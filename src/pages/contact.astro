@@ -5,29 +5,30 @@ import ContactUs from '~/components/widgets/Contact.astro';
 import Features2 from '~/components/widgets/Features2.astro';
 
 const metadata = {
-  title: 'Contact',
+  title: 'Contact Us',
 };
 ---
 
 <Layout metadata={metadata}>
-  <!-- HeroText Widget ******************* -->
-
-  <HeroText tagline="Contact" title="Let's Connect!" />
+  <HeroText
+    tagline="Contact AIZENOVA"
+    title="Let's Build the Future Together"
+  />
 
   <ContactUs
     id="form"
-    title="Drop us a message today!"
-    subtitle="For quicker answers, explore our FAQs section. You may find the solution you're looking  for right there! If not, our support team is delighted to help you."
+    title="Send us a message"
+    subtitle="Have a question, feedback, partnership proposal or business inquiry? We'd love to hear from you."
     inputs={[
       {
         type: 'text',
         name: 'name',
-        label: 'Name',
+        label: 'Full Name',
       },
       {
         type: 'email',
         name: 'email',
-        label: 'Email',
+        label: 'Email Address',
       },
     ]}
     textarea={{
@@ -35,43 +36,42 @@ const metadata = {
     }}
     disclaimer={{
       label:
-        'By submitting this contact form, you acknowledge and agree to the collection of your personal information.',
+        'By submitting this form you agree to our Privacy Policy and Terms of Service.',
     }}
-    description="Our support team typically responds within 24 business hours."
+    description="We usually reply within 24–48 hours."
   />
 
-  <!-- Features2 Widget ************** -->
-
   <Features2
-    title="We are here to help!"
+    title="Get in Touch"
     items={[
       {
-        title: 'General support',
-        description: `Chat with us for inquiries related to account management, website navigation, payment issues, accessing purchased templates or general questions about the website's functionality.`,
-      },
-      {
-        title: 'Contact sales',
+        title: 'General Inquiries',
         description:
-          'Chat with us for questions about purchases, customization options, licensing for commercial use, inquiries about specific template, etc.',
+          'Questions about our articles, tutorials or website.',
       },
       {
-        title: 'Technical support',
+        title: 'Business & Partnerships',
         description:
-          'Chat with us when facing issues like template installation, problems editing difficulties, compatibility issues with software or download errors, or other technical challenges related to using the templates.',
+          'Advertising, sponsorships and collaboration opportunities.',
       },
       {
-        title: 'Phone',
-        description: '+1 (234) 567-890',
-        icon: 'tabler:headset',
+        title: 'Technical Support',
+        description:
+          'Report website issues or broken pages.',
       },
       {
         title: 'Email',
-        description: 'contact@support.com',
+        description: 'Aizenovahelp@gmail.com',
         icon: 'tabler:mail',
       },
       {
+        title: 'Website',
+        description: 'https://aizenova.com',
+        icon: 'tabler:world',
+      },
+      {
         title: 'Location',
-        description: '1234 Lorem Ipsum St, 12345, Miami, EEUU',
+        description: 'Online • Worldwide',
         icon: 'tabler:map-pin',
       },
     ]}

@@ -1,31 +1,66 @@
 site:
-  name: AstroWind
-  site: 'https://astrowind.vercel.app'
-  base: '/'
+  name: AIZENOVA
+  site: "https://aizenova.com"
+  base: "/"
   trailingSlash: false
 
-  googleSiteVerificationId: orcPxI47GSa-cRvY11tUe6iGg2IO_RPvnA1q95iEM3M
+  googleSiteVerificationId: "orcPxI47GSa-cRvY11tUe6iGg2IO_RPvnA1q95iEM3M"
 
-# Default SEO metadata
 metadata:
   title:
-    default: AstroWind
-    template: '%s — AstroWind'
-  description: "\U0001F680 Suitable for Startups, Small Business, Sass Websites, Professional Portfolios, Marketing Websites, Landing Pages & Blogs."
+    default: AIZENOVA
+    template: "%s | AIZENOVA"
+
+  description: "AIZENOVA publishes expert guides, AI tutorials, programming resources, technology news, software reviews, SEO tips, cybersecurity insights, and business guides to help you stay ahead in the digital world."
+
+  keywords:
+    - AI
+    - Artificial Intelligence
+    - ChatGPT
+    - Gemini
+    - Claude AI
+    - Machine Learning
+    - Generative AI
+    - Technology
+    - Programming
+    - Python
+    - JavaScript
+    - Web Development
+    - HTML
+    - CSS
+    - React
+    - Astro
+    - Git
+    - GitHub
+    - API
+    - Cloud Computing
+    - Cybersecurity
+    - SEO
+    - Affiliate Marketing
+    - Business
+    - Digital Marketing
+    - Software Reviews
+    - Tutorials
+    - Tech News
+    - AIZENOVA
+
   robots:
     index: true
     follow: true
+
   openGraph:
-    site_name: AstroWind
-    images:
-      - url: '~/assets/images/default.png'
-        width: 1200
-        height: 628
+    site_name: AIZENOVA
     type: website
-  twitter:
-    handle: '@arthelokyo'
-    site: '@arthelokyo'
-    cardType: summary_large_image
+
+    images:
+      - url: "~/assets/images/default.png"
+        width: 1200
+        height: 630
+
+twitter:
+  handle: "@ZENOVAAI"
+  site: "@ZENOVAAI"
+  cardType: summary_large_image
 
 i18n:
   language: en
@@ -34,39 +69,39 @@ i18n:
 apps:
   blog:
     isEnabled: true
-    postsPerPage: 6
+    postsPerPage: 9
 
     post:
       isEnabled: true
-      permalink: '/%slug%' # Variables: %slug%, %year%, %month%, %day%, %hour%, %minute%, %second%, %category%
+      permalink: "/%slug%"
       robots:
         index: true
 
     list:
       isEnabled: true
-      pathname: 'blog' # Blog main path, you can change this to "articles" (/articles)
+      pathname: "blog"
       robots:
         index: true
 
     category:
       isEnabled: true
-      pathname: 'category' # Category main path /category/some-category, you can change this to "group" (/group/some-category)
+      pathname: "category"
       robots:
         index: true
 
     tag:
       isEnabled: true
-      pathname: 'tag' # Tag main path /tag/some-tag, you can change this to "topics" (/topics/some-category)
+      pathname: "tag"
       robots:
-        index: false
+        index: true
 
     isRelatedPostsEnabled: true
-    relatedPostsCount: 4
+    relatedPostsCount: 6
 
 analytics:
   vendors:
     googleAnalytics:
-      id: null # or "G-XXXXXXXXXX"
+      id: null
 
 ui:
-  theme: 'system' # Values: "system" | "light" | "dark" | "light:only" | "dark:only"
+  theme: system
