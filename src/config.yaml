@@ -101,7 +101,7 @@ apps:
 analytics:
   vendors:
     googleAnalytics:
-      id: null
+      id: "G-ML6Z1PQG57"
 
 ui:
   theme: system
