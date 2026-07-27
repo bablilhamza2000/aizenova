@@ -869,12 +869,12 @@ If you're serious about building an online business, start today, keep learning,
 
 If you found this guide helpful, you may also enjoy:
 
-- [How to Start a Blog](/blog/how-to-start-blog)
-- [SEO for Beginners](/blog/seo-beginners)
-- [Google AdSense Guide](/blog/google-adsense-guide)
-- [Best AI Tools in 2026](/blog/best-ai-tools-2026)
-- [ChatGPT Review](https://www.aizenova.com/blog/chatgpt-review)
-- [How to Make Money Online](/blog/how-to-make-money-online)
+- [How to Start a Blog](/blog/how-to-start-blog.md)
+- [SEO for Beginners](/blog/seo-beginners.md)
+- [Google AdSense Guide](/blog/google-adsense-guide.md)
+- [Best AI Tools in 2026](s/blog/best-ai-tools-2026.md)
+- [ChatGPT Review](/blog/chatgpt-review.md)
+- [How to Make Money Online](/blog/how-to-make-money-online.md)
 
 ---
 
