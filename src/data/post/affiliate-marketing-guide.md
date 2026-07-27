@@ -357,23 +357,6 @@ This is why affiliate marketing is often considered one of the best long-term on
 
 ---
 
-> 💡 **Success Tip**
->
-> Don't focus on earning your first $100.
->
-> Focus on publishing your first **50 high-quality articles**.
->
-> Traffic comes first.
->
-> Revenue follows.
-
----
-
-> ⚠️ **Common Mistake**
->
-> Many beginners join 20 or 30 affiliate programs during their first month.
->
-> Instead, focus on creating outstanding content around a small number of trusted products. Quality almost always beats quantity in affiliate marketing.
 
 ---
 # Benefits of Affiliate Marketing
@@ -459,9 +442,6 @@ It rewards creators who consistently publish useful, trustworthy, and well-optim
 
 ---
 
-> 💡 **Pro Tip**
->
-> Think of affiliate marketing as building a digital asset. Every helpful article you publish becomes another opportunity to attract visitors and generate commissions for years to come.
 
 ---
 
@@ -653,9 +633,6 @@ Watching experienced affiliate marketers explain real strategies can help you un
   allowfullscreen>
 </iframe>
 
-> 💡 **Tip**
->
-> Choose a high-quality educational video that complements your article instead of repeating the exact same information. This gives readers another way to learn while increasing the value of your content.
 
 ---
 # Common Affiliate Marketing Mistakes
@@ -728,9 +705,6 @@ Data helps you make smarter decisions.
 
 ---
 
-> ⚠️ **Remember**
->
-> Affiliate marketing is built on trust. Every recommendation you make affects your reputation. Protect your audience first—commissions come second.
 
 ---
 
