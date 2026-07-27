@@ -643,7 +643,6 @@ Before publishing your article, make sure you've completed this checklist.
 
 Watching experienced affiliate marketers explain real strategies can help you understand the concepts covered in this guide.
 
-Replace the video ID below with your preferred YouTube video.
 
 <iframe
   width="100%"
