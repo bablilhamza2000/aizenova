@@ -225,6 +225,7 @@ This continuous improvement is one of the reasons AI has become such a valuable 
 
 ## How AI Supports Daily Business Operations
 
+
 ```text
 Business Data
       │
