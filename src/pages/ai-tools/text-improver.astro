@@ -1,0 +1,449 @@
+---
+import Layout from "../../layouts/Layout.astro";
+---
+
+<Layout title="AI Text Improver | AIZENOVA">
+  <main class="mx-auto max-w-4xl px-6 py-16 text-white">
+
+    <a
+      href="/ai-tools"
+      class="inline-flex items-center gap-2 text-sm text-gray-400 hover:text-white"
+    >
+      ← Back to AI Tools
+    </a>
+
+    <div class="mt-10 text-center">
+      <div class="mx-auto mb-5 flex h-16 w-16 items-center justify-center rounded-2xl bg-white/10 text-3xl">
+        ✨
+      </div>
+
+      <h1 class="text-4xl font-bold sm:text-5xl">
+        AI Text Improver
+      </h1>
+
+      <p class="mx-auto mt-4 max-w-2xl text-gray-400">
+        Improve clarity, readability, grammar, and style while keeping your original meaning.
+      </p>
+    </div>
+
+    <section class="mt-12 rounded-2xl border border-white/10 bg-white/[0.03] p-6 sm:p-8">
+
+      <label
+        for="text"
+        class="mb-3 block text-sm font-medium text-gray-200"
+      >
+        Your Text
+      </label>
+
+      <textarea
+        id="text"
+        rows="11"
+        maxlength="6000"
+        placeholder="Paste the text you want to improve..."
+        class="w-full resize-y rounded-xl border border-white/10 bg-[#111118] px-4 py-4 text-white placeholder-gray-500 outline-none focus:border-white/30"
+      ></textarea>
+
+      <div class="mt-2 flex justify-between text-xs text-gray-500">
+        <span>Improve your text without changing its main meaning.</span>
+
+        <span>
+          <span id="charCount">0</span>/6000
+        </span>
+      </div>
+
+      <div class="mt-6 grid gap-5 sm:grid-cols-2">
+
+        <div>
+          <label
+            for="style"
+            class="mb-3 block text-sm font-medium text-gray-200"
+          >
+            Writing Style
+          </label>
+
+          <select
+            id="style"
+            class="w-full rounded-xl border border-white/10 bg-[#111118] px-4 py-3 text-white outline-none"
+          >
+            <option value="Natural">Natural</option>
+            <option value="Professional">Professional</option>
+            <option value="Academic">Academic</option>
+            <option value="Friendly">Friendly</option>
+            <option value="Formal">Formal</option>
+            <option value="Conversational">Conversational</option>
+            <option value="Persuasive">Persuasive</option>
+          </select>
+        </div>
+
+        <div>
+          <label
+            for="language"
+            class="mb-3 block text-sm font-medium text-gray-200"
+          >
+            Language
+          </label>
+
+          <select
+            id="language"
+            class="w-full rounded-xl border border-white/10 bg-[#111118] px-4 py-3 text-white outline-none"
+          >
+            <option value="English">English</option>
+            <option value="French">French</option>
+            <option value="Arabic">Arabic</option>
+            <option value="Spanish">Spanish</option>
+            <option value="German">German</option>
+          </select>
+        </div>
+
+      </div>
+
+      <div class="mt-5 grid gap-5 sm:grid-cols-2">
+
+        <div>
+          <label
+            for="level"
+            class="mb-3 block text-sm font-medium text-gray-200"
+          >
+            Improvement Level
+          </label>
+
+          <select
+            id="level"
+            class="w-full rounded-xl border border-white/10 bg-[#111118] px-4 py-3 text-white outline-none"
+          >
+            <option value="Light">Light</option>
+            <option value="Balanced" selected>Balanced</option>
+            <option value="Advanced">Advanced</option>
+          </select>
+        </div>
+
+        <div>
+          <label
+            for="goal"
+            class="mb-3 block text-sm font-medium text-gray-200"
+          >
+            Main Goal
+          </label>
+
+          <select
+            id="goal"
+            class="w-full rounded-xl border border-white/10 bg-[#111118] px-4 py-3 text-white outline-none"
+          >
+            <option value="Clarity">Improve Clarity</option>
+            <option value="Readability">Improve Readability</option>
+            <option value="Grammar">Fix Grammar</option>
+            <option value="Professional Quality">Professional Quality</option>
+            <option value="Overall Quality">Overall Quality</option>
+          </select>
+        </div>
+
+      </div>
+
+      <div class="mt-5 grid gap-3 sm:grid-cols-2">
+
+        <label class="flex items-center gap-3 text-sm text-gray-300">
+          <input
+            id="preserveMeaning"
+            type="checkbox"
+            checked
+            class="h-4 w-4 rounded border-white/20 bg-[#111118]"
+          />
+          Preserve the original meaning
+        </label>
+
+        <label class="flex items-center gap-3 text-sm text-gray-300">
+          <input
+            id="preserveTone"
+            type="checkbox"
+            class="h-4 w-4 rounded border-white/20 bg-[#111118]"
+          />
+          Keep the original tone
+        </label>
+
+      </div>
+
+      <button
+        id="generateBtn"
+        type="button"
+        class="mt-6 w-full rounded-xl bg-white px-6 py-4 font-semibold text-black hover:bg-gray-200 disabled:cursor-not-allowed disabled:opacity-50"
+      >
+        ✨ Improve Text
+      </button>
+
+      <div
+        id="loading"
+        class="mt-6 hidden rounded-xl border border-white/10 bg-white/[0.03] p-6 text-center"
+      >
+        <div class="animate-pulse text-2xl">✨</div>
+
+        <p class="mt-2 text-sm text-gray-400">
+          AI is improving your text...
+        </p>
+      </div>
+
+      <div
+        id="errorContainer"
+        class="mt-6 hidden rounded-xl border border-red-500/20 bg-red-500/5 p-4"
+      >
+        <p id="errorMessage" class="text-sm text-red-400"></p>
+      </div>
+
+      <div id="resultContainer" class="mt-8 hidden">
+
+        <div class="mb-3 flex flex-wrap items-center justify-between gap-3">
+
+          <h2 class="text-lg font-semibold">
+            Improved Text
+          </h2>
+
+          <div class="flex gap-2">
+
+            <button
+              id="generateAgainBtn"
+              type="button"
+              class="rounded-lg border border-white/10 px-4 py-2 text-sm text-gray-300 hover:bg-white/10 hover:text-white"
+            >
+              🔄 Improve Again
+            </button>
+
+            <button
+              id="copyBtn"
+              type="button"
+              class="rounded-lg border border-white/10 px-4 py-2 text-sm text-gray-300 hover:bg-white/10 hover:text-white"
+            >
+              📋 Copy
+            </button>
+
+          </div>
+
+        </div>
+
+        <div
+          id="result"
+          class="min-h-[280px] whitespace-pre-wrap rounded-xl border border-white/10 bg-[#111118] p-5 leading-7 text-gray-200"
+        ></div>
+
+        <button
+          id="clearBtn"
+          type="button"
+          class="mt-4 text-sm text-gray-500 hover:text-white"
+        >
+          Clear result
+        </button>
+
+      </div>
+
+    </section>
+
+  </main>
+
+  <script>
+    const text =
+      document.getElementById("text") as HTMLTextAreaElement;
+
+    const style =
+      document.getElementById("style") as HTMLSelectElement;
+
+    const language =
+      document.getElementById("language") as HTMLSelectElement;
+
+    const level =
+      document.getElementById("level") as HTMLSelectElement;
+
+    const goal =
+      document.getElementById("goal") as HTMLSelectElement;
+
+    const preserveMeaning =
+      document.getElementById("preserveMeaning") as HTMLInputElement;
+
+    const preserveTone =
+      document.getElementById("preserveTone") as HTMLInputElement;
+
+    const charCount =
+      document.getElementById("charCount")!;
+
+    const generateBtn =
+      document.getElementById("generateBtn") as HTMLButtonElement;
+
+    const generateAgainBtn =
+      document.getElementById("generateAgainBtn") as HTMLButtonElement;
+
+    const loading =
+      document.getElementById("loading")!;
+
+    const errorContainer =
+      document.getElementById("errorContainer")!;
+
+    const errorMessage =
+      document.getElementById("errorMessage")!;
+
+    const resultContainer =
+      document.getElementById("resultContainer")!;
+
+    const result =
+      document.getElementById("result")!;
+
+    const copyBtn =
+      document.getElementById("copyBtn") as HTMLButtonElement;
+
+    const clearBtn =
+      document.getElementById("clearBtn") as HTMLButtonElement;
+
+    let hasGenerated = false;
+
+    text.addEventListener("input", () => {
+      charCount.textContent =
+        String(text.value.length);
+    });
+
+    function showError(message: string) {
+      errorMessage.textContent = message;
+      errorContainer.classList.remove("hidden");
+    }
+
+    function hideError() {
+      errorContainer.classList.add("hidden");
+      errorMessage.textContent = "";
+    }
+
+    async function improveText() {
+      hideError();
+
+      const textValue =
+        text.value.trim();
+
+      if (!textValue) {
+        showError(
+          "Please enter the text you want to improve."
+        );
+
+        text.focus();
+        return;
+      }
+
+      generateBtn.disabled = true;
+      loading.classList.remove("hidden");
+      resultContainer.classList.add("hidden");
+
+      try {
+        const response = await fetch(
+          "/api/improve-text",
+          {
+            method: "POST",
+
+            headers: {
+              "Content-Type": "application/json",
+            },
+
+            body: JSON.stringify({
+              text: textValue,
+              style: style.value,
+              language: language.value,
+              level: level.value,
+              goal: goal.value,
+              preserveMeaning: preserveMeaning.checked,
+              preserveTone: preserveTone.checked,
+            }),
+          }
+        );
+
+        const data =
+          await response.json();
+
+        if (!response.ok) {
+          throw new Error(
+            data?.error ||
+            "Failed to improve the text."
+          );
+        }
+
+        if (!data.text) {
+          throw new Error(
+            "The AI did not return improved text."
+          );
+        }
+
+        result.textContent =
+          data.text.trim();
+
+        resultContainer.classList.remove(
+          "hidden"
+        );
+
+        hasGenerated = true;
+
+      } catch (error) {
+        console.error(error);
+
+        showError(
+          error instanceof Error
+            ? error.message
+            : "Something went wrong."
+        );
+
+      } finally {
+        generateBtn.disabled = false;
+        loading.classList.add("hidden");
+      }
+    }
+
+    generateBtn.addEventListener(
+      "click",
+      improveText
+    );
+
+    generateAgainBtn.addEventListener(
+      "click",
+      () => {
+        if (hasGenerated) {
+          improveText();
+        }
+      }
+    );
+
+    copyBtn.addEventListener(
+      "click",
+      async () => {
+        const value =
+          result.textContent?.trim();
+
+        if (!value) return;
+
+        try {
+          await navigator.clipboard.writeText(value);
+
+          const oldText =
+            copyBtn.textContent;
+
+          copyBtn.textContent =
+            "✅ Copied";
+
+          setTimeout(() => {
+            copyBtn.textContent =
+              oldText;
+          }, 1500);
+
+        } catch {
+          showError(
+            "Could not copy the improved text."
+          );
+        }
+      }
+    );
+
+    clearBtn.addEventListener(
+      "click",
+      () => {
+        result.textContent = "";
+
+        resultContainer.classList.add(
+          "hidden"
+        );
+
+        hideError();
+
+        hasGenerated = false;
+      }
+    );
+  </script>
+</Layout>

@@ -1,0 +1,361 @@
+---
+import Layout from "../../layouts/Layout.astro";
+---
+
+<Layout title="AI Content Rewriter | AIZENOVA">
+  <main class="mx-auto max-w-4xl px-6 py-16 text-white">
+
+    <a
+      href="/ai-tools"
+      class="inline-flex items-center gap-2 text-sm text-gray-400 hover:text-white"
+    >
+      ← Back to AI Tools
+    </a>
+
+    <div class="mt-10 text-center">
+      <div class="mx-auto mb-5 flex h-16 w-16 items-center justify-center rounded-2xl bg-white/10 text-3xl">
+        ✍️
+      </div>
+
+      <h1 class="text-4xl font-bold sm:text-5xl">
+        AI Content Rewriter
+      </h1>
+
+      <p class="mx-auto mt-4 max-w-2xl text-gray-400">
+        Rewrite your text while preserving its original meaning and making it clearer and more natural.
+      </p>
+    </div>
+
+    <section class="mt-12 rounded-2xl border border-white/10 bg-white/[0.03] p-6 sm:p-8">
+
+      <label
+        for="text"
+        class="mb-3 block text-sm font-medium text-gray-200"
+      >
+        Text to Rewrite
+      </label>
+
+      <textarea
+        id="text"
+        rows="10"
+        maxlength="5000"
+        placeholder="Paste the text you want to rewrite..."
+        class="w-full resize-y rounded-xl border border-white/10 bg-[#111118] px-4 py-4 text-white placeholder-gray-500 outline-none focus:border-white/30"
+      ></textarea>
+
+      <div class="mt-2 flex justify-between text-xs text-gray-500">
+        <span>Keep the original meaning of your text.</span>
+        <span>
+          <span id="charCount">0</span>/5000
+        </span>
+      </div>
+
+      <div class="mt-6 grid gap-5 sm:grid-cols-2">
+
+        <div>
+          <label
+            for="style"
+            class="mb-3 block text-sm font-medium text-gray-200"
+          >
+            Writing Style
+          </label>
+
+          <select
+            id="style"
+            class="w-full rounded-xl border border-white/10 bg-[#111118] px-4 py-3 text-white outline-none"
+          >
+            <option value="Professional">Professional</option>
+            <option value="Simple">Simple</option>
+            <option value="Friendly">Friendly</option>
+            <option value="Formal">Formal</option>
+            <option value="Concise">Concise</option>
+            <option value="Engaging">Engaging</option>
+          </select>
+        </div>
+
+        <div>
+          <label
+            for="language"
+            class="mb-3 block text-sm font-medium text-gray-200"
+          >
+            Language
+          </label>
+
+          <select
+            id="language"
+            class="w-full rounded-xl border border-white/10 bg-[#111118] px-4 py-3 text-white outline-none"
+          >
+            <option value="English">English</option>
+            <option value="French">French</option>
+            <option value="Arabic">Arabic</option>
+            <option value="Spanish">Spanish</option>
+            <option value="German">German</option>
+          </select>
+        </div>
+
+      </div>
+
+      <button
+        id="rewriteBtn"
+        type="button"
+        class="mt-6 w-full rounded-xl bg-white px-6 py-4 font-semibold text-black hover:bg-gray-200 disabled:cursor-not-allowed disabled:opacity-50"
+      >
+        ✨ Rewrite Text
+      </button>
+
+      <div
+        id="loading"
+        class="mt-6 hidden rounded-xl border border-white/10 bg-white/[0.03] p-6 text-center"
+      >
+        <div class="animate-pulse text-2xl">✨</div>
+
+        <p class="mt-2 text-sm text-gray-400">
+          AI is rewriting your text...
+        </p>
+      </div>
+
+      <div
+        id="errorContainer"
+        class="mt-6 hidden rounded-xl border border-red-500/20 bg-red-500/5 p-4"
+      >
+        <p id="errorMessage" class="text-sm text-red-400"></p>
+      </div>
+
+      <div id="resultContainer" class="mt-8 hidden">
+
+        <div class="mb-3 flex flex-wrap items-center justify-between gap-3">
+
+          <h2 class="text-lg font-semibold">
+            Rewritten Text
+          </h2>
+
+          <div class="flex gap-2">
+
+            <button
+              id="rewriteAgainBtn"
+              type="button"
+              class="rounded-lg border border-white/10 px-4 py-2 text-sm text-gray-300 hover:bg-white/10 hover:text-white"
+            >
+              🔄 Rewrite Again
+            </button>
+
+            <button
+              id="copyBtn"
+              type="button"
+              class="rounded-lg border border-white/10 px-4 py-2 text-sm text-gray-300 hover:bg-white/10 hover:text-white"
+            >
+              📋 Copy
+            </button>
+
+          </div>
+
+        </div>
+
+        <div
+          id="result"
+          class="min-h-[250px] whitespace-pre-wrap rounded-xl border border-white/10 bg-[#111118] p-5 leading-7 text-gray-200"
+        ></div>
+
+        <button
+          id="clearBtn"
+          type="button"
+          class="mt-4 text-sm text-gray-500 hover:text-white"
+        >
+          Clear result
+        </button>
+
+      </div>
+
+    </section>
+
+  </main>
+
+  <script>
+    const textInput =
+      document.getElementById("text") as HTMLTextAreaElement;
+
+    const style =
+      document.getElementById("style") as HTMLSelectElement;
+
+    const language =
+      document.getElementById("language") as HTMLSelectElement;
+
+    const charCount =
+      document.getElementById("charCount")!;
+
+    const rewriteBtn =
+      document.getElementById("rewriteBtn") as HTMLButtonElement;
+
+    const rewriteAgainBtn =
+      document.getElementById("rewriteAgainBtn") as HTMLButtonElement;
+
+    const loading =
+      document.getElementById("loading")!;
+
+    const errorContainer =
+      document.getElementById("errorContainer")!;
+
+    const errorMessage =
+      document.getElementById("errorMessage")!;
+
+    const resultContainer =
+      document.getElementById("resultContainer")!;
+
+    const result =
+      document.getElementById("result")!;
+
+    const copyBtn =
+      document.getElementById("copyBtn") as HTMLButtonElement;
+
+    const clearBtn =
+      document.getElementById("clearBtn") as HTMLButtonElement;
+
+    let hasGenerated = false;
+
+    textInput.addEventListener("input", () => {
+      charCount.textContent =
+        String(textInput.value.length);
+    });
+
+    function showError(message: string) {
+      errorMessage.textContent = message;
+      errorContainer.classList.remove("hidden");
+    }
+
+    function hideError() {
+      errorContainer.classList.add("hidden");
+      errorMessage.textContent = "";
+    }
+
+    async function rewriteText() {
+      hideError();
+
+      const text = textInput.value.trim();
+
+      if (!text) {
+        showError("Please enter some text to rewrite.");
+        textInput.focus();
+        return;
+      }
+
+      rewriteBtn.disabled = true;
+      loading.classList.remove("hidden");
+      resultContainer.classList.add("hidden");
+
+      try {
+        const response = await fetch(
+          "/api/rewrite-text",
+          {
+            method: "POST",
+
+            headers: {
+              "Content-Type": "application/json",
+            },
+
+            body: JSON.stringify({
+              text,
+              style: style.value,
+              language: language.value,
+            }),
+          }
+        );
+
+        const data = await response.json();
+
+        if (!response.ok) {
+          throw new Error(
+            data?.error ||
+            "Failed to rewrite the text."
+          );
+        }
+
+        if (!data.text) {
+          throw new Error(
+            "The AI did not return rewritten text."
+          );
+        }
+
+        result.textContent =
+          data.text.trim();
+
+        resultContainer.classList.remove(
+          "hidden"
+        );
+
+        hasGenerated = true;
+
+      } catch (error) {
+        console.error(error);
+
+        showError(
+          error instanceof Error
+            ? error.message
+            : "Something went wrong."
+        );
+
+      } finally {
+        rewriteBtn.disabled = false;
+        loading.classList.add("hidden");
+      }
+    }
+
+    rewriteBtn.addEventListener(
+      "click",
+      rewriteText
+    );
+
+    rewriteAgainBtn.addEventListener(
+      "click",
+      () => {
+        if (hasGenerated) {
+          rewriteText();
+        }
+      }
+    );
+
+    copyBtn.addEventListener(
+      "click",
+      async () => {
+        const text =
+          result.textContent?.trim();
+
+        if (!text) return;
+
+        try {
+          await navigator.clipboard.writeText(text);
+
+          const oldText =
+            copyBtn.textContent;
+
+          copyBtn.textContent =
+            "✅ Copied";
+
+          setTimeout(() => {
+            copyBtn.textContent =
+              oldText;
+          }, 1500);
+
+        } catch {
+          showError(
+            "Could not copy the rewritten text."
+          );
+        }
+      }
+    );
+
+    clearBtn.addEventListener(
+      "click",
+      () => {
+        result.textContent = "";
+
+        resultContainer.classList.add(
+          "hidden"
+        );
+
+        hideError();
+
+        hasGenerated = false;
+      }
+    );
+  </script>
+</Layout>

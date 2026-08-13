@@ -1,0 +1,437 @@
+---
+import Layout from "../../layouts/Layout.astro";
+---
+
+<Layout title="AI Conclusion Generator | AIZENOVA">
+  <main class="mx-auto max-w-4xl px-6 py-16 text-white">
+
+    <a
+      href="/ai-tools"
+      class="inline-flex items-center gap-2 text-sm text-gray-400 hover:text-white"
+    >
+      ← Back to AI Tools
+    </a>
+
+    <div class="mt-10 text-center">
+      <div class="mx-auto mb-5 flex h-16 w-16 items-center justify-center rounded-2xl bg-white/10 text-3xl">
+        📝
+      </div>
+
+      <h1 class="text-4xl font-bold sm:text-5xl">
+        AI Conclusion Generator
+      </h1>
+
+      <p class="mx-auto mt-4 max-w-2xl text-gray-400">
+        Turn your main ideas into a clear, natural, and effective conclusion.
+      </p>
+    </div>
+
+    <section class="mt-12 rounded-2xl border border-white/10 bg-white/[0.03] p-6 sm:p-8">
+
+      <label
+        for="content"
+        class="mb-3 block text-sm font-medium text-gray-200"
+      >
+        Your Content
+      </label>
+
+      <textarea
+        id="content"
+        rows="10"
+        maxlength="6000"
+        placeholder="Paste your article, essay, paragraph, or main ideas here..."
+        class="w-full resize-y rounded-xl border border-white/10 bg-[#111118] px-4 py-4 text-white placeholder-gray-500 outline-none focus:border-white/30"
+      ></textarea>
+
+      <div class="mt-2 flex justify-between text-xs text-gray-500">
+        <span>Provide the content you want to conclude.</span>
+
+        <span>
+          <span id="charCount">0</span>/6000
+        </span>
+      </div>
+
+      <div class="mt-6 grid gap-5 sm:grid-cols-2">
+
+        <div>
+          <label
+            for="tone"
+            class="mb-3 block text-sm font-medium text-gray-200"
+          >
+            Tone
+          </label>
+
+          <select
+            id="tone"
+            class="w-full rounded-xl border border-white/10 bg-[#111118] px-4 py-3 text-white outline-none"
+          >
+            <option value="Clear">Clear</option>
+            <option value="Professional">Professional</option>
+            <option value="Academic">Academic</option>
+            <option value="Friendly">Friendly</option>
+            <option value="Persuasive">Persuasive</option>
+            <option value="Conversational">Conversational</option>
+          </select>
+        </div>
+
+        <div>
+          <label
+            for="language"
+            class="mb-3 block text-sm font-medium text-gray-200"
+          >
+            Language
+          </label>
+
+          <select
+            id="language"
+            class="w-full rounded-xl border border-white/10 bg-[#111118] px-4 py-3 text-white outline-none"
+          >
+            <option value="English">English</option>
+            <option value="French">French</option>
+            <option value="Arabic">Arabic</option>
+            <option value="Spanish">Spanish</option>
+            <option value="German">German</option>
+          </select>
+        </div>
+
+      </div>
+
+      <div class="mt-5 grid gap-5 sm:grid-cols-2">
+
+        <div>
+          <label
+            for="length"
+            class="mb-3 block text-sm font-medium text-gray-200"
+          >
+            Length
+          </label>
+
+          <select
+            id="length"
+            class="w-full rounded-xl border border-white/10 bg-[#111118] px-4 py-3 text-white outline-none"
+          >
+            <option value="Short">Short</option>
+            <option value="Medium" selected>Medium</option>
+            <option value="Long">Long</option>
+          </select>
+        </div>
+
+        <div>
+          <label
+            for="purpose"
+            class="mb-3 block text-sm font-medium text-gray-200"
+          >
+            Content Type
+          </label>
+
+          <select
+            id="purpose"
+            class="w-full rounded-xl border border-white/10 bg-[#111118] px-4 py-3 text-white outline-none"
+          >
+            <option value="Blog Article">Blog Article</option>
+            <option value="Essay">Essay</option>
+            <option value="Academic Paper">Academic Paper</option>
+            <option value="Report">Report</option>
+            <option value="General Content">General Content</option>
+          </select>
+        </div>
+
+      </div>
+
+      <div class="mt-5 flex items-center gap-3">
+        <input
+          id="cta"
+          type="checkbox"
+          checked
+          class="h-4 w-4 rounded border-white/20 bg-[#111118]"
+        />
+
+        <label
+          for="cta"
+          class="text-sm text-gray-300"
+        >
+          Include a natural final takeaway or call to action
+        </label>
+      </div>
+
+      <button
+        id="generateBtn"
+        type="button"
+        class="mt-6 w-full rounded-xl bg-white px-6 py-4 font-semibold text-black hover:bg-gray-200 disabled:cursor-not-allowed disabled:opacity-50"
+      >
+        ✨ Generate Conclusion
+      </button>
+
+      <div
+        id="loading"
+        class="mt-6 hidden rounded-xl border border-white/10 bg-white/[0.03] p-6 text-center"
+      >
+        <div class="animate-pulse text-2xl">📝</div>
+
+        <p class="mt-2 text-sm text-gray-400">
+          AI is writing your conclusion...
+        </p>
+      </div>
+
+      <div
+        id="errorContainer"
+        class="mt-6 hidden rounded-xl border border-red-500/20 bg-red-500/5 p-4"
+      >
+        <p id="errorMessage" class="text-sm text-red-400"></p>
+      </div>
+
+      <div id="resultContainer" class="mt-8 hidden">
+
+        <div class="mb-3 flex flex-wrap items-center justify-between gap-3">
+
+          <h2 class="text-lg font-semibold">
+            Generated Conclusion
+          </h2>
+
+          <div class="flex gap-2">
+
+            <button
+              id="generateAgainBtn"
+              type="button"
+              class="rounded-lg border border-white/10 px-4 py-2 text-sm text-gray-300 hover:bg-white/10 hover:text-white"
+            >
+              🔄 Generate Again
+            </button>
+
+            <button
+              id="copyBtn"
+              type="button"
+              class="rounded-lg border border-white/10 px-4 py-2 text-sm text-gray-300 hover:bg-white/10 hover:text-white"
+            >
+              📋 Copy
+            </button>
+
+          </div>
+
+        </div>
+
+        <div
+          id="result"
+          class="min-h-[250px] whitespace-pre-wrap rounded-xl border border-white/10 bg-[#111118] p-5 leading-7 text-gray-200"
+        ></div>
+
+        <button
+          id="clearBtn"
+          type="button"
+          class="mt-4 text-sm text-gray-500 hover:text-white"
+        >
+          Clear result
+        </button>
+
+      </div>
+
+    </section>
+
+  </main>
+
+  <script>
+    const content =
+      document.getElementById("content") as HTMLTextAreaElement;
+
+    const tone =
+      document.getElementById("tone") as HTMLSelectElement;
+
+    const language =
+      document.getElementById("language") as HTMLSelectElement;
+
+    const length =
+      document.getElementById("length") as HTMLSelectElement;
+
+    const purpose =
+      document.getElementById("purpose") as HTMLSelectElement;
+
+    const cta =
+      document.getElementById("cta") as HTMLInputElement;
+
+    const charCount =
+      document.getElementById("charCount")!;
+
+    const generateBtn =
+      document.getElementById("generateBtn") as HTMLButtonElement;
+
+    const generateAgainBtn =
+      document.getElementById("generateAgainBtn") as HTMLButtonElement;
+
+    const loading =
+      document.getElementById("loading")!;
+
+    const errorContainer =
+      document.getElementById("errorContainer")!;
+
+    const errorMessage =
+      document.getElementById("errorMessage")!;
+
+    const resultContainer =
+      document.getElementById("resultContainer")!;
+
+    const result =
+      document.getElementById("result")!;
+
+    const copyBtn =
+      document.getElementById("copyBtn") as HTMLButtonElement;
+
+    const clearBtn =
+      document.getElementById("clearBtn") as HTMLButtonElement;
+
+    let hasGenerated = false;
+
+    content.addEventListener("input", () => {
+      charCount.textContent =
+        String(content.value.length);
+    });
+
+    function showError(message: string) {
+      errorMessage.textContent = message;
+      errorContainer.classList.remove("hidden");
+    }
+
+    function hideError() {
+      errorContainer.classList.add("hidden");
+      errorMessage.textContent = "";
+    }
+
+    async function generateConclusion() {
+      hideError();
+
+      const contentValue =
+        content.value.trim();
+
+      if (!contentValue) {
+        showError(
+          "Please enter the content you want to conclude."
+        );
+
+        content.focus();
+        return;
+      }
+
+      generateBtn.disabled = true;
+      loading.classList.remove("hidden");
+      resultContainer.classList.add("hidden");
+
+      try {
+        const response = await fetch(
+          "/api/generate-conclusion",
+          {
+            method: "POST",
+
+            headers: {
+              "Content-Type": "application/json",
+            },
+
+            body: JSON.stringify({
+              content: contentValue,
+              tone: tone.value,
+              language: language.value,
+              length: length.value,
+              purpose: purpose.value,
+              cta: cta.checked,
+            }),
+          }
+        );
+
+        const data =
+          await response.json();
+
+        if (!response.ok) {
+          throw new Error(
+            data?.error ||
+            "Failed to generate the conclusion."
+          );
+        }
+
+        if (!data.text) {
+          throw new Error(
+            "The AI did not return a conclusion."
+          );
+        }
+
+        result.textContent =
+          data.text.trim();
+
+        resultContainer.classList.remove(
+          "hidden"
+        );
+
+        hasGenerated = true;
+
+      } catch (error) {
+        console.error(error);
+
+        showError(
+          error instanceof Error
+            ? error.message
+            : "Something went wrong."
+        );
+
+      } finally {
+        generateBtn.disabled = false;
+        loading.classList.add("hidden");
+      }
+    }
+
+    generateBtn.addEventListener(
+      "click",
+      generateConclusion
+    );
+
+    generateAgainBtn.addEventListener(
+      "click",
+      () => {
+        if (hasGenerated) {
+          generateConclusion();
+        }
+      }
+    );
+
+    copyBtn.addEventListener(
+      "click",
+      async () => {
+        const text =
+          result.textContent?.trim();
+
+        if (!text) return;
+
+        try {
+          await navigator.clipboard.writeText(text);
+
+          const oldText =
+            copyBtn.textContent;
+
+          copyBtn.textContent =
+            "✅ Copied";
+
+          setTimeout(() => {
+            copyBtn.textContent =
+              oldText;
+          }, 1500);
+
+        } catch {
+          showError(
+            "Could not copy the conclusion."
+          );
+        }
+      }
+    );
+
+    clearBtn.addEventListener(
+      "click",
+      () => {
+        result.textContent = "";
+
+        resultContainer.classList.add(
+          "hidden"
+        );
+
+        hideError();
+
+        hasGenerated = false;
+      }
+    );
+  </script>
+</Layout>

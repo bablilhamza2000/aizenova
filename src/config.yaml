@@ -1,0 +1,107 @@
+site:
+  name: AIZENOVA
+  site: "https://aizenova.com"
+  base: "/"
+  trailingSlash: false
+
+  googleSiteVerificationId: "orcPxI47GSa-cRvY11tUe6iGg2IO_RPvnA1q95iEM3M"
+
+metadata:
+  title:
+    default: AIZENOVA
+    template: "%s | AIZENOVA"
+
+  description: "AIZENOVA publishes expert guides, AI tutorials, programming resources, technology news, software reviews, SEO tips, cybersecurity insights, and business guides to help you stay ahead in the digital world."
+
+  keywords:
+    - AI
+    - Artificial Intelligence
+    - ChatGPT
+    - Gemini
+    - Claude AI
+    - Machine Learning
+    - Generative AI
+    - Technology
+    - Programming
+    - Python
+    - JavaScript
+    - Web Development
+    - HTML
+    - CSS
+    - React
+    - Astro
+    - Git
+    - GitHub
+    - API
+    - Cloud Computing
+    - Cybersecurity
+    - SEO
+    - Affiliate Marketing
+    - Business
+    - Digital Marketing
+    - Software Reviews
+    - Tutorials
+    - Tech News
+    - AIZENOVA
+
+  robots:
+    index: true
+    follow: true
+
+  openGraph:
+    site_name: AIZENOVA
+    type: website
+
+    images:
+      - url: "~/assets/images/default.png"
+        width: 1200
+        height: 630
+
+twitter:
+  handle: "@ZENOVAAI"
+  site: "@ZENOVAAI"
+  cardType: summary_large_image
+
+i18n:
+  language: en
+  textDirection: ltr
+
+apps:
+  blog:
+    isEnabled: true
+    postsPerPage: 9
+
+    post:
+      isEnabled: true
+      permalink: "/%slug%"
+      robots:
+        index: true
+
+    list:
+      isEnabled: true
+      pathname: "blog"
+      robots:
+        index: true
+
+    category:
+      isEnabled: true
+      pathname: "category"
+      robots:
+        index: true
+
+    tag:
+      isEnabled: true
+      pathname: "tag"
+      robots:
+        index: true
+
+    isRelatedPostsEnabled: true
+    relatedPostsCount: 6
+
+analytics:
+  vendors:
+    googleAnalytics:
+      id: "G-ML6Z1PQG57"
+
+ui:
+  theme: system

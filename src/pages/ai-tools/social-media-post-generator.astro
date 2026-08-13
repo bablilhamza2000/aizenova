@@ -1,0 +1,713 @@
+---
+import Layout from '../../layouts/Layout.astro';
+
+const pageTitle = 'AI Social Media Post Generator | AIZENOVA';
+const pageDescription =
+  'Generate engaging social media post ideas for different platforms with AIZENOVA.';
+---
+
+<Layout title={pageTitle} description={pageDescription}>
+  <main class="mx-auto max-w-5xl px-6 py-12 text-white">
+
+    <a
+      href="/ai-tools"
+      class="inline-flex items-center gap-2 text-sm text-gray-400 transition hover:text-white"
+    >
+      ← Back to AI Tools
+    </a>
+
+    <header class="mt-10 text-center">
+      <div
+        class="mx-auto mb-5 flex h-16 w-16 items-center justify-center rounded-2xl bg-white/10 text-3xl"
+      >
+        📱
+      </div>
+
+      <h1 class="text-4xl font-bold sm:text-5xl">
+        AI Social Media Post Generator
+      </h1>
+
+      <p class="mx-auto mt-4 max-w-2xl text-gray-400">
+        Create engaging social media posts for Instagram, Facebook, LinkedIn,
+        X, and other platforms.
+      </p>
+    </header>
+
+    <section class="mt-12 grid gap-8 lg:grid-cols-2">
+
+      <!-- INPUT -->
+      <div
+        class="rounded-2xl border border-white/10 bg-white/[0.03] p-6 sm:p-8"
+      >
+        <h2 class="text-xl font-semibold">
+          Post Details
+        </h2>
+
+        <p class="mt-2 text-sm text-gray-500">
+          Add your topic and choose the platform and style.
+        </p>
+
+        <div class="mt-7">
+          <label
+            for="topic"
+            class="mb-2 block text-sm font-medium text-gray-300"
+          >
+            Topic or Idea
+          </label>
+
+          <textarea
+            id="topic"
+            rows="6"
+            placeholder="Example: Launching a new AI productivity tool that helps students save time."
+            class="w-full resize-y rounded-xl border border-white/10 bg-[#111118] px-4 py-3 text-sm leading-7 text-white placeholder-gray-500 outline-none transition focus:border-white/30"
+          ></textarea>
+        </div>
+
+        <div class="mt-5">
+          <label
+            for="platform"
+            class="mb-2 block text-sm font-medium text-gray-300"
+          >
+            Platform
+          </label>
+
+          <select
+            id="platform"
+            class="w-full rounded-xl border border-white/10 bg-[#111118] px-4 py-3 text-sm text-white outline-none focus:border-white/30"
+          >
+            <option value="instagram" selected>
+              Instagram
+            </option>
+
+            <option value="facebook">
+              Facebook
+            </option>
+
+            <option value="linkedin">
+              LinkedIn
+            </option>
+
+            <option value="x">
+              X / Twitter
+            </option>
+
+            <option value="tiktok">
+              TikTok
+            </option>
+          </select>
+        </div>
+
+        <div class="mt-5">
+          <label
+            for="tone"
+            class="mb-2 block text-sm font-medium text-gray-300"
+          >
+            Tone
+          </label>
+
+          <select
+            id="tone"
+            class="w-full rounded-xl border border-white/10 bg-[#111118] px-4 py-3 text-sm text-white outline-none focus:border-white/30"
+          >
+            <option value="engaging" selected>
+              Engaging
+            </option>
+
+            <option value="professional">
+              Professional
+            </option>
+
+            <option value="friendly">
+              Friendly
+            </option>
+
+            <option value="educational">
+              Educational
+            </option>
+
+            <option value="exciting">
+              Exciting
+            </option>
+
+            <option value="minimal">
+              Short & Simple
+            </option>
+          </select>
+        </div>
+
+        <div class="mt-5">
+          <label
+            for="audience"
+            class="mb-2 block text-sm font-medium text-gray-300"
+          >
+            Target Audience
+          </label>
+
+          <input
+            id="audience"
+            type="text"
+            placeholder="Example: Students, entrepreneurs, developers"
+            class="w-full rounded-xl border border-white/10 bg-[#111118] px-4 py-3 text-sm text-white placeholder-gray-500 outline-none transition focus:border-white/30"
+          />
+        </div>
+
+        <div class="mt-5">
+          <label
+            for="cta"
+            class="mb-2 block text-sm font-medium text-gray-300"
+          >
+            Call to Action
+          </label>
+
+          <input
+            id="cta"
+            type="text"
+            placeholder="Example: Try it today!"
+            class="w-full rounded-xl border border-white/10 bg-[#111118] px-4 py-3 text-sm text-white placeholder-gray-500 outline-none transition focus:border-white/30"
+          />
+        </div>
+
+        <div class="mt-8 flex flex-wrap gap-3">
+          <button
+            id="generateBtn"
+            type="button"
+            class="flex-1 rounded-xl bg-white px-6 py-4 font-semibold text-black transition hover:bg-gray-200"
+          >
+            Generate Post
+          </button>
+
+          <button
+            id="clearBtn"
+            type="button"
+            class="rounded-xl border border-white/10 px-6 py-4 text-gray-300 transition hover:bg-white/10"
+          >
+            Clear
+          </button>
+        </div>
+
+        <p
+          id="status"
+          class="mt-4 hidden text-center text-sm text-gray-400"
+        ></p>
+      </div>
+
+      <!-- OUTPUT -->
+      <div
+        class="rounded-2xl border border-white/10 bg-white/[0.03] p-6 sm:p-8 lg:sticky lg:top-8 lg:self-start"
+      >
+        <div class="flex items-center justify-between gap-4">
+          <div>
+            <h2 class="text-xl font-semibold">
+              Generated Post
+            </h2>
+
+            <p class="mt-1 text-sm text-gray-500">
+              Your social media post will appear here.
+            </p>
+          </div>
+
+          <button
+            id="copyBtn"
+            type="button"
+            class="rounded-lg border border-white/10 px-4 py-2 text-sm text-gray-300 transition hover:bg-white/10"
+          >
+            Copy
+          </button>
+        </div>
+
+        <textarea
+          id="output"
+          readonly
+          rows="24"
+          placeholder="Your generated social media post will appear here..."
+          class="mt-6 w-full resize-y rounded-xl border border-white/10 bg-[#111118] px-4 py-4 text-sm leading-7 text-gray-300 outline-none"
+        ></textarea>
+
+        <div class="mt-4 flex items-center justify-between text-xs text-gray-500">
+          <span id="wordCount">
+            0 words
+          </span>
+
+          <span id="charCount">
+            0 characters
+          </span>
+        </div>
+      </div>
+
+    </section>
+
+    <section class="mt-16 max-w-3xl">
+      <h2 class="text-2xl font-bold">
+        Create better social media posts
+      </h2>
+
+      <div class="mt-5 space-y-4 text-sm leading-7 text-gray-400">
+        <p>
+          A good social media post should communicate one clear idea and give
+          the audience a reason to stop, read, and interact.
+        </p>
+
+        <p>
+          Adapt your content to the platform. A LinkedIn post can be more
+          professional, while Instagram and TikTok often benefit from a more
+          conversational and visual style.
+        </p>
+
+        <p>
+          Use the generated post as a starting point and personalize it with
+          your own experience, links, examples, and brand voice.
+        </p>
+      </div>
+    </section>
+
+  </main>
+
+  <script>
+    const $ = (id: string) =>
+      document.getElementById(id);
+
+    const getValue = (id: string) => {
+      const element =
+        document.getElementById(id) as
+          | HTMLInputElement
+          | HTMLTextAreaElement
+          | HTMLSelectElement
+          | null;
+
+      return element?.value.trim() || '';
+    };
+
+    const clean = (text: string) =>
+      text.replace(/\s+/g, ' ').trim();
+
+    function getTone(tone: string) {
+      const tones: Record<
+        string,
+        {
+          intro: string;
+          ending: string;
+        }
+      > = {
+        engaging: {
+          intro:
+            'Here is something worth paying attention to:',
+          ending:
+            'What do you think about this?',
+        },
+
+        professional: {
+          intro:
+            'Here is an important idea worth considering:',
+          ending:
+            'What is your perspective on this?',
+        },
+
+        friendly: {
+          intro:
+            'Here is something I wanted to share with you:',
+          ending:
+            'What do you think?',
+        },
+
+        educational: {
+          intro:
+            'Let’s break this idea down:',
+          ending:
+            'What would you add to this?',
+        },
+
+        exciting: {
+          intro:
+            'Big idea alert! 🚀',
+          ending:
+            'Would you try this?',
+        },
+
+        minimal: {
+          intro:
+            '',
+          ending:
+            '',
+        },
+      };
+
+      return tones[tone] || tones.engaging;
+    }
+
+    function createHashtags(
+      topic: string,
+      platform: string
+    ) {
+      const words = topic
+        .toLowerCase()
+        .replace(/[^\p{L}\p{N}\s]/gu, '')
+        .split(/\s+/)
+        .filter(
+          (word) =>
+            word.length > 3
+        )
+        .slice(0, 5);
+
+      const baseTags = [
+        'SocialMedia',
+        'ContentCreator',
+        'DigitalMarketing',
+      ];
+
+      const topicTags = words.map(
+        (word) =>
+          word.charAt(0).toUpperCase() +
+          word.slice(1)
+      );
+
+      if (platform === 'linkedin') {
+        return [
+          ...new Set([
+            ...topicTags,
+            'LinkedIn',
+            'ProfessionalGrowth',
+            'Business',
+          ]),
+        ]
+          .map(
+            (tag) => `#${tag}`
+          )
+          .join(' ');
+      }
+
+      if (platform === 'x') {
+        return [
+          ...new Set([
+            ...topicTags,
+            'Tech',
+            'Business',
+          ]),
+        ]
+          .slice(0, 6)
+          .map(
+            (tag) => `#${tag}`
+          )
+          .join(' ');
+      }
+
+      return [
+        ...new Set([
+          ...topicTags,
+          ...baseTags,
+        ]),
+      ]
+        .slice(0, 10)
+        .map(
+          (tag) => `#${tag}`
+        )
+        .join(' ');
+    }
+
+    function createPost(
+      topic: string,
+      platform: string,
+      tone: string,
+      audience: string,
+      cta: string
+    ) {
+      const subject =
+        clean(topic);
+
+      const target =
+        clean(audience) ||
+        'our audience';
+
+      const action =
+        clean(cta);
+
+      const toneData =
+        getTone(tone);
+
+      const hashtags =
+        createHashtags(
+          subject,
+          platform
+        );
+
+      if (platform === 'linkedin') {
+        return [
+          toneData.intro,
+          '',
+          `Today I want to talk about ${subject}.`,
+          '',
+          `This is especially relevant for ${target}.`,
+          '',
+          'The key takeaway is simple: focus on the problem, understand the audience, and turn the idea into something practical.',
+          '',
+          'Small improvements and consistent action can create meaningful results over time.',
+          '',
+          action
+            ? `👉 ${action}`
+            : 'What has been your experience with this?',
+          '',
+          hashtags,
+        ]
+          .filter(
+            (line) => line !== undefined
+          )
+          .join('\n');
+      }
+
+      if (platform === 'x') {
+        return [
+          toneData.intro,
+          '',
+          `${subject}.`,
+          '',
+          `A simple idea, but an important one for ${target}.`,
+          '',
+          action
+            ? `👉 ${action}`
+            : toneData.ending,
+          '',
+          hashtags,
+        ]
+          .filter(
+            Boolean
+          )
+          .join('\n');
+      }
+
+      if (platform === 'tiktok') {
+        return [
+          toneData.intro,
+          '',
+          `🔥 ${subject}`,
+          '',
+          `If you're interested in this, keep watching and save this post for later.`,
+          '',
+          `This is especially useful for ${target}.`,
+          '',
+          action
+            ? `👉 ${action}`
+            : 'Follow for more useful content!',
+          '',
+          hashtags,
+        ]
+          .filter(
+            Boolean
+          )
+          .join('\n');
+      }
+
+      if (platform === 'facebook') {
+        return [
+          toneData.intro,
+          '',
+          `Today we're talking about ${subject}.`,
+          '',
+          `This can be especially useful for ${target}.`,
+          '',
+          'The main idea is to keep things simple, focus on what actually works, and take consistent action.',
+          '',
+          action
+            ? `👉 ${action}`
+            : 'If you found this useful, share it with someone who might benefit from it.',
+          '',
+          toneData.ending,
+          '',
+          hashtags,
+        ]
+          .filter(
+            Boolean
+          )
+          .join('\n');
+      }
+
+      return [
+        toneData.intro,
+        '',
+        `✨ ${subject}`,
+        '',
+        `If you're interested in this topic or you're part of ${target}, this is something worth knowing.`,
+        '',
+        'The key is to focus on practical value and make the next step simple.',
+        '',
+        action
+          ? `👉 ${action}`
+          : 'Save this post and come back to it later.',
+        '',
+        toneData.ending,
+        '',
+        hashtags,
+      ]
+        .filter(
+          Boolean
+        )
+        .join('\n');
+    }
+
+    function updateStats(
+      text: string
+    ) {
+      const words =
+        text.trim()
+          ? text.trim().split(/\s+/).length
+          : 0;
+
+      const characters =
+        text.length;
+
+      $('wordCount')!.textContent =
+        `${words} ${words === 1 ? 'word' : 'words'}`;
+
+      $('charCount')!.textContent =
+        `${characters} characters`;
+    }
+
+    function showStatus(
+      message: string
+    ) {
+      const status =
+        $('status')!;
+
+      status.textContent =
+        message;
+
+      status.classList.remove(
+        'hidden'
+      );
+
+      setTimeout(() => {
+        status.classList.add(
+          'hidden'
+        );
+      }, 2500);
+    }
+
+    $('generateBtn')!.addEventListener(
+      'click',
+      () => {
+        const topic =
+          getValue('topic');
+
+        if (!topic) {
+          showStatus(
+            'Please enter your topic first.'
+          );
+
+          return;
+        }
+
+        const platform =
+          getValue('platform');
+
+        const tone =
+          getValue('tone');
+
+        const audience =
+          getValue('audience');
+
+        const cta =
+          getValue('cta');
+
+        const post =
+          createPost(
+            topic,
+            platform,
+            tone,
+            audience,
+            cta
+          );
+
+        const output =
+          $('output') as HTMLTextAreaElement;
+
+        output.value =
+          post;
+
+        updateStats(
+          post
+        );
+
+        showStatus(
+          'Social media post generated successfully.'
+        );
+      }
+    );
+
+    $('copyBtn')!.addEventListener(
+      'click',
+      async () => {
+        const output =
+          (
+            $('output') as HTMLTextAreaElement
+          ).value.trim();
+
+        if (!output) {
+          showStatus(
+            'Generate a post first.'
+          );
+
+          return;
+        }
+
+        try {
+          await navigator.clipboard.writeText(
+            output
+          );
+
+          const button =
+            $('copyBtn')!;
+
+          const original =
+            button.textContent;
+
+          button.textContent =
+            'Copied!';
+
+          setTimeout(() => {
+            button.textContent =
+              original;
+          }, 1800);
+        } catch {
+          showStatus(
+            'Unable to copy automatically.'
+          );
+        }
+      }
+    );
+
+    $('clearBtn')!.addEventListener(
+      'click',
+      () => {
+        (
+          $('topic') as HTMLTextAreaElement
+        ).value = '';
+
+        (
+          $('platform') as HTMLSelectElement
+        ).value = 'instagram';
+
+        (
+          $('tone') as HTMLSelectElement
+        ).value = 'engaging';
+
+        (
+          $('audience') as HTMLInputElement
+        ).value = '';
+
+        (
+          $('cta') as HTMLInputElement
+        ).value = '';
+
+        (
+          $('output') as HTMLTextAreaElement
+        ).value = '';
+
+        updateStats('');
+
+        $('status')!.classList.add(
+          'hidden'
+        );
+      }
+    );
+
+    updateStats('');
+  </script>
+</Layout>

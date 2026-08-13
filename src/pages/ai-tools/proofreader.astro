@@ -1,0 +1,698 @@
+---
+import Layout from '../../layouts/Layout.astro';
+
+const pageTitle = 'AI Proofreader | AIZENOVA';
+const pageDescription =
+  'Check grammar, spelling, punctuation, clarity, and readability with the AIZENOVA AI Proofreader.';
+---
+
+<Layout title={pageTitle} description={pageDescription}>
+  <main class="mx-auto max-w-6xl px-6 py-12 text-white">
+
+    <a
+      href="/ai-tools"
+      class="inline-flex items-center gap-2 text-sm text-gray-400 transition hover:text-white"
+    >
+      ← Back to AI Tools
+    </a>
+
+    <header class="mt-10 text-center">
+      <div
+        class="mx-auto mb-5 flex h-16 w-16 items-center justify-center rounded-2xl bg-white/10 text-3xl"
+      >
+        ✍️
+      </div>
+
+      <h1 class="text-4xl font-bold sm:text-5xl">
+        AI Proofreader
+      </h1>
+
+      <p class="mx-auto mt-4 max-w-2xl text-gray-400">
+        Improve grammar, spelling, punctuation, clarity, and readability in
+        your writing.
+      </p>
+    </header>
+
+    <section class="mt-12 grid gap-8 lg:grid-cols-2">
+
+      <!-- INPUT -->
+      <div
+        class="rounded-2xl border border-white/10 bg-white/[0.03] p-6 sm:p-8"
+      >
+        <h2 class="text-xl font-semibold">
+          Your Text
+        </h2>
+
+        <p class="mt-2 text-sm text-gray-500">
+          Paste or type the text you want to proofread.
+        </p>
+
+        <div class="mt-7">
+          <label
+            for="textInput"
+            class="mb-2 block text-sm font-medium text-gray-300"
+          >
+            Text to proofread
+          </label>
+
+          <textarea
+            id="textInput"
+            rows="18"
+            placeholder="Paste your article, email, essay, paragraph, or any other text here..."
+            class="w-full resize-y rounded-xl border border-white/10 bg-[#111118] px-4 py-4 text-sm leading-7 text-white placeholder-gray-500 outline-none transition focus:border-white/30"
+          ></textarea>
+        </div>
+
+        <div class="mt-5">
+          <label
+            for="level"
+            class="mb-2 block text-sm font-medium text-gray-300"
+          >
+            Writing Level
+          </label>
+
+          <select
+            id="level"
+            class="w-full rounded-xl border border-white/10 bg-[#111118] px-4 py-3 text-sm text-white outline-none focus:border-white/30"
+          >
+            <option value="professional" selected>
+              Professional
+            </option>
+
+            <option value="academic">
+              Academic
+            </option>
+
+            <option value="simple">
+              Simple & Clear
+            </option>
+
+            <option value="casual">
+              Casual
+            </option>
+          </select>
+        </div>
+
+        <div class="mt-5">
+          <label
+            for="focus"
+            class="mb-2 block text-sm font-medium text-gray-300"
+          >
+            Main Focus
+          </label>
+
+          <select
+            id="focus"
+            class="w-full rounded-xl border border-white/10 bg-[#111118] px-4 py-3 text-sm text-white outline-none focus:border-white/30"
+          >
+            <option value="grammar" selected>
+              Grammar & Spelling
+            </option>
+
+            <option value="clarity">
+              Clarity
+            </option>
+
+            <option value="readability">
+              Readability
+            </option>
+
+            <option value="concise">
+              Make It More Concise
+            </option>
+
+            <option value="all">
+              Everything
+            </option>
+          </select>
+        </div>
+
+        <div class="mt-8 flex flex-wrap gap-3">
+          <button
+            id="proofreadBtn"
+            type="button"
+            class="flex-1 rounded-xl bg-white px-6 py-4 font-semibold text-black transition hover:bg-gray-200"
+          >
+            Proofread Text
+          </button>
+
+          <button
+            id="clearBtn"
+            type="button"
+            class="rounded-xl border border-white/10 px-6 py-4 text-gray-300 transition hover:bg-white/10"
+          >
+            Clear
+          </button>
+        </div>
+
+        <p
+          id="status"
+          class="mt-4 hidden text-center text-sm text-gray-400"
+        ></p>
+      </div>
+
+      <!-- OUTPUT -->
+      <div
+        class="rounded-2xl border border-white/10 bg-white/[0.03] p-6 sm:p-8 lg:sticky lg:top-8 lg:self-start"
+      >
+        <div class="flex items-center justify-between gap-4">
+          <div>
+            <h2 class="text-xl font-semibold">
+              Improved Text
+            </h2>
+
+            <p class="mt-1 text-sm text-gray-500">
+              Your corrected version will appear here.
+            </p>
+          </div>
+
+          <button
+            id="copyBtn"
+            type="button"
+            class="rounded-lg border border-white/10 px-4 py-2 text-sm text-gray-300 transition hover:bg-white/10"
+          >
+            Copy
+          </button>
+        </div>
+
+        <textarea
+          id="output"
+          readonly
+          rows="30"
+          placeholder="Your proofread text will appear here..."
+          class="mt-6 w-full resize-y rounded-xl border border-white/10 bg-[#111118] px-4 py-4 text-sm leading-7 text-gray-300 outline-none"
+        ></textarea>
+
+        <div class="mt-4 grid grid-cols-2 gap-3 text-xs text-gray-500">
+          <div class="rounded-lg border border-white/10 bg-white/[0.02] p-3">
+            <span class="block">
+              Original
+            </span>
+
+            <strong
+              id="originalWords"
+              class="mt-1 block text-sm text-gray-300"
+            >
+              0 words
+            </strong>
+          </div>
+
+          <div class="rounded-lg border border-white/10 bg-white/[0.02] p-3">
+            <span class="block">
+              Improved
+            </span>
+
+            <strong
+              id="improvedWords"
+              class="mt-1 block text-sm text-gray-300"
+            >
+              0 words
+            </strong>
+          </div>
+        </div>
+      </div>
+
+    </section>
+
+    <section class="mt-16 max-w-4xl">
+      <h2 class="text-2xl font-bold">
+        What does the AI Proofreader check?
+      </h2>
+
+      <div class="mt-6 grid gap-4 sm:grid-cols-2">
+
+        <div class="rounded-xl border border-white/10 bg-white/[0.03] p-5">
+          <div class="text-2xl">✓</div>
+
+          <h3 class="mt-3 font-semibold">
+            Grammar
+          </h3>
+
+          <p class="mt-2 text-sm leading-6 text-gray-500">
+            Identify common grammar problems and improve sentence structure.
+          </p>
+        </div>
+
+        <div class="rounded-xl border border-white/10 bg-white/[0.03] p-5">
+          <div class="text-2xl">🔤</div>
+
+          <h3 class="mt-3 font-semibold">
+            Spelling
+          </h3>
+
+          <p class="mt-2 text-sm leading-6 text-gray-500">
+            Catch obvious spelling mistakes and common typing errors.
+          </p>
+        </div>
+
+        <div class="rounded-xl border border-white/10 bg-white/[0.03] p-5">
+          <div class="text-2xl">💡</div>
+
+          <h3 class="mt-3 font-semibold">
+            Clarity
+          </h3>
+
+          <p class="mt-2 text-sm leading-6 text-gray-500">
+            Make sentences easier to understand without changing the main
+            meaning.
+          </p>
+        </div>
+
+        <div class="rounded-xl border border-white/10 bg-white/[0.03] p-5">
+          <div class="text-2xl">📖</div>
+
+          <h3 class="mt-3 font-semibold">
+            Readability
+          </h3>
+
+          <p class="mt-2 text-sm leading-6 text-gray-500">
+            Improve sentence flow and make the text more comfortable to read.
+          </p>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <script>
+    const $ = (id: string) =>
+      document.getElementById(id);
+
+    const getValue = (id: string) => {
+      const element =
+        document.getElementById(id) as
+          | HTMLInputElement
+          | HTMLTextAreaElement
+          | HTMLSelectElement
+          | null;
+
+      return element?.value.trim() || '';
+    };
+
+    function countWords(text: string) {
+      return text.trim()
+        ? text.trim().split(/\s+/).length
+        : 0;
+    }
+
+    function cleanSpaces(text: string) {
+      return text
+        .replace(/[ \t]+/g, ' ')
+        .replace(/\n{3,}/g, '\n\n')
+        .trim();
+    }
+
+    function capitalizeSentences(text: string) {
+      return text.replace(
+        /(^|[.!?]\s+)([a-z])/g,
+        (_match, prefix, letter) =>
+          `${prefix}${letter.toUpperCase()}`
+      );
+    }
+
+    function fixCommonGrammar(text: string) {
+      let result = text;
+
+      const replacements: [RegExp, string][] = [
+        [/\bi am\b/gi, 'I am'],
+        [/\bi have\b/gi, 'I have'],
+        [/\bi will\b/gi, 'I will'],
+        [/\bi can\b/gi, 'I can'],
+        [/\bi think\b/gi, 'I think'],
+        [/\bi dont\b/gi, "I don't"],
+        [/\bi didnt\b/gi, "I didn't"],
+        [/\bi cant\b/gi, "I can't"],
+        [/\bi wont\b/gi, "I won't"],
+        [/\bdoesnt\b/gi, "doesn't"],
+        [/\bdont\b/gi, "don't"],
+        [/\bdidnt\b/gi, "didn't"],
+        [/\bcant\b/gi, "can't"],
+        [/\bwont\b/gi, "won't"],
+        [/\bdoesnt\b/gi, "doesn't"],
+        [/\bisnt\b/gi, "isn't"],
+        [/\bwasnt\b/gi, "wasn't"],
+        [/\bwerent\b/gi, "weren't"],
+        [/\bshouldnt\b/gi, "shouldn't"],
+        [/\bcouldnt\b/gi, "couldn't"],
+        [/\bwouldnt\b/gi, "wouldn't"],
+        [/\bthats\b/gi, "that's"],
+        [/\bwhats\b/gi, "what's"],
+        [/\bits\b/gi, "it's"],
+        [/\bim\b/gi, "I'm"],
+        [/\bive\b/gi, "I've"],
+        [/\bive got\b/gi, "I've got"],
+        [/\bthere is\b/gi, 'there is'],
+        [/\bthere are\b/gi, 'there are'],
+      ];
+
+      replacements.forEach(
+        ([pattern, replacement]) => {
+          result =
+            result.replace(
+              pattern,
+              replacement
+            );
+        }
+      );
+
+      return result;
+    }
+
+    function fixPunctuation(text: string) {
+      let result = text;
+
+      result =
+        result
+          .replace(/\s+([,.!?;:])/g, '$1')
+          .replace(/([,.!?;:])([A-Za-z])/g, '$1 $2')
+          .replace(/\.{4,}/g, '...')
+          .replace(/!{2,}/g, '!')
+          .replace(/\?{2,}/g, '?');
+
+      return result;
+    }
+
+    function improveConciseness(text: string) {
+      let result = text;
+
+      const replacements: [RegExp, string][] = [
+        [
+          /\bin order to\b/gi,
+          'to',
+        ],
+        [
+          /\bdue to the fact that\b/gi,
+          'because',
+        ],
+        [
+          /\bat this point in time\b/gi,
+          'now',
+        ],
+        [
+          /\bfor the purpose of\b/gi,
+          'for',
+        ],
+        [
+          /\ba large number of\b/gi,
+          'many',
+        ],
+        [
+          /\ba small number of\b/gi,
+          'few',
+        ],
+        [
+          /\bin the event that\b/gi,
+          'if',
+        ],
+        [
+          /\bhas the ability to\b/gi,
+          'can',
+        ],
+        [
+          /\bmake a decision\b/gi,
+          'decide',
+        ],
+        [
+          /\bmake an improvement\b/gi,
+          'improve',
+        ],
+        [
+          /\bvery important\b/gi,
+          'important',
+        ],
+        [
+          /\bvery unique\b/gi,
+          'unique',
+        ],
+      ];
+
+      replacements.forEach(
+        ([pattern, replacement]) => {
+          result =
+            result.replace(
+              pattern,
+              replacement
+            );
+        }
+      );
+
+      return result;
+    }
+
+    function improveReadability(text: string) {
+      let result =
+        text
+          .replace(/\s+/g, ' ')
+          .replace(/\s+([,.!?])/g, '$1')
+          .trim();
+
+      result =
+        result.replace(
+          /([.!?])\s+/g,
+          '$1\n\n'
+        );
+
+      return result;
+    }
+
+    function improveProfessionalTone(text: string) {
+      let result = text;
+
+      const replacements: [RegExp, string][] = [
+        [
+          /\bawesome\b/gi,
+          'excellent',
+        ],
+        [
+          /\bsuper cool\b/gi,
+          'highly useful',
+        ],
+        [
+          /\bstuff\b/gi,
+          'information',
+        ],
+        [
+          /\ba lot of\b/gi,
+          'many',
+        ],
+        [
+          /\bkind of\b/gi,
+          'somewhat',
+        ],
+        [
+          /\bguys\b/gi,
+          'everyone',
+        ],
+      ];
+
+      replacements.forEach(
+        ([pattern, replacement]) => {
+          result =
+            result.replace(
+              pattern,
+              replacement
+            );
+        }
+      );
+
+      return result;
+    }
+
+    function proofread(
+      original: string,
+      level: string,
+      focus: string
+    ) {
+      let result =
+        cleanSpaces(original);
+
+      if (
+        focus === 'grammar' ||
+        focus === 'all'
+      ) {
+        result =
+          fixCommonGrammar(result);
+
+        result =
+          capitalizeSentences(result);
+      }
+
+      if (
+        focus === 'clarity' ||
+        focus === 'all'
+      ) {
+        result =
+          cleanSpaces(result);
+      }
+
+      if (
+        focus === 'readability' ||
+        focus === 'all'
+      ) {
+        result =
+          improveReadability(result);
+      }
+
+      if (
+        focus === 'concise' ||
+        focus === 'all'
+      ) {
+        result =
+          improveConciseness(result);
+      }
+
+      if (
+        level === 'professional'
+      ) {
+        result =
+          improveProfessionalTone(result);
+      }
+
+      if (
+        level === 'simple'
+      ) {
+        result =
+          improveConciseness(result);
+      }
+
+      return result;
+    }
+
+    function showStatus(message: string) {
+      const status =
+        $('status')!;
+
+      status.textContent =
+        message;
+
+      status.classList.remove(
+        'hidden'
+      );
+
+      setTimeout(() => {
+        status.classList.add(
+          'hidden'
+        );
+      }, 2500);
+    }
+
+    $('proofreadBtn')!.addEventListener(
+      'click',
+      () => {
+        const original =
+          getValue('textInput');
+
+        if (!original) {
+          showStatus(
+            'Please enter some text first.'
+          );
+
+          return;
+        }
+
+        const level =
+          getValue('level');
+
+        const focus =
+          getValue('focus');
+
+        const improved =
+          proofread(
+            original,
+            level,
+            focus
+          );
+
+        const output =
+          $('output') as HTMLTextAreaElement;
+
+        output.value =
+          improved;
+
+        $('originalWords')!.textContent =
+          `${countWords(original)} words`;
+
+        $('improvedWords')!.textContent =
+          `${countWords(improved)} words`;
+
+        showStatus(
+          'Proofreading completed.'
+        );
+      }
+    );
+
+    $('copyBtn')!.addEventListener(
+      'click',
+      async () => {
+        const output =
+          (
+            $('output') as HTMLTextAreaElement
+          ).value.trim();
+
+        if (!output) {
+          showStatus(
+            'Proofread some text first.'
+          );
+
+          return;
+        }
+
+        try {
+          await navigator.clipboard.writeText(
+            output
+          );
+
+          const button =
+            $('copyBtn')!;
+
+          const original =
+            button.textContent;
+
+          button.textContent =
+            'Copied!';
+
+          setTimeout(() => {
+            button.textContent =
+              original;
+          }, 1800);
+        } catch {
+          showStatus(
+            'Unable to copy automatically.'
+          );
+        }
+      }
+    );
+
+    $('clearBtn')!.addEventListener(
+      'click',
+      () => {
+        (
+          $('textInput') as HTMLTextAreaElement
+        ).value = '';
+
+        (
+          $('level') as HTMLSelectElement
+        ).value = 'professional';
+
+        (
+          $('focus') as HTMLSelectElement
+        ).value = 'grammar';
+
+        (
+          $('output') as HTMLTextAreaElement
+        ).value = '';
+
+        $('originalWords')!.textContent =
+          '0 words';
+
+        $('improvedWords')!.textContent =
+          '0 words';
+
+        $('status')!.classList.add(
+          'hidden'
+        );
+      }
+    );
+  </script>
+</Layout>

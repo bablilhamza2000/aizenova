@@ -1,0 +1,98 @@
+---
+import Layout from '~/layouts/PageLayout.astro';
+
+import Hero from '~/components/widgets/Hero.astro';
+import Features3 from '~/components/widgets/Features3.astro';
+import Stats from '~/components/widgets/Stats.astro';
+
+const metadata = {
+  title: 'About AIZENOVA',
+};
+---
+
+<Layout metadata={metadata}>
+  <Hero
+    tagline="About AIZENOVA"
+    image={{
+      src: '~/assets/images/hero-image.png',
+      alt: 'AIZENOVA',
+    }}
+  >
+    <Fragment slot="title">
+      Empowering the Future with <span class="text-accent">AI & Technology</span>
+    </Fragment>
+
+    <Fragment slot="subtitle">
+      AIZENOVA is a technology blog dedicated to Artificial Intelligence,
+      Programming, Technology, Cybersecurity and Digital Innovation.
+      Our mission is to provide high-quality tutorials, practical guides,
+      industry news and valuable resources for developers, students and tech enthusiasts.
+    </Fragment>
+  </Hero>
+
+  <Stats
+    title="AIZENOVA in Numbers"
+    stats={[
+      {
+        title: 'Categories',
+        amount: '8',
+      },
+      {
+        title: 'Topics',
+        amount: '100+',
+      },
+      {
+        title: 'Tutorials',
+        amount: 'Weekly',
+      },
+      {
+        title: 'Mission',
+        amount: 'Learn',
+      },
+    ]}
+  />
+
+  <Features3
+    title="What We Cover"
+    subtitle="Everything you need to stay ahead in technology."
+    columns={3}
+    items={[
+      {
+        title: 'Artificial Intelligence',
+        description:
+          'Latest AI tools, ChatGPT, automation and machine learning.',
+        icon: 'tabler:brain',
+      },
+      {
+        title: 'Programming',
+        description:
+          'Python, JavaScript, React, Astro, Web Development and coding tutorials.',
+        icon: 'tabler:code',
+      },
+      {
+        title: 'Technology',
+        description:
+          'Tech news, gadgets, software and digital innovation.',
+        icon: 'tabler:cpu',
+      },
+      {
+        title: 'Cybersecurity',
+        description:
+          'Security tips, ethical hacking and online privacy.',
+        icon: 'tabler:shield-lock',
+      },
+      {
+        title: 'Business',
+        description:
+          'Digital business, freelancing and entrepreneurship.',
+        icon: 'tabler:briefcase',
+      },
+      {
+        title: 'SEO & Marketing',
+        description:
+          'Search Engine Optimization and digital marketing strategies.',
+        icon: 'tabler:search',
+      },
+    ]}
+  />
+</Layout>

@@ -1,0 +1,632 @@
+---
+import Layout from '../../layouts/Layout.astro';
+
+const pageTitle = 'AI LinkedIn Post Generator | AIZENOVA';
+const pageDescription =
+  'Create professional and engaging LinkedIn posts with AIZENOVA.';
+---
+
+<Layout title={pageTitle} description={pageDescription}>
+  <main class="mx-auto max-w-5xl px-6 py-12 text-white">
+
+    <a
+      href="/ai-tools"
+      class="inline-flex items-center gap-2 text-sm text-gray-400 transition hover:text-white"
+    >
+      ← Back to AI Tools
+    </a>
+
+    <header class="mt-10 text-center">
+      <div
+        class="mx-auto mb-5 flex h-16 w-16 items-center justify-center rounded-2xl bg-white/10 text-3xl"
+      >
+        💼
+      </div>
+
+      <h1 class="text-4xl font-bold sm:text-5xl">
+        AI LinkedIn Post Generator
+      </h1>
+
+      <p class="mx-auto mt-4 max-w-2xl text-gray-400">
+        Generate professional LinkedIn posts for your personal brand,
+        business, career, and industry insights.
+      </p>
+    </header>
+
+    <section class="mt-12 grid gap-8 lg:grid-cols-2">
+
+      <!-- INPUT -->
+      <div
+        class="rounded-2xl border border-white/10 bg-white/[0.03] p-6 sm:p-8"
+      >
+        <h2 class="text-xl font-semibold">
+          Post Details
+        </h2>
+
+        <p class="mt-2 text-sm text-gray-500">
+          Add your idea and customize the LinkedIn post.
+        </p>
+
+        <div class="mt-7">
+          <label
+            for="topic"
+            class="mb-2 block text-sm font-medium text-gray-300"
+          >
+            Topic or Idea
+          </label>
+
+          <textarea
+            id="topic"
+            rows="6"
+            placeholder="Example: What I learned after building my first SaaS product"
+            class="w-full resize-y rounded-xl border border-white/10 bg-[#111118] px-4 py-3 text-sm leading-7 text-white placeholder-gray-500 outline-none transition focus:border-white/30"
+          ></textarea>
+        </div>
+
+        <div class="mt-5">
+          <label
+            for="audience"
+            class="mb-2 block text-sm font-medium text-gray-300"
+          >
+            Target Audience
+          </label>
+
+          <input
+            id="audience"
+            type="text"
+            placeholder="Example: Entrepreneurs, developers, recruiters"
+            class="w-full rounded-xl border border-white/10 bg-[#111118] px-4 py-3 text-sm text-white placeholder-gray-500 outline-none transition focus:border-white/30"
+          />
+        </div>
+
+        <div class="mt-5">
+          <label
+            for="tone"
+            class="mb-2 block text-sm font-medium text-gray-300"
+          >
+            Tone
+          </label>
+
+          <select
+            id="tone"
+            class="w-full rounded-xl border border-white/10 bg-[#111118] px-4 py-3 text-sm text-white outline-none focus:border-white/30"
+          >
+            <option value="professional" selected>
+              Professional
+            </option>
+
+            <option value="personal">
+              Personal
+            </option>
+
+            <option value="thoughtful">
+              Thought Leadership
+            </option>
+
+            <option value="motivational">
+              Motivational
+            </option>
+
+            <option value="educational">
+              Educational
+            </option>
+
+            <option value="storytelling">
+              Storytelling
+            </option>
+          </select>
+        </div>
+
+        <div class="mt-5">
+          <label
+            for="length"
+            class="mb-2 block text-sm font-medium text-gray-300"
+          >
+            Post Length
+          </label>
+
+          <select
+            id="length"
+            class="w-full rounded-xl border border-white/10 bg-[#111118] px-4 py-3 text-sm text-white outline-none focus:border-white/30"
+          >
+            <option value="short">
+              Short
+            </option>
+
+            <option value="medium" selected>
+              Medium
+            </option>
+
+            <option value="long">
+              Long
+            </option>
+          </select>
+        </div>
+
+        <div class="mt-5">
+          <label
+            for="cta"
+            class="mb-2 block text-sm font-medium text-gray-300"
+          >
+            Call to Action
+          </label>
+
+          <input
+            id="cta"
+            type="text"
+            placeholder="Example: What has been your experience?"
+            class="w-full rounded-xl border border-white/10 bg-[#111118] px-4 py-3 text-sm text-white placeholder-gray-500 outline-none transition focus:border-white/30"
+          />
+        </div>
+
+        <div class="mt-8 flex flex-wrap gap-3">
+          <button
+            id="generateBtn"
+            type="button"
+            class="flex-1 rounded-xl bg-white px-6 py-4 font-semibold text-black transition hover:bg-gray-200"
+          >
+            Generate Post
+          </button>
+
+          <button
+            id="clearBtn"
+            type="button"
+            class="rounded-xl border border-white/10 px-6 py-4 text-gray-300 transition hover:bg-white/10"
+          >
+            Clear
+          </button>
+        </div>
+
+        <p
+          id="status"
+          class="mt-4 hidden text-center text-sm text-gray-400"
+        ></p>
+      </div>
+
+      <!-- OUTPUT -->
+      <div
+        class="rounded-2xl border border-white/10 bg-white/[0.03] p-6 sm:p-8 lg:sticky lg:top-8 lg:self-start"
+      >
+        <div class="flex items-center justify-between gap-4">
+          <div>
+            <h2 class="text-xl font-semibold">
+              Generated LinkedIn Post
+            </h2>
+
+            <p class="mt-1 text-sm text-gray-500">
+              Your post will appear here.
+            </p>
+          </div>
+
+          <button
+            id="copyBtn"
+            type="button"
+            class="rounded-lg border border-white/10 px-4 py-2 text-sm text-gray-300 transition hover:bg-white/10"
+          >
+            Copy
+          </button>
+        </div>
+
+        <textarea
+          id="output"
+          readonly
+          rows="26"
+          placeholder="Your LinkedIn post will appear here..."
+          class="mt-6 w-full resize-y rounded-xl border border-white/10 bg-[#111118] px-4 py-4 text-sm leading-7 text-gray-300 outline-none"
+        ></textarea>
+
+        <div class="mt-4 flex items-center justify-between text-xs text-gray-500">
+          <span id="wordCount">
+            0 words
+          </span>
+
+          <span id="charCount">
+            0 characters
+          </span>
+        </div>
+      </div>
+
+    </section>
+
+    <section class="mt-16 max-w-3xl">
+      <h2 class="text-2xl font-bold">
+        Tips for better LinkedIn posts
+      </h2>
+
+      <div class="mt-6 grid gap-4 sm:grid-cols-2">
+
+        <div class="rounded-xl border border-white/10 bg-white/[0.03] p-5">
+          <div class="text-2xl">🎯</div>
+
+          <h3 class="mt-3 font-semibold">
+            Start with a strong hook
+          </h3>
+
+          <p class="mt-2 text-sm leading-6 text-gray-500">
+            The first few lines should make people want to continue reading.
+          </p>
+        </div>
+
+        <div class="rounded-xl border border-white/10 bg-white/[0.03] p-5">
+          <div class="text-2xl">💡</div>
+
+          <h3 class="mt-3 font-semibold">
+            Share useful insight
+          </h3>
+
+          <p class="mt-2 text-sm leading-6 text-gray-500">
+            Give readers a practical lesson, observation, or idea they can use.
+          </p>
+        </div>
+
+        <div class="rounded-xl border border-white/10 bg-white/[0.03] p-5">
+          <div class="text-2xl">📖</div>
+
+          <h3 class="mt-3 font-semibold">
+            Tell a real story
+          </h3>
+
+          <p class="mt-2 text-sm leading-6 text-gray-500">
+            Personal experiences can make professional content more memorable.
+          </p>
+        </div>
+
+        <div class="rounded-xl border border-white/10 bg-white/[0.03] p-5">
+          <div class="text-2xl">💬</div>
+
+          <h3 class="mt-3 font-semibold">
+            Invite discussion
+          </h3>
+
+          <p class="mt-2 text-sm leading-6 text-gray-500">
+            End with a relevant question to encourage meaningful conversations.
+          </p>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <script>
+    const $ = (id: string) =>
+      document.getElementById(id);
+
+    const getValue = (id: string) => {
+      const element =
+        document.getElementById(id) as
+          | HTMLInputElement
+          | HTMLTextAreaElement
+          | HTMLSelectElement
+          | null;
+
+      return element?.value.trim() || '';
+    };
+
+    const clean = (text: string) =>
+      text.replace(/\s+/g, ' ').trim();
+
+    function getTone(tone: string) {
+      const tones: Record<
+        string,
+        {
+          opening: string;
+          lesson: string;
+        }
+      > = {
+        professional: {
+          opening:
+            'One lesson I have learned recently:',
+          lesson:
+            'The most important takeaway is that consistent execution matters more than simply having a good idea.',
+        },
+
+        personal: {
+          opening:
+            'I have been thinking about this a lot lately.',
+          lesson:
+            'What surprised me most was how much I learned from the process itself.',
+        },
+
+        thoughtful: {
+          opening:
+            'Here is something I believe deserves more attention:',
+          lesson:
+            'The deeper lesson is that progress often comes from questioning assumptions and improving the process.',
+        },
+
+        motivational: {
+          opening:
+            'A reminder I needed to hear myself:',
+          lesson:
+            'Progress rarely happens overnight. It comes from showing up, learning, and continuing even when results are slow.',
+        },
+
+        educational: {
+          opening:
+            'Here is a simple lesson that can make a big difference:',
+          lesson:
+            'The key is to understand the fundamentals first, then apply them consistently in real situations.',
+        },
+
+        storytelling: {
+          opening:
+            'A few months ago, I would have approached this completely differently.',
+          lesson:
+            'Looking back, the biggest lesson was not the result. It was what the process taught me.',
+        },
+      };
+
+      return tones[tone] || tones.professional;
+    }
+
+    function createHashtags(topic: string) {
+      const words =
+        topic
+          .toLowerCase()
+          .replace(/[^\p{L}\p{N}\s]/gu, '')
+          .split(/\s+/)
+          .filter(
+            (word) => word.length > 4
+          )
+          .slice(0, 4);
+
+      const tags = [
+        ...words,
+        'LinkedIn',
+        'ProfessionalGrowth',
+        'Career',
+      ];
+
+      return [
+        ...new Set(tags),
+      ]
+        .slice(0, 7)
+        .map(
+          (tag) =>
+            `#${tag.charAt(0).toUpperCase()}${tag.slice(1)}`
+        )
+        .join(' ');
+    }
+
+    function createPost(
+      topic: string,
+      audience: string,
+      tone: string,
+      length: string,
+      cta: string
+    ) {
+      const subject =
+        clean(topic);
+
+      const target =
+        clean(audience) ||
+        'professionals';
+
+      const action =
+        clean(cta);
+
+      const toneData =
+        getTone(tone);
+
+      const hashtags =
+        createHashtags(subject);
+
+      if (length === 'short') {
+        return [
+          toneData.opening,
+          '',
+          subject + '.',
+          '',
+          toneData.lesson,
+          '',
+          action ||
+            'What has been your experience with this?',
+          '',
+          hashtags,
+        ].join('\n');
+      }
+
+      if (length === 'long') {
+        return [
+          toneData.opening,
+          '',
+          subject + '.',
+          '',
+          `This is especially relevant for ${target}.`,
+          '',
+          'At first, it is easy to focus only on the result. But the process behind that result often teaches us much more.',
+          '',
+          toneData.lesson,
+          '',
+          'The practical lesson is simple: stay curious, keep learning, test your assumptions, and turn what you learn into action.',
+          '',
+          'There will always be things we could have done differently. The important part is to learn from them and keep moving forward.',
+          '',
+          action ||
+            'What is one lesson you have learned recently?',
+          '',
+          hashtags,
+        ].join('\n');
+      }
+
+      return [
+        toneData.opening,
+        '',
+        subject + '.',
+        '',
+        `For ${target}, this is a useful reminder that meaningful progress usually comes from small improvements repeated over time.`,
+        '',
+        toneData.lesson,
+        '',
+        'Instead of waiting for everything to be perfect, focus on learning, testing, and improving one step at a time.',
+        '',
+        action ||
+          'What is your biggest lesson from a similar experience?',
+        '',
+        hashtags,
+      ].join('\n');
+    }
+
+    function updateStats(text: string) {
+      const words =
+        text.trim()
+          ? text.trim().split(/\s+/).length
+          : 0;
+
+      $('wordCount')!.textContent =
+        `${words} ${words === 1 ? 'word' : 'words'}`;
+
+      $('charCount')!.textContent =
+        `${text.length} characters`;
+    }
+
+    function showStatus(message: string) {
+      const status =
+        $('status')!;
+
+      status.textContent =
+        message;
+
+      status.classList.remove(
+        'hidden'
+      );
+
+      setTimeout(() => {
+        status.classList.add(
+          'hidden'
+        );
+      }, 2500);
+    }
+
+    $('generateBtn')!.addEventListener(
+      'click',
+      () => {
+        const topic =
+          getValue('topic');
+
+        if (!topic) {
+          showStatus(
+            'Please enter your topic first.'
+          );
+
+          return;
+        }
+
+        const audience =
+          getValue('audience');
+
+        const tone =
+          getValue('tone');
+
+        const length =
+          getValue('length');
+
+        const cta =
+          getValue('cta');
+
+        const post =
+          createPost(
+            topic,
+            audience,
+            tone,
+            length,
+            cta
+          );
+
+        const output =
+          $('output') as HTMLTextAreaElement;
+
+        output.value =
+          post;
+
+        updateStats(
+          post
+        );
+
+        showStatus(
+          'LinkedIn post generated successfully.'
+        );
+      }
+    );
+
+    $('copyBtn')!.addEventListener(
+      'click',
+      async () => {
+        const output =
+          (
+            $('output') as HTMLTextAreaElement
+          ).value.trim();
+
+        if (!output) {
+          showStatus(
+            'Generate a post first.'
+          );
+
+          return;
+        }
+
+        try {
+          await navigator.clipboard.writeText(
+            output
+          );
+
+          const button =
+            $('copyBtn')!;
+
+          const original =
+            button.textContent;
+
+          button.textContent =
+            'Copied!';
+
+          setTimeout(() => {
+            button.textContent =
+              original;
+          }, 1800);
+        } catch {
+          showStatus(
+            'Unable to copy automatically.'
+          );
+        }
+      }
+    );
+
+    $('clearBtn')!.addEventListener(
+      'click',
+      () => {
+        (
+          $('topic') as HTMLTextAreaElement
+        ).value = '';
+
+        (
+          $('audience') as HTMLInputElement
+        ).value = '';
+
+        (
+          $('tone') as HTMLSelectElement
+        ).value = 'professional';
+
+        (
+          $('length') as HTMLSelectElement
+        ).value = 'medium';
+
+        (
+          $('cta') as HTMLInputElement
+        ).value = '';
+
+        (
+          $('output') as HTMLTextAreaElement
+        ).value = '';
+
+        updateStats('');
+
+        $('status')!.classList.add(
+          'hidden'
+        );
+      }
+    );
+
+    updateStats('');
+  </script>
+</Layout>

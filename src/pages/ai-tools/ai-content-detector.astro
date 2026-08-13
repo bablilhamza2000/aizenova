@@ -1,0 +1,486 @@
+---
+import Layout from "../../layouts/Layout.astro";
+---
+
+<Layout title="AI Content Detector | AIZENOVA">
+  <main class="mx-auto max-w-4xl px-6 py-16 text-white">
+
+    <a
+      href="/ai-tools"
+      class="inline-flex items-center gap-2 text-sm text-gray-400 hover:text-white"
+    >
+      ← Back to AI Tools
+    </a>
+
+    <div class="mt-10 text-center">
+      <div class="mx-auto mb-5 flex h-16 w-16 items-center justify-center rounded-2xl bg-white/10 text-3xl">
+        🔎
+      </div>
+
+      <h1 class="text-4xl font-bold sm:text-5xl">
+        AI Content Detector
+      </h1>
+
+      <p class="mx-auto mt-4 max-w-2xl text-gray-400">
+        Analyze text for patterns commonly associated with AI-generated writing.
+      </p>
+    </div>
+
+    <section class="mt-12 rounded-2xl border border-white/10 bg-white/[0.03] p-6 sm:p-8">
+
+      <label
+        for="text"
+        class="mb-3 block text-sm font-medium text-gray-200"
+      >
+        Text to Analyze
+      </label>
+
+      <textarea
+        id="text"
+        rows="12"
+        maxlength="8000"
+        placeholder="Paste the text you want to analyze..."
+        class="w-full resize-y rounded-xl border border-white/10 bg-[#111118] px-4 py-4 text-white placeholder-gray-500 outline-none focus:border-white/30"
+      ></textarea>
+
+      <div class="mt-2 flex justify-between text-xs text-gray-500">
+        <span>
+          Longer samples can provide more useful signals.
+        </span>
+
+        <span>
+          <span id="charCount">0</span>/8000
+        </span>
+      </div>
+
+      <div class="mt-6 grid gap-5 sm:grid-cols-2">
+
+        <div>
+          <label
+            for="language"
+            class="mb-3 block text-sm font-medium text-gray-200"
+          >
+            Language
+          </label>
+
+          <select
+            id="language"
+            class="w-full rounded-xl border border-white/10 bg-[#111118] px-4 py-3 text-white outline-none"
+          >
+            <option value="English">English</option>
+            <option value="French">French</option>
+            <option value="Spanish">Spanish</option>
+            <option value="German">German</option>
+            <option value="Arabic">Arabic</option>
+          </select>
+        </div>
+
+        <div>
+          <label
+            for="analysis"
+            class="mb-3 block text-sm font-medium text-gray-200"
+          >
+            Analysis Level
+          </label>
+
+          <select
+            id="analysis"
+            class="w-full rounded-xl border border-white/10 bg-[#111118] px-4 py-3 text-white outline-none"
+          >
+            <option value="Standard">Standard</option>
+            <option value="Detailed">Detailed</option>
+          </select>
+        </div>
+
+      </div>
+
+      <div class="mt-5 rounded-xl border border-yellow-500/10 bg-yellow-500/5 p-4">
+        <p class="text-sm leading-6 text-gray-400">
+          <strong class="text-gray-200">Important:</strong>
+          AI detection is not definitive. The result is an estimate based on linguistic patterns and should not be treated as proof that a text was or was not written by AI.
+        </p>
+      </div>
+
+      <button
+        id="detectBtn"
+        type="button"
+        class="mt-6 w-full rounded-xl bg-white px-6 py-4 font-semibold text-black hover:bg-gray-200 disabled:cursor-not-allowed disabled:opacity-50"
+      >
+        🔎 Analyze Text
+      </button>
+
+      <div
+        id="loading"
+        class="mt-6 hidden rounded-xl border border-white/10 bg-white/[0.03] p-6 text-center"
+      >
+        <div class="animate-pulse text-2xl">🔎</div>
+
+        <p class="mt-2 text-sm text-gray-400">
+          Analyzing your text...
+        </p>
+      </div>
+
+      <div
+        id="errorContainer"
+        class="mt-6 hidden rounded-xl border border-red-500/20 bg-red-500/5 p-4"
+      >
+        <p id="errorMessage" class="text-sm text-red-400"></p>
+      </div>
+
+      <div id="resultContainer" class="mt-8 hidden">
+
+        <h2 class="mb-4 text-lg font-semibold">
+          Analysis Result
+        </h2>
+
+        <div class="grid gap-5 sm:grid-cols-3">
+
+          <div class="rounded-xl border border-white/10 bg-[#111118] p-5 text-center">
+            <p class="text-sm text-gray-500">
+              AI-Like Estimate
+            </p>
+
+            <p
+              id="aiScore"
+              class="mt-2 text-4xl font-bold"
+            >
+              0%
+            </p>
+          </div>
+
+          <div class="rounded-xl border border-white/10 bg-[#111118] p-5 text-center">
+            <p class="text-sm text-gray-500">
+              Human-Like Estimate
+            </p>
+
+            <p
+              id="humanScore"
+              class="mt-2 text-4xl font-bold"
+            >
+              0%
+            </p>
+          </div>
+
+          <div class="rounded-xl border border-white/10 bg-[#111118] p-5 text-center">
+            <p class="text-sm text-gray-500">
+              Classification
+            </p>
+
+            <p
+              id="classification"
+              class="mt-3 text-lg font-semibold text-gray-200"
+            >
+              —
+            </p>
+          </div>
+
+        </div>
+
+        <div class="mt-6 rounded-xl border border-white/10 bg-[#111118] p-5">
+
+          <div class="mb-3 flex justify-between text-sm">
+            <span class="text-gray-400">
+              AI-like pattern estimate
+            </span>
+
+            <span
+              id="scoreLabel"
+              class="font-medium text-gray-200"
+            >
+              0%
+            </span>
+          </div>
+
+          <div class="h-3 overflow-hidden rounded-full bg-white/10">
+            <div
+              id="scoreBar"
+              class="h-full rounded-full bg-white transition-all duration-700"
+              style="width: 0%"
+            ></div>
+          </div>
+
+        </div>
+
+        <div class="mt-6">
+
+          <h3 class="mb-3 font-semibold">
+            Analysis
+          </h3>
+
+          <div
+            id="analysisText"
+            class="whitespace-pre-wrap rounded-xl border border-white/10 bg-[#111118] p-5 leading-7 text-gray-300"
+          ></div>
+
+        </div>
+
+        <div class="mt-6">
+
+          <h3 class="mb-3 font-semibold">
+            Detected Signals
+          </h3>
+
+          <div
+            id="signals"
+            class="space-y-3"
+          ></div>
+
+        </div>
+
+        <button
+          id="clearBtn"
+          type="button"
+          class="mt-5 text-sm text-gray-500 hover:text-white"
+        >
+          Clear result
+        </button>
+
+      </div>
+
+    </section>
+
+  </main>
+
+  <script>
+    const text =
+      document.getElementById("text") as HTMLTextAreaElement;
+
+    const language =
+      document.getElementById("language") as HTMLSelectElement;
+
+    const analysis =
+      document.getElementById("analysis") as HTMLSelectElement;
+
+    const charCount =
+      document.getElementById("charCount")!;
+
+    const detectBtn =
+      document.getElementById("detectBtn") as HTMLButtonElement;
+
+    const loading =
+      document.getElementById("loading")!;
+
+    const errorContainer =
+      document.getElementById("errorContainer")!;
+
+    const errorMessage =
+      document.getElementById("errorMessage")!;
+
+    const resultContainer =
+      document.getElementById("resultContainer")!;
+
+    const aiScore =
+      document.getElementById("aiScore")!;
+
+    const humanScore =
+      document.getElementById("humanScore")!;
+
+    const classification =
+      document.getElementById("classification")!;
+
+    const scoreLabel =
+      document.getElementById("scoreLabel")!;
+
+    const scoreBar =
+      document.getElementById("scoreBar") as HTMLElement;
+
+    const analysisText =
+      document.getElementById("analysisText")!;
+
+    const signals =
+      document.getElementById("signals")!;
+
+    const clearBtn =
+      document.getElementById("clearBtn") as HTMLButtonElement;
+
+    text.addEventListener("input", () => {
+      charCount.textContent =
+        String(text.value.length);
+    });
+
+    function showError(message: string) {
+      errorMessage.textContent = message;
+      errorContainer.classList.remove("hidden");
+    }
+
+    function hideError() {
+      errorContainer.classList.add("hidden");
+      errorMessage.textContent = "";
+    }
+
+    function renderSignals(items: string[]) {
+      signals.innerHTML = "";
+
+      if (!items.length) {
+        const empty =
+          document.createElement("p");
+
+        empty.className =
+          "rounded-xl border border-white/10 bg-[#111118] p-4 text-sm text-gray-400";
+
+        empty.textContent =
+          "No notable signals were returned.";
+
+        signals.appendChild(empty);
+
+        return;
+      }
+
+      items.forEach((item) => {
+        const element =
+          document.createElement("div");
+
+        element.className =
+          "rounded-xl border border-white/10 bg-[#111118] p-4 text-sm leading-6 text-gray-300";
+
+        element.textContent =
+          `• ${item}`;
+
+        signals.appendChild(element);
+      });
+    }
+
+    async function detectAI() {
+      hideError();
+
+      const textValue =
+        text.value.trim();
+
+      if (!textValue) {
+        showError(
+          "Please enter text to analyze."
+        );
+
+        text.focus();
+        return;
+      }
+
+      if (textValue.length < 80) {
+        showError(
+          "Please enter at least 80 characters for a more useful analysis."
+        );
+
+        text.focus();
+        return;
+      }
+
+      detectBtn.disabled = true;
+      loading.classList.remove("hidden");
+      resultContainer.classList.add("hidden");
+
+      try {
+        const response = await fetch(
+          "/api/detect-ai-content",
+          {
+            method: "POST",
+
+            headers: {
+              "Content-Type": "application/json",
+            },
+
+            body: JSON.stringify({
+              text: textValue,
+              language: language.value,
+              analysisLevel: analysis.value,
+            }),
+          }
+        );
+
+        const data =
+          await response.json();
+
+        if (!response.ok) {
+          throw new Error(
+            data?.error ||
+            "Failed to analyze the text."
+          );
+        }
+
+        const score =
+          Math.max(
+            0,
+            Math.min(
+              100,
+              Number(data.aiScore) || 0
+            )
+          );
+
+        const human =
+          Math.max(
+            0,
+            Math.min(
+              100,
+              Number(data.humanScore) || 100 - score
+            )
+          );
+
+        aiScore.textContent =
+          `${score}%`;
+
+        humanScore.textContent =
+          `${human}%`;
+
+        classification.textContent =
+          data.classification ||
+          "Uncertain";
+
+        scoreLabel.textContent =
+          `${score}%`;
+
+        scoreBar.style.width =
+          `${score}%`;
+
+        analysisText.textContent =
+          data.analysis ||
+          "No detailed analysis was returned.";
+
+        renderSignals(
+          Array.isArray(data.signals)
+            ? data.signals
+            : []
+        );
+
+        resultContainer.classList.remove(
+          "hidden"
+        );
+
+      } catch (error) {
+        console.error(error);
+
+        showError(
+          error instanceof Error
+            ? error.message
+            : "Something went wrong."
+        );
+
+      } finally {
+        detectBtn.disabled = false;
+        loading.classList.add("hidden");
+      }
+    }
+
+    detectBtn.addEventListener(
+      "click",
+      detectAI
+    );
+
+    clearBtn.addEventListener(
+      "click",
+      () => {
+        resultContainer.classList.add(
+          "hidden"
+        );
+
+        aiScore.textContent = "0%";
+        humanScore.textContent = "0%";
+        classification.textContent = "—";
+        scoreLabel.textContent = "0%";
+        scoreBar.style.width = "0%";
+        analysisText.textContent = "";
+        signals.innerHTML = "";
+
+        hideError();
+      }
+    );
+  </script>
+</Layout>

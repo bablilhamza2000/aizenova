@@ -1,0 +1,589 @@
+---
+import Layout from '../../layouts/Layout.astro';
+
+const pageTitle = 'AI Text Humanizer | AIZENOVA';
+const pageDescription =
+  'Make AI-generated text sound more natural, clear, and human with AIZENOVA.';
+---
+
+<Layout title={pageTitle} description={pageDescription}>
+  <main class="mx-auto max-w-5xl px-6 py-12 text-white">
+
+    <a
+      href="/ai-tools"
+      class="inline-flex items-center gap-2 text-sm text-gray-400 transition hover:text-white"
+    >
+      ← Back to AI Tools
+    </a>
+
+    <header class="mt-10 text-center">
+      <div
+        class="mx-auto mb-5 flex h-16 w-16 items-center justify-center rounded-2xl bg-white/10 text-3xl"
+      >
+        ✍️
+      </div>
+
+      <h1 class="text-4xl font-bold sm:text-5xl">
+        AI Text Humanizer
+      </h1>
+
+      <p class="mx-auto mt-4 max-w-2xl text-gray-400">
+        Make AI-generated text sound more natural, readable, and
+        conversational while keeping the original meaning.
+      </p>
+    </header>
+
+    <section class="mt-12 grid gap-8 lg:grid-cols-2">
+
+      <!-- INPUT -->
+      <div
+        class="rounded-2xl border border-white/10 bg-white/[0.03] p-6 sm:p-8"
+      >
+        <div class="flex items-center justify-between gap-4">
+          <div>
+            <h2 class="text-xl font-semibold">
+              Your Text
+            </h2>
+
+            <p class="mt-1 text-sm text-gray-500">
+              Paste the text you want to make more natural.
+            </p>
+          </div>
+
+          <span
+            id="inputCount"
+            class="text-xs text-gray-500"
+          >
+            0 words
+          </span>
+        </div>
+
+        <textarea
+          id="inputText"
+          rows="18"
+          placeholder="Paste your text here..."
+          class="mt-6 w-full resize-y rounded-xl border border-white/10 bg-[#111118] px-4 py-4 text-sm leading-7 text-white placeholder-gray-500 outline-none transition focus:border-white/30"
+        ></textarea>
+
+        <div class="mt-5">
+          <label
+            for="style"
+            class="mb-2 block text-sm font-medium text-gray-300"
+          >
+            Writing Style
+          </label>
+
+          <select
+            id="style"
+            class="w-full rounded-xl border border-white/10 bg-[#111118] px-4 py-3 text-white outline-none focus:border-white/30"
+          >
+            <option value="natural">
+              Natural & Balanced
+            </option>
+
+            <option value="professional">
+              Professional
+            </option>
+
+            <option value="friendly">
+              Friendly & Conversational
+            </option>
+
+            <option value="academic">
+              Academic
+            </option>
+          </select>
+        </div>
+
+        <div class="mt-6 flex flex-wrap gap-3">
+
+          <button
+            id="humanizeBtn"
+            type="button"
+            class="flex-1 rounded-xl bg-white px-6 py-4 font-semibold text-black transition hover:bg-gray-200"
+          >
+            Humanize Text
+          </button>
+
+          <button
+            id="clearBtn"
+            type="button"
+            class="rounded-xl border border-white/10 px-6 py-4 text-gray-300 transition hover:bg-white/10"
+          >
+            Clear
+          </button>
+
+        </div>
+
+        <p
+          id="status"
+          class="mt-4 hidden text-center text-sm text-gray-400"
+        ></p>
+      </div>
+
+      <!-- OUTPUT -->
+      <div
+        class="rounded-2xl border border-white/10 bg-white/[0.03] p-6 sm:p-8"
+      >
+        <div class="flex items-center justify-between gap-4">
+          <div>
+            <h2 class="text-xl font-semibold">
+              Humanized Text
+            </h2>
+
+            <p class="mt-1 text-sm text-gray-500">
+              Your improved version will appear here.
+            </p>
+          </div>
+
+          <button
+            id="copyBtn"
+            type="button"
+            class="rounded-lg border border-white/10 px-4 py-2 text-sm text-gray-300 transition hover:bg-white/10"
+          >
+            Copy
+          </button>
+        </div>
+
+        <div
+          id="outputText"
+          class="mt-6 min-h-[430px] whitespace-pre-line rounded-xl border border-white/10 bg-[#111118] p-5 text-sm leading-7 text-gray-300"
+        >
+          Your humanized text will appear here.
+        </div>
+
+        <div
+          class="mt-4 flex items-center justify-between text-xs text-gray-500"
+        >
+          <span id="outputCount">
+            0 words
+          </span>
+
+          <span>
+            Review before publishing
+          </span>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- INFO -->
+    <section class="mt-16 max-w-3xl">
+
+      <h2 class="text-2xl font-bold">
+        What does a text humanizer do?
+      </h2>
+
+      <div class="mt-5 space-y-4 text-sm leading-7 text-gray-400">
+
+        <p>
+          A text humanizer can help improve the readability and flow of
+          generated or overly formal text by using more natural sentence
+          structures and clearer wording.
+        </p>
+
+        <p>
+          The goal is not to change the core meaning of your content, but to
+          make it easier and more natural for people to read.
+        </p>
+
+        <p>
+          Always review the result yourself and make sure the final text
+          accurately represents your ideas and information.
+        </p>
+
+      </div>
+
+    </section>
+
+  </main>
+
+  <script>
+    const $ = (id: string) =>
+      document.getElementById(id);
+
+    const getText = () => {
+      const element =
+        document.getElementById(
+          "inputText"
+        ) as HTMLTextAreaElement | null;
+
+      return element?.value.trim() || "";
+    };
+
+    const countWords = (text: string) => {
+      if (!text.trim()) return 0;
+
+      return text
+        .trim()
+        .split(/\s+/)
+        .filter(Boolean)
+        .length;
+    };
+
+    const updateInputCount = () => {
+      const count =
+        countWords(getText());
+
+      $("inputCount")!.textContent =
+        `${count} ${count === 1 ? "word" : "words"}`;
+    };
+
+    const updateOutputCount = (
+      text: string
+    ) => {
+      const count =
+        countWords(text);
+
+      $("outputCount")!.textContent =
+        `${count} ${count === 1 ? "word" : "words"}`;
+    };
+
+    function improveSentence(sentence: string) {
+      let result =
+        sentence.trim();
+
+      const replacements: [
+        RegExp,
+        string
+      ][] = [
+        [
+          /\bin order to\b/gi,
+          "to"
+        ],
+        [
+          /\bdue to the fact that\b/gi,
+          "because"
+        ],
+        [
+          /\bat this point in time\b/gi,
+          "now"
+        ],
+        [
+          /\bin the event that\b/gi,
+          "if"
+        ],
+        [
+          /\ba large number of\b/gi,
+          "many"
+        ],
+        [
+          /\ba significant amount of\b/gi,
+          "a lot of"
+        ],
+        [
+          /\butilize\b/gi,
+          "use"
+        ],
+        [
+          /\bapproximately\b/gi,
+          "about"
+        ],
+        [
+          /\bcommence\b/gi,
+          "start"
+        ],
+        [
+          /\bsubsequently\b/gi,
+          "then"
+        ],
+        [
+          /\badditionally\b/gi,
+          "also"
+        ],
+        [
+          /\btherefore\b/gi,
+          "so"
+        ],
+        [
+          /\bhowever\b/gi,
+          "but"
+        ],
+        [
+          /\bfacilitate\b/gi,
+          "help"
+        ],
+        [
+          /\bdemonstrate\b/gi,
+          "show"
+        ],
+        [
+          /\bobtain\b/gi,
+          "get"
+        ],
+        [
+          /\bapproximately\b/gi,
+          "around"
+        ],
+      ];
+
+      replacements.forEach(
+        ([pattern, replacement]) => {
+          result =
+            result.replace(
+              pattern,
+              replacement
+            );
+        }
+      );
+
+      result =
+        result.replace(
+          /\s{2,}/g,
+          " "
+        );
+
+      return result;
+    }
+
+    function humanizeText(
+      text: string,
+      style: string
+    ) {
+      if (!text.trim()) {
+        return "";
+      }
+
+      const paragraphs =
+        text
+          .split(/\n\s*\n/)
+          .map(
+            (paragraph) =>
+              paragraph.trim()
+          )
+          .filter(Boolean);
+
+      const processed =
+        paragraphs.map(
+          (paragraph) => {
+
+            const sentences =
+              paragraph
+                .match(
+                  /[^.!?]+[.!?]+|[^.!?]+$/g
+                ) || [paragraph];
+
+            let result =
+              sentences
+                .map(
+                  (sentence) =>
+                    improveSentence(
+                      sentence
+                    )
+                )
+                .join(" ");
+
+            if (
+              style ===
+              "friendly"
+            ) {
+              result =
+                result
+                  .replace(
+                    /\bIt is important to\b/gi,
+                    "It's important to"
+                  )
+                  .replace(
+                    /\bIt is\b/gi,
+                    "It's"
+                  )
+                  .replace(
+                    /\bYou should\b/gi,
+                    "You can"
+                  );
+            }
+
+            if (
+              style ===
+              "professional"
+            ) {
+              result =
+                result
+                  .replace(
+                    /\bcan't\b/gi,
+                    "cannot"
+                  )
+                  .replace(
+                    /\bdon't\b/gi,
+                    "do not"
+                  )
+                  .replace(
+                    /\bwon't\b/gi,
+                    "will not"
+                  );
+            }
+
+            if (
+              style ===
+              "academic"
+            ) {
+              result =
+                result
+                  .replace(
+                    /\ba lot of\b/gi,
+                    "a considerable amount of"
+                  )
+                  .replace(
+                    /\bget\b/gi,
+                    "obtain"
+                  );
+            }
+
+            return result;
+          }
+        );
+
+      return processed.join(
+        "\n\n"
+      );
+    }
+
+    function showStatus(
+      message: string
+    ) {
+      const status =
+        $("status")!;
+
+      status.textContent =
+        message;
+
+      status.classList.remove(
+        "hidden"
+      );
+
+      setTimeout(() => {
+        status.classList.add(
+          "hidden"
+        );
+      }, 2500);
+    }
+
+    $("inputText")!.addEventListener(
+      "input",
+      updateInputCount
+    );
+
+    $("humanizeBtn")!.addEventListener(
+      "click",
+      () => {
+        const text =
+          getText();
+
+        if (!text) {
+          showStatus(
+            "Please enter some text first."
+          );
+
+          return;
+        }
+
+        const style =
+          (
+            document.getElementById(
+              "style"
+            ) as HTMLSelectElement
+          ).value;
+
+        const result =
+          humanizeText(
+            text,
+            style
+          );
+
+        $("outputText")!.textContent =
+          result;
+
+        updateOutputCount(
+          result
+        );
+
+        showStatus(
+          "Text humanized successfully."
+        );
+
+        $("outputText")!.scrollIntoView({
+          behavior: "smooth",
+          block: "center",
+        });
+      }
+    );
+
+    $("clearBtn")!.addEventListener(
+      "click",
+      () => {
+        (
+          document.getElementById(
+            "inputText"
+          ) as HTMLTextAreaElement
+        ).value = "";
+
+        (
+          document.getElementById(
+            "style"
+          ) as HTMLSelectElement
+        ).value = "natural";
+
+        $("outputText")!.textContent =
+          "Your humanized text will appear here.";
+
+        $("inputCount")!.textContent =
+          "0 words";
+
+        $("outputCount")!.textContent =
+          "0 words";
+
+        $("status")!.classList.add(
+          "hidden"
+        );
+      }
+    );
+
+    $("copyBtn")!.addEventListener(
+      "click",
+      async () => {
+        const output =
+          $("outputText")!.textContent?.trim() ||
+          "";
+
+        if (
+          !output ||
+          output ===
+            "Your humanized text will appear here."
+        ) {
+          showStatus(
+            "There is no generated text to copy."
+          );
+
+          return;
+        }
+
+        try {
+          await navigator.clipboard.writeText(
+            output
+          );
+
+          const button =
+            $("copyBtn")!;
+
+          const original =
+            button.textContent;
+
+          button.textContent =
+            "Copied!";
+
+          setTimeout(() => {
+            button.textContent =
+              original;
+          }, 2000);
+
+        } catch {
+          showStatus(
+            "Unable to copy the text automatically."
+          );
+        }
+      }
+    );
+
+    updateInputCount();
+  </script>
+</Layout>

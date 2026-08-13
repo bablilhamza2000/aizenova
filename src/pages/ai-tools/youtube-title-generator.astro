@@ -1,0 +1,607 @@
+---
+import Layout from '../../layouts/Layout.astro';
+
+const pageTitle = 'AI YouTube Title Generator | AIZENOVA';
+const pageDescription =
+  'Generate catchy and SEO-friendly YouTube titles for your videos with AIZENOVA.';
+---
+
+<Layout title={pageTitle} description={pageDescription}>
+  <main class="mx-auto max-w-5xl px-6 py-12 text-white">
+
+    <a
+      href="/ai-tools"
+      class="inline-flex items-center gap-2 text-sm text-gray-400 transition hover:text-white"
+    >
+      ← Back to AI Tools
+    </a>
+
+    <header class="mt-10 text-center">
+      <div
+        class="mx-auto mb-5 flex h-16 w-16 items-center justify-center rounded-2xl bg-white/10 text-3xl"
+      >
+        🎬
+      </div>
+
+      <h1 class="text-4xl font-bold sm:text-5xl">
+        AI YouTube Title Generator
+      </h1>
+
+      <p class="mx-auto mt-4 max-w-2xl text-gray-400">
+        Generate catchy, clickable, and SEO-friendly YouTube titles based on
+        your video topic and audience.
+      </p>
+    </header>
+
+    <section class="mt-12 grid gap-8 lg:grid-cols-2">
+
+      <!-- FORM -->
+      <div
+        class="rounded-2xl border border-white/10 bg-white/[0.03] p-6 sm:p-8"
+      >
+        <h2 class="text-xl font-semibold">
+          Video Details
+        </h2>
+
+        <p class="mt-2 text-sm text-gray-500">
+          Tell us about your YouTube video.
+        </p>
+
+        <div class="mt-7">
+          <label
+            for="topic"
+            class="mb-2 block text-sm font-medium text-gray-300"
+          >
+            Video Topic
+          </label>
+
+          <textarea
+            id="topic"
+            rows="5"
+            placeholder="e.g. How to learn Python from zero in 2026"
+            class="w-full resize-y rounded-xl border border-white/10 bg-[#111118] px-4 py-3 text-white placeholder-gray-500 outline-none transition focus:border-white/30"
+          ></textarea>
+        </div>
+
+        <div class="mt-5">
+          <label
+            for="keyword"
+            class="mb-2 block text-sm font-medium text-gray-300"
+          >
+            Main Keyword
+          </label>
+
+          <input
+            id="keyword"
+            type="text"
+            placeholder="e.g. Learn Python"
+            class="w-full rounded-xl border border-white/10 bg-[#111118] px-4 py-3 text-white placeholder-gray-500 outline-none transition focus:border-white/30"
+          />
+        </div>
+
+        <div class="mt-5">
+          <label
+            for="audience"
+            class="mb-2 block text-sm font-medium text-gray-300"
+          >
+            Target Audience
+          </label>
+
+          <input
+            id="audience"
+            type="text"
+            placeholder="e.g. Beginners, students, entrepreneurs"
+            class="w-full rounded-xl border border-white/10 bg-[#111118] px-4 py-3 text-white placeholder-gray-500 outline-none transition focus:border-white/30"
+          />
+        </div>
+
+        <div class="mt-5">
+          <label
+            for="style"
+            class="mb-2 block text-sm font-medium text-gray-300"
+          >
+            Title Style
+          </label>
+
+          <select
+            id="style"
+            class="w-full rounded-xl border border-white/10 bg-[#111118] px-4 py-3 text-white outline-none transition focus:border-white/30"
+          >
+            <option value="clickable">
+              Clickable
+            </option>
+
+            <option value="seo">
+              SEO Focused
+            </option>
+
+            <option value="curiosity">
+              Curiosity
+            </option>
+
+            <option value="professional">
+              Professional
+            </option>
+
+            <option value="viral">
+              Viral / Bold
+            </option>
+          </select>
+        </div>
+
+        <div class="mt-5">
+          <label
+            for="count"
+            class="mb-2 block text-sm font-medium text-gray-300"
+          >
+            Number of Titles
+          </label>
+
+          <select
+            id="count"
+            class="w-full rounded-xl border border-white/10 bg-[#111118] px-4 py-3 text-white outline-none transition focus:border-white/30"
+          >
+            <option value="5">5 Titles</option>
+            <option value="10" selected>10 Titles</option>
+            <option value="15">15 Titles</option>
+          </select>
+        </div>
+
+        <div class="mt-8 flex flex-wrap gap-3">
+
+          <button
+            id="generateBtn"
+            type="button"
+            class="flex-1 rounded-xl bg-white px-6 py-4 font-semibold text-black transition hover:bg-gray-200"
+          >
+            Generate Titles
+          </button>
+
+          <button
+            id="clearBtn"
+            type="button"
+            class="rounded-xl border border-white/10 px-6 py-4 text-gray-300 transition hover:bg-white/10"
+          >
+            Clear
+          </button>
+
+        </div>
+
+        <p
+          id="status"
+          class="mt-4 hidden text-center text-sm text-gray-400"
+        ></p>
+      </div>
+
+      <!-- RESULTS -->
+      <div class="lg:sticky lg:top-8 lg:self-start">
+
+        <div class="mb-4">
+          <h2 class="text-xl font-semibold">
+            Generated Titles
+          </h2>
+
+          <p class="mt-1 text-sm text-gray-500">
+            Click a title to copy it.
+          </p>
+        </div>
+
+        <div
+          id="results"
+          class="space-y-3"
+        >
+          <div
+            class="rounded-xl border border-white/10 bg-white/[0.03] p-6 text-center"
+          >
+            <div class="text-4xl">
+              🎯
+            </div>
+
+            <h3 class="mt-4 font-semibold">
+              Ready to generate?
+            </h3>
+
+            <p class="mt-2 text-sm leading-6 text-gray-500">
+              Enter your video topic and generate optimized YouTube titles.
+            </p>
+          </div>
+        </div>
+
+      </div>
+
+    </section>
+
+    <section class="mt-16 max-w-3xl">
+
+      <h2 class="text-2xl font-bold">
+        Tips for better YouTube titles
+      </h2>
+
+      <div class="mt-6 grid gap-4 sm:grid-cols-2">
+
+        <div class="rounded-xl border border-white/10 bg-white/[0.03] p-5">
+          <div class="text-2xl">🎯</div>
+
+          <h3 class="mt-3 font-semibold">
+            Be specific
+          </h3>
+
+          <p class="mt-2 text-sm leading-6 text-gray-500">
+            Tell viewers exactly what they can expect to learn or discover
+            from the video.
+          </p>
+        </div>
+
+        <div class="rounded-xl border border-white/10 bg-white/[0.03] p-5">
+          <div class="text-2xl">🔎</div>
+
+          <h3 class="mt-3 font-semibold">
+            Use relevant keywords
+          </h3>
+
+          <p class="mt-2 text-sm leading-6 text-gray-500">
+            Include the main topic naturally when it helps viewers understand
+            what the video is about.
+          </p>
+        </div>
+
+        <div class="rounded-xl border border-white/10 bg-white/[0.03] p-5">
+          <div class="text-2xl">👀</div>
+
+          <h3 class="mt-3 font-semibold">
+            Create curiosity
+          </h3>
+
+          <p class="mt-2 text-sm leading-6 text-gray-500">
+            Give viewers a reason to click without making misleading claims.
+          </p>
+        </div>
+
+        <div class="rounded-xl border border-white/10 bg-white/[0.03] p-5">
+          <div class="text-2xl">📱</div>
+
+          <h3 class="mt-3 font-semibold">
+            Keep it readable
+          </h3>
+
+          <p class="mt-2 text-sm leading-6 text-gray-500">
+            Avoid unnecessarily long titles and put the most important words
+            near the beginning.
+          </p>
+        </div>
+
+      </div>
+
+    </section>
+
+  </main>
+
+  <script>
+    const $ = (id: string) =>
+      document.getElementById(id);
+
+    const getValue = (id: string) => {
+      const element =
+        document.getElementById(id) as
+          | HTMLInputElement
+          | HTMLTextAreaElement
+          | HTMLSelectElement
+          | null;
+
+      return element?.value.trim() || "";
+    };
+
+    const cleanText = (text: string) => {
+      return text
+        .replace(/\s+/g, " ")
+        .trim();
+    };
+
+    function createTitles(
+      topic: string,
+      keyword: string,
+      audience: string,
+      style: string
+    ) {
+      const subject =
+        cleanText(topic) ||
+        "this topic";
+
+      const mainKeyword =
+        cleanText(keyword) ||
+        subject;
+
+      const target =
+        cleanText(audience) ||
+        "beginners";
+
+      const templates: Record<
+        string,
+        string[]
+      > = {
+
+        clickable: [
+          `The Ultimate Guide to ${mainKeyword}`,
+          `How to Master ${mainKeyword} Step by Step`,
+          `${mainKeyword}: Everything You Need to Know`,
+          `I Tried ${mainKeyword} — Here's What Happened`,
+          `The Easiest Way to Learn ${mainKeyword}`,
+          `Stop Making These ${mainKeyword} Mistakes`,
+          `How ${mainKeyword} Really Works`,
+          `${mainKeyword} Explained for Beginners`,
+          `Before You Learn ${mainKeyword}, Watch This`,
+          `The Complete ${mainKeyword} Guide`,
+        ],
+
+        seo: [
+          `How to ${mainKeyword} in 2026`,
+          `${mainKeyword} Tutorial for Beginners`,
+          `${mainKeyword}: Complete Beginner's Guide`,
+          `How Does ${mainKeyword} Work?`,
+          `Best Way to Learn ${mainKeyword}`,
+          `${mainKeyword} Step-by-Step Tutorial`,
+          `${mainKeyword} Tips and Tricks for Beginners`,
+          `${mainKeyword} Explained Simply`,
+          `Learn ${mainKeyword} from Zero`,
+          `${mainKeyword} Guide: Everything You Need to Know`,
+        ],
+
+        curiosity: [
+          `Nobody Tells You This About ${mainKeyword}`,
+          `I Wish I Knew This Before Learning ${mainKeyword}`,
+          `The Truth About ${mainKeyword}`,
+          `You're Probably Learning ${mainKeyword} Wrong`,
+          `What Happens When You Master ${mainKeyword}?`,
+          `This Changes Everything About ${mainKeyword}`,
+          `The Mistake Almost Everyone Makes With ${mainKeyword}`,
+          `Why ${mainKeyword} Is Easier Than You Think`,
+          `What I Learned From ${mainKeyword}`,
+          `The Secret to Understanding ${mainKeyword}`,
+        ],
+
+        professional: [
+          `${mainKeyword}: A Practical Guide`,
+          `Understanding ${mainKeyword}: Complete Overview`,
+          `${mainKeyword}: Key Concepts and Best Practices`,
+          `A Beginner's Guide to ${mainKeyword}`,
+          `${mainKeyword}: Step-by-Step Introduction`,
+          `How to Get Started With ${mainKeyword}`,
+          `${mainKeyword}: Practical Strategies for ${target}`,
+          `${mainKeyword}: Essential Tips and Techniques`,
+          `${mainKeyword}: Common Mistakes to Avoid`,
+          `${mainKeyword}: A Complete Learning Roadmap`,
+        ],
+
+        viral: [
+          `10 ${mainKeyword} Secrets You Need to Know`,
+          `I Tested ${mainKeyword} So You Don't Have To`,
+          `${mainKeyword} Is About to Change Everything`,
+          `This ${mainKeyword} Trick Is Seriously Useful`,
+          `The ${mainKeyword} Hack Everyone Should Know`,
+          `You Need to See This Before Learning ${mainKeyword}`,
+          `7 Things I Wish I Knew About ${mainKeyword}`,
+          `${mainKeyword} Just Got MUCH Easier`,
+          `Don't Learn ${mainKeyword} Until You Know This`,
+          `The Fastest Way to Understand ${mainKeyword}`,
+        ],
+      };
+
+      const selected =
+        templates[style] ||
+        templates.clickable;
+
+      const variations =
+        [
+          ...selected,
+          `How ${mainKeyword} Can Help ${target}`,
+          `The Complete ${mainKeyword} Roadmap`,
+          `${mainKeyword}: From Beginner to Advanced`,
+          `Everything ${target} Should Know About ${mainKeyword}`,
+          `Master ${mainKeyword} With This Simple Strategy`,
+        ];
+
+      return variations;
+    }
+
+    function renderTitles() {
+      const topic =
+        getValue("topic");
+
+      if (!topic) {
+        showStatus(
+          "Please enter your video topic first."
+        );
+
+        return;
+      }
+
+      const keyword =
+        getValue("keyword");
+
+      const audience =
+        getValue("audience");
+
+      const style =
+        getValue("style");
+
+      const count =
+        Number(
+          getValue("count") || "10"
+        );
+
+      const titles =
+        createTitles(
+          topic,
+          keyword,
+          audience,
+          style
+        ).slice(0, count);
+
+      const results =
+        $("results")!;
+
+      results.innerHTML = "";
+
+      titles.forEach(
+        (title, index) => {
+
+          const item =
+            document.createElement(
+              "button"
+            );
+
+          item.type = "button";
+
+          item.className =
+            "group flex w-full items-center gap-4 rounded-xl border border-white/10 bg-white/[0.03] p-4 text-left transition hover:border-white/20 hover:bg-white/[0.06]";
+
+          item.innerHTML = `
+            <span
+              class="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-white/10 text-xs font-bold text-gray-400"
+            >
+              ${index + 1}
+            </span>
+
+            <span class="flex-1 text-sm font-medium leading-6 text-gray-200">
+              ${escapeHTML(title)}
+            </span>
+
+            <span
+              class="copy-label shrink-0 text-xs text-gray-500 transition group-hover:text-gray-300"
+            >
+              Copy
+            </span>
+          `;
+
+          item.addEventListener(
+            "click",
+            async () => {
+
+              try {
+                await navigator.clipboard.writeText(
+                  title
+                );
+
+                const label =
+                  item.querySelector(
+                    ".copy-label"
+                  );
+
+                if (label) {
+                  label.textContent =
+                    "Copied!";
+
+                  setTimeout(() => {
+                    label.textContent =
+                      "Copy";
+                  }, 1500);
+                }
+              } catch {
+                showStatus(
+                  "Unable to copy automatically."
+                );
+              }
+            }
+          );
+
+          results.appendChild(item);
+        }
+      );
+    }
+
+    function escapeHTML(text: string) {
+      const div =
+        document.createElement("div");
+
+      div.textContent =
+        text;
+
+      return div.innerHTML;
+    }
+
+    function showStatus(
+      message: string
+    ) {
+      const status =
+        $("status")!;
+
+      status.textContent =
+        message;
+
+      status.classList.remove(
+        "hidden"
+      );
+
+      setTimeout(() => {
+        status.classList.add(
+          "hidden"
+        );
+      }, 2500);
+    }
+
+    $("generateBtn")!.addEventListener(
+      "click",
+      () => {
+        renderTitles();
+      }
+    );
+
+    $("clearBtn")!.addEventListener(
+      "click",
+      () => {
+
+        (
+          document.getElementById(
+            "topic"
+          ) as HTMLTextAreaElement
+        ).value = "";
+
+        (
+          document.getElementById(
+            "keyword"
+          ) as HTMLInputElement
+        ).value = "";
+
+        (
+          document.getElementById(
+            "audience"
+          ) as HTMLInputElement
+        ).value = "";
+
+        (
+          document.getElementById(
+            "style"
+          ) as HTMLSelectElement
+        ).value = "clickable";
+
+        (
+          document.getElementById(
+            "count"
+          ) as HTMLSelectElement
+        ).value = "10";
+
+        $("results")!.innerHTML = `
+          <div
+            class="rounded-xl border border-white/10 bg-white/[0.03] p-6 text-center"
+          >
+            <div class="text-4xl">
+              🎯
+            </div>
+
+            <h3 class="mt-4 font-semibold">
+              Ready to generate?
+            </h3>
+
+            <p class="mt-2 text-sm leading-6 text-gray-500">
+              Enter your video topic and generate optimized YouTube titles.
+            </p>
+          </div>
+        `;
+
+        $("status")!.classList.add(
+          "hidden"
+        );
+      }
+    );
+  </script>
+</Layout>

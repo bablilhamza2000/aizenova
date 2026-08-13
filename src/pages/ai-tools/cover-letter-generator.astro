@@ -1,0 +1,612 @@
+---
+import Layout from '../../layouts/Layout.astro';
+
+const pageTitle = 'AI Cover Letter Generator | AIZENOVA';
+const pageDescription =
+  'Create a professional cover letter quickly with AIZENOVA’s free cover letter generator.';
+---
+
+<Layout title={pageTitle} description={pageDescription}>
+  <main class="mx-auto max-w-5xl px-6 py-12 text-white">
+
+    <a
+      href="/ai-tools"
+      class="inline-flex items-center gap-2 text-sm text-gray-400 transition hover:text-white"
+    >
+      ← Back to AI Tools
+    </a>
+
+    <header class="mt-10 text-center">
+      <div
+        class="mx-auto mb-5 flex h-16 w-16 items-center justify-center rounded-2xl bg-white/10 text-3xl"
+      >
+        ✉️
+      </div>
+
+      <h1 class="text-4xl font-bold sm:text-5xl">
+        AI Cover Letter Generator
+      </h1>
+
+      <p class="mx-auto mt-4 max-w-2xl text-gray-400">
+        Create a professional, personalized cover letter in seconds.
+        Enter your information, job details, and experience, then generate
+        a polished letter ready to edit and use.
+      </p>
+    </header>
+
+    <section class="mt-12 grid gap-8 lg:grid-cols-2">
+
+      <!-- FORM -->
+      <div
+        class="rounded-2xl border border-white/10 bg-white/[0.03] p-6 sm:p-8"
+      >
+        <h2 class="text-xl font-semibold">
+          Your Information
+        </h2>
+
+        <p class="mt-2 text-sm text-gray-500">
+          Add the information you want to include in your cover letter.
+        </p>
+
+        <!-- Personal information -->
+        <div class="mt-7">
+          <h3 class="mb-4 text-sm font-semibold uppercase tracking-wider text-gray-400">
+            Personal Information
+          </h3>
+
+          <div class="grid gap-4 sm:grid-cols-2">
+
+            <input
+              id="fullName"
+              type="text"
+              placeholder="Full name"
+              class="rounded-xl border border-white/10 bg-[#111118] px-4 py-3 text-white placeholder-gray-500 outline-none focus:border-white/30"
+            />
+
+            <input
+              id="email"
+              type="email"
+              placeholder="Email"
+              class="rounded-xl border border-white/10 bg-[#111118] px-4 py-3 text-white placeholder-gray-500 outline-none focus:border-white/30"
+            />
+
+            <input
+              id="phone"
+              type="text"
+              placeholder="Phone"
+              class="rounded-xl border border-white/10 bg-[#111118] px-4 py-3 text-white placeholder-gray-500 outline-none focus:border-white/30"
+            />
+
+            <input
+              id="location"
+              type="text"
+              placeholder="City, Country"
+              class="rounded-xl border border-white/10 bg-[#111118] px-4 py-3 text-white placeholder-gray-500 outline-none focus:border-white/30"
+            />
+
+          </div>
+        </div>
+
+        <!-- Job information -->
+        <div class="mt-8">
+          <h3 class="mb-4 text-sm font-semibold uppercase tracking-wider text-gray-400">
+            Job Information
+          </h3>
+
+          <div class="space-y-4">
+
+            <input
+              id="jobTitle"
+              type="text"
+              placeholder="Job title"
+              class="w-full rounded-xl border border-white/10 bg-[#111118] px-4 py-3 text-white placeholder-gray-500 outline-none focus:border-white/30"
+            />
+
+            <input
+              id="company"
+              type="text"
+              placeholder="Company name"
+              class="w-full rounded-xl border border-white/10 bg-[#111118] px-4 py-3 text-white placeholder-gray-500 outline-none focus:border-white/30"
+            />
+
+            <input
+              id="hiringManager"
+              type="text"
+              placeholder="Hiring manager (optional)"
+              class="w-full rounded-xl border border-white/10 bg-[#111118] px-4 py-3 text-white placeholder-gray-500 outline-none focus:border-white/30"
+            />
+
+          </div>
+        </div>
+
+        <!-- Experience -->
+        <div class="mt-8">
+          <h3 class="mb-4 text-sm font-semibold uppercase tracking-wider text-gray-400">
+            Your Background
+          </h3>
+
+          <div class="space-y-4">
+
+            <textarea
+              id="experience"
+              rows="5"
+              placeholder="Describe your experience, previous jobs, projects, achievements..."
+              class="w-full resize-y rounded-xl border border-white/10 bg-[#111118] px-4 py-3 text-white placeholder-gray-500 outline-none focus:border-white/30"
+            ></textarea>
+
+            <textarea
+              id="skills"
+              rows="4"
+              placeholder="Your main skills, separated by commas..."
+              class="w-full resize-y rounded-xl border border-white/10 bg-[#111118] px-4 py-3 text-white placeholder-gray-500 outline-none focus:border-white/30"
+            ></textarea>
+
+            <textarea
+              id="motivation"
+              rows="5"
+              placeholder="Why do you want this job? Why this company?"
+              class="w-full resize-y rounded-xl border border-white/10 bg-[#111118] px-4 py-3 text-white placeholder-gray-500 outline-none focus:border-white/30"
+            ></textarea>
+
+          </div>
+        </div>
+
+        <!-- Tone -->
+        <div class="mt-8">
+          <h3 class="mb-4 text-sm font-semibold uppercase tracking-wider text-gray-400">
+            Writing Style
+          </h3>
+
+          <select
+            id="tone"
+            class="w-full rounded-xl border border-white/10 bg-[#111118] px-4 py-3 text-white outline-none focus:border-white/30"
+          >
+            <option value="professional">Professional</option>
+            <option value="confident">Confident</option>
+            <option value="friendly">Friendly</option>
+            <option value="formal">Formal</option>
+            <option value="simple">Simple & Clear</option>
+          </select>
+        </div>
+
+        <div class="mt-8 flex flex-wrap gap-3">
+
+          <button
+            id="generateBtn"
+            type="button"
+            class="flex-1 rounded-xl bg-white px-6 py-4 font-semibold text-black transition hover:bg-gray-200"
+          >
+            Generate Cover Letter
+          </button>
+
+          <button
+            id="clearBtn"
+            type="button"
+            class="rounded-xl border border-white/10 px-6 py-4 text-gray-300 transition hover:bg-white/10"
+          >
+            Clear
+          </button>
+
+        </div>
+
+        <p
+          id="status"
+          class="mt-4 hidden text-center text-sm text-gray-400"
+        ></p>
+      </div>
+
+      <!-- PREVIEW -->
+      <div class="lg:sticky lg:top-8 lg:self-start">
+
+        <div class="mb-4 flex items-center justify-between">
+          <div>
+            <h2 class="text-xl font-semibold">
+              Cover Letter Preview
+            </h2>
+
+            <p class="mt-1 text-sm text-gray-500">
+              Edit the generated letter before using it.
+            </p>
+          </div>
+
+          <button
+            id="printBtn"
+            type="button"
+            class="rounded-lg border border-white/10 px-4 py-2 text-sm text-gray-300 transition hover:bg-white/10"
+          >
+            Print / PDF
+          </button>
+        </div>
+
+        <article
+          id="letterPreview"
+          class="min-h-[900px] rounded-xl bg-white p-8 text-gray-900 shadow-2xl sm:p-10"
+        >
+
+          <div class="border-b border-gray-200 pb-6">
+
+            <h2
+              id="previewName"
+              class="text-2xl font-bold"
+            >
+              Your Name
+            </h2>
+
+            <div
+              id="previewContact"
+              class="mt-3 space-y-1 text-sm text-gray-500"
+            >
+              <p>Email</p>
+              <p>Phone</p>
+              <p>Location</p>
+            </div>
+
+          </div>
+
+          <div class="mt-8">
+
+            <div
+              id="previewDate"
+              class="text-sm text-gray-500"
+            ></div>
+
+            <p
+              id="previewRecipient"
+              class="mt-6 text-sm leading-6"
+            >
+              Hiring Manager
+            </p>
+
+            <p
+              id="previewGreeting"
+              class="mt-5 text-sm leading-6"
+            >
+              Dear Hiring Manager,
+            </p>
+
+            <div
+              id="previewBody"
+              class="mt-5 whitespace-pre-line text-sm leading-7 text-gray-700"
+            >
+              Your cover letter will appear here.
+            </div>
+
+            <div class="mt-8 text-sm leading-7">
+              <p>Sincerely,</p>
+
+              <p
+                id="previewSignature"
+                class="mt-6 font-semibold"
+              >
+                Your Name
+              </p>
+            </div>
+
+          </div>
+
+        </article>
+
+      </div>
+
+    </section>
+
+    <!-- SEO / informational section -->
+    <section class="mt-16 max-w-3xl">
+
+      <h2 class="text-2xl font-bold">
+        How to write a good cover letter
+      </h2>
+
+      <div class="mt-5 space-y-4 text-sm leading-7 text-gray-400">
+
+        <p>
+          A strong cover letter should explain why you are interested in the
+          position and show how your experience and skills can benefit the
+          employer.
+        </p>
+
+        <p>
+          Keep your letter focused, relevant, and easy to read. Mention the
+          position you are applying for and highlight a few qualifications
+          that match the job description.
+        </p>
+
+        <p>
+          Always review the generated letter and personalize it before
+          submitting your application.
+        </p>
+
+      </div>
+
+    </section>
+
+  </main>
+
+  <script>
+    const $ = (id: string) =>
+      document.getElementById(id);
+
+    const inputValue = (id: string) => {
+      const element =
+        document.getElementById(id) as
+          | HTMLInputElement
+          | HTMLTextAreaElement
+          | HTMLSelectElement
+          | null;
+
+      return element?.value.trim() || "";
+    };
+
+    function escapeHTML(value: string) {
+      const div = document.createElement("div");
+      div.textContent = value;
+      return div.innerHTML;
+    }
+
+    function getGreeting(name: string) {
+      if (!name) {
+        return "Dear Hiring Manager,";
+      }
+
+      return `Dear ${name},`;
+    }
+
+    function buildLetter() {
+      const fullName = inputValue("fullName");
+      const email = inputValue("email");
+      const phone = inputValue("phone");
+      const location = inputValue("location");
+
+      const jobTitle = inputValue("jobTitle");
+      const company = inputValue("company");
+      const hiringManager = inputValue("hiringManager");
+
+      const experience = inputValue("experience");
+      const skills = inputValue("skills");
+      const motivation = inputValue("motivation");
+      const tone = inputValue("tone");
+
+      const safeName =
+        fullName || "Your Name";
+
+      const safeJob =
+        jobTitle || "the position";
+
+      const safeCompany =
+        company || "your company";
+
+      let opening = "";
+
+      if (tone === "confident") {
+        opening =
+          `I am excited to apply for ${safeJob} at ${safeCompany}. With my background and practical experience, I am confident that I can bring valuable skills and a strong work ethic to your team.`;
+      } else if (tone === "friendly") {
+        opening =
+          `I am pleased to apply for ${safeJob} at ${safeCompany}. I would be excited to bring my experience, skills, and enthusiasm to your team and contribute to your continued success.`;
+      } else if (tone === "formal") {
+        opening =
+          `I am writing to formally express my interest in the ${safeJob} position at ${safeCompany}. My background and qualifications have prepared me to contribute effectively to your organization.`;
+      } else if (tone === "simple") {
+        opening =
+          `I am applying for the ${safeJob} position at ${safeCompany}. I believe my experience and skills make me a strong candidate for this opportunity.`;
+      } else {
+        opening =
+          `I am writing to express my interest in the ${safeJob} position at ${safeCompany}. My experience and skills have prepared me to contribute positively to your team.`;
+      }
+
+      let experienceParagraph =
+        "Throughout my experience, I have developed practical skills, adaptability, and a strong commitment to achieving good results.";
+
+      if (experience) {
+        experienceParagraph =
+          `My background includes ${experience}. These experiences have helped me develop practical skills, adaptability, and the ability to work effectively in different situations.`;
+      }
+
+      let skillsParagraph =
+        "I am motivated to learn, take responsibility, and contribute positively to the organization.";
+
+      if (skills) {
+        skillsParagraph =
+          `Among my key skills are ${skills}. I am confident that these strengths would allow me to contribute effectively to the role.`;
+      }
+
+      let motivationParagraph =
+        `I am particularly interested in joining ${safeCompany} because I see this opportunity as a chance to apply my abilities, continue developing professionally, and contribute to meaningful work.`;
+
+      if (motivation) {
+        motivationParagraph =
+          `${motivation} This opportunity would allow me to apply my abilities while continuing to develop professionally and contribute to ${safeCompany}.`;
+      }
+
+      const closing =
+        tone === "friendly"
+          ? `Thank you for taking the time to consider my application. I would be happy to discuss my background and this opportunity further.`
+          : `Thank you for considering my application. I would welcome the opportunity to discuss my qualifications and how I could contribute to your team.`;
+
+      const body = [
+        opening,
+        experienceParagraph,
+        skillsParagraph,
+        motivationParagraph,
+        closing,
+      ].join("\n\n");
+
+      $("previewName")!.textContent =
+        safeName;
+
+      $("previewContact")!.innerHTML = "";
+
+      const contactItems = [
+        email,
+        phone,
+        location,
+      ].filter(Boolean);
+
+      if (contactItems.length === 0) {
+        $("previewContact")!.innerHTML = `
+          <p>Email</p>
+          <p>Phone</p>
+          <p>Location</p>
+        `;
+      } else {
+        contactItems.forEach((item) => {
+          const paragraph =
+            document.createElement("p");
+
+          paragraph.textContent = item;
+
+          $("previewContact")!
+            .appendChild(paragraph);
+        });
+      }
+
+      const now =
+        new Date();
+
+      $("previewDate")!.textContent =
+        now.toLocaleDateString(
+          undefined,
+          {
+            year: "numeric",
+            month: "long",
+            day: "numeric",
+          }
+        );
+
+      $("previewRecipient")!.textContent =
+        hiringManager ||
+        "Hiring Manager";
+
+      $("previewGreeting")!.textContent =
+        getGreeting(hiringManager);
+
+      $("previewBody")!.textContent =
+        body;
+
+      $("previewSignature")!.textContent =
+        safeName;
+    }
+
+    document
+      .querySelectorAll<
+        HTMLInputElement |
+        HTMLTextAreaElement |
+        HTMLSelectElement
+      >(
+        "#fullName, #email, #phone, #location, #jobTitle, #company, #hiringManager, #experience, #skills, #motivation, #tone"
+      )
+      .forEach((element) => {
+        element.addEventListener(
+          "input",
+          buildLetter
+        );
+
+        element.addEventListener(
+          "change",
+          buildLetter
+        );
+      });
+
+    $("generateBtn")!.addEventListener(
+      "click",
+      () => {
+        buildLetter();
+
+        const status =
+          $("status")!;
+
+        status.textContent =
+          "Cover letter generated successfully.";
+
+        status.classList.remove(
+          "hidden"
+        );
+
+        setTimeout(() => {
+          status.classList.add(
+            "hidden"
+          );
+        }, 3000);
+
+        $("letterPreview")!
+          .scrollIntoView({
+            behavior: "smooth",
+            block: "start",
+          });
+      }
+    );
+
+    $("clearBtn")!.addEventListener(
+      "click",
+      () => {
+
+        document
+          .querySelectorAll<
+            HTMLInputElement |
+            HTMLTextAreaElement |
+            HTMLSelectElement
+          >(
+            "#fullName, #email, #phone, #location, #jobTitle, #company, #hiringManager, #experience, #skills, #motivation"
+          )
+          .forEach((element) => {
+            element.value = "";
+          });
+
+        (
+          document.getElementById(
+            "tone"
+          ) as HTMLSelectElement
+        ).value = "professional";
+
+        buildLetter();
+
+        $("status")!.classList.add(
+          "hidden"
+        );
+      }
+    );
+
+    $("printBtn")!.addEventListener(
+      "click",
+      () => {
+        window.print();
+      }
+    );
+
+    buildLetter();
+  </script>
+
+  <style>
+    @media print {
+      body {
+        background: white !important;
+      }
+
+      main {
+        max-width: none !important;
+        padding: 0 !important;
+      }
+
+      main > a,
+      main > header,
+      main > section:first-of-type > div:first-child,
+      main > section:last-of-type,
+      #printBtn {
+        display: none !important;
+      }
+
+      main > section:first-of-type {
+        display: block !important;
+        margin: 0 !important;
+      }
+
+      #letterPreview {
+        display: block !important;
+        min-height: auto !important;
+        border-radius: 0 !important;
+        box-shadow: none !important;
+        padding: 40px !important;
+      }
+    }
+  </style>
+</Layout>

@@ -1,0 +1,988 @@
+---
+const pageTitle = 'AI Email Writer';
+const pageDescription =
+  'Write professional emails quickly with AI.';
+---
+
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0"
+    />
+
+    <title>{pageTitle} | AIZENOVA</title>
+
+    <meta
+      name="description"
+      content={pageDescription}
+    />
+  </head>
+
+  <body class="min-h-screen bg-[#08080d] text-white">
+
+    <main class="mx-auto max-w-5xl px-5 py-12 sm:px-8">
+
+      <!-- Back -->
+      <a
+        href="/ai-tools"
+        class="inline-flex items-center gap-2 text-sm text-gray-400 transition hover:text-white"
+      >
+        ← Back to AI Tools
+      </a>
+
+
+      <!-- Header -->
+      <section class="mt-12 text-center">
+
+        <div
+          class="mx-auto mb-5 flex h-16 w-16 items-center justify-center rounded-2xl bg-white/10 text-3xl"
+        >
+          📧
+        </div>
+
+        <h1 class="text-4xl font-bold sm:text-5xl">
+          AI Email Writer
+        </h1>
+
+        <p class="mx-auto mt-4 max-w-2xl text-gray-400">
+          Create clear, professional, and natural emails
+          in seconds.
+        </p>
+
+      </section>
+
+
+      <!-- Main Card -->
+      <section
+        class="mx-auto mt-10 max-w-3xl rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-8"
+      >
+
+        <!-- Email Type -->
+        <div>
+
+          <label
+            for="emailType"
+            class="mb-3 block text-sm font-medium text-gray-200"
+          >
+            What type of email do you need?
+          </label>
+
+          <select
+            id="emailType"
+            class="w-full rounded-xl border border-white/10 bg-[#111118] px-4 py-3 text-white outline-none transition focus:border-white/30"
+          >
+
+            <option value="Professional Email">
+              Professional Email
+            </option>
+
+            <option value="Job Application">
+              Job Application
+            </option>
+
+            <option value="Follow-up Email">
+              Follow-up Email
+            </option>
+
+            <option value="Business Proposal">
+              Business Proposal
+            </option>
+
+            <option value="Customer Support">
+              Customer Support
+            </option>
+
+            <option value="Apology Email">
+              Apology Email
+            </option>
+
+            <option value="Thank You Email">
+              Thank You Email
+            </option>
+
+            <option value="Meeting Request">
+              Meeting Request
+            </option>
+
+          </select>
+
+        </div>
+
+
+        <!-- Options -->
+        <div class="mt-6 grid gap-5 sm:grid-cols-3">
+
+          <!-- Language -->
+          <div>
+
+            <label
+              for="language"
+              class="mb-3 block text-sm font-medium text-gray-200"
+            >
+              Language
+            </label>
+
+            <select
+              id="language"
+              class="w-full rounded-xl border border-white/10 bg-[#111118] px-4 py-3 text-white outline-none transition focus:border-white/30"
+            >
+
+              <option value="English">
+                English
+              </option>
+
+              <option value="French">
+                French
+              </option>
+
+              <option value="Arabic">
+                Arabic
+              </option>
+
+              <option value="Spanish">
+                Spanish
+              </option>
+
+              <option value="German">
+                German
+              </option>
+
+              <option value="Italian">
+                Italian
+              </option>
+
+            </select>
+
+          </div>
+
+
+          <!-- Tone -->
+          <div>
+
+            <label
+              for="tone"
+              class="mb-3 block text-sm font-medium text-gray-200"
+            >
+              Tone
+            </label>
+
+            <select
+              id="tone"
+              class="w-full rounded-xl border border-white/10 bg-[#111118] px-4 py-3 text-white outline-none transition focus:border-white/30"
+            >
+
+              <option value="Professional">
+                Professional
+              </option>
+
+              <option value="Friendly">
+                Friendly
+              </option>
+
+              <option value="Formal">
+                Formal
+              </option>
+
+              <option value="Casual">
+                Casual
+              </option>
+
+              <option value="Persuasive">
+                Persuasive
+              </option>
+
+              <option value="Polite">
+                Polite
+              </option>
+
+            </select>
+
+          </div>
+
+
+          <!-- Length -->
+          <div>
+
+            <label
+              for="length"
+              class="mb-3 block text-sm font-medium text-gray-200"
+            >
+              Length
+            </label>
+
+            <select
+              id="length"
+              class="w-full rounded-xl border border-white/10 bg-[#111118] px-4 py-3 text-white outline-none transition focus:border-white/30"
+            >
+
+              <option value="Short">
+                Short
+              </option>
+
+              <option value="Medium" selected>
+                Medium
+              </option>
+
+              <option value="Long">
+                Long
+              </option>
+
+            </select>
+
+          </div>
+
+        </div>
+
+
+        <!-- Recipient -->
+        <div class="mt-6">
+
+          <label
+            for="recipient"
+            class="mb-3 block text-sm font-medium text-gray-200"
+          >
+            Who is this email for?
+          </label>
+
+          <input
+            id="recipient"
+            type="text"
+            maxlength="200"
+            placeholder="Example: Hiring manager, client, professor, customer..."
+            class="w-full rounded-xl border border-white/10 bg-[#111118] px-4 py-3 text-white placeholder-gray-500 outline-none transition focus:border-white/30"
+          />
+
+        </div>
+
+
+        <!-- Subject -->
+        <div class="mt-6">
+
+          <label
+            for="subject"
+            class="mb-3 block text-sm font-medium text-gray-200"
+          >
+            Email subject
+            <span class="text-gray-500">
+              (optional)
+            </span>
+          </label>
+
+          <input
+            id="subject"
+            type="text"
+            maxlength="300"
+            placeholder="Example: Application for Marketing Assistant Position"
+            class="w-full rounded-xl border border-white/10 bg-[#111118] px-4 py-3 text-white placeholder-gray-500 outline-none transition focus:border-white/30"
+          />
+
+        </div>
+
+
+        <!-- Instructions -->
+        <div class="mt-6">
+
+          <label
+            for="prompt"
+            class="mb-3 block text-sm font-medium text-gray-200"
+          >
+            What should the email say?
+          </label>
+
+          <textarea
+            id="prompt"
+            rows="8"
+            maxlength="5000"
+            placeholder="Example: I want to apply for a marketing internship. Mention that I have experience with social media and content creation."
+            class="w-full resize-y rounded-xl border border-white/10 bg-[#111118] px-4 py-4 text-white placeholder-gray-500 outline-none transition focus:border-white/30"
+          ></textarea>
+
+          <div class="mt-2 flex justify-between text-xs text-gray-500">
+
+            <span>
+              Be specific for better results.
+            </span>
+
+            <span>
+              <span id="charCount">0</span>/5000
+            </span>
+
+          </div>
+
+        </div>
+
+
+        <!-- Generate -->
+        <button
+          id="generateBtn"
+          type="button"
+          class="mt-6 w-full rounded-xl bg-white px-6 py-4 font-semibold text-black transition hover:bg-gray-200 disabled:cursor-not-allowed disabled:opacity-50"
+        >
+          ✨ Generate Email
+        </button>
+
+
+        <!-- Loading -->
+        <div
+          id="loading"
+          class="mt-6 hidden rounded-xl border border-white/10 bg-white/[0.03] p-6 text-center"
+        >
+
+          <div class="animate-pulse text-2xl">
+            ✨
+          </div>
+
+          <p class="mt-2 text-sm text-gray-400">
+            AI is writing your email...
+          </p>
+
+          <p class="mt-1 text-xs text-gray-500">
+            This may take a few seconds.
+          </p>
+
+        </div>
+
+
+        <!-- Error -->
+        <div
+          id="errorContainer"
+          class="mt-6 hidden rounded-xl border border-red-500/20 bg-red-500/5 p-4"
+        >
+
+          <p
+            id="errorMessage"
+            class="text-sm text-red-400"
+          ></p>
+
+        </div>
+
+
+        <!-- Result -->
+        <div
+          id="resultContainer"
+          class="mt-8 hidden"
+        >
+
+          <div
+            class="mb-3 flex flex-wrap items-center justify-between gap-3"
+          >
+
+            <h2 class="text-lg font-semibold">
+              Generated Email
+            </h2>
+
+
+            <div class="flex flex-wrap gap-2">
+
+              <button
+                id="regenerateBtn"
+                type="button"
+                class="rounded-lg border border-white/10 px-4 py-2 text-sm text-gray-300 transition hover:bg-white/10 hover:text-white"
+              >
+                🔄 Regenerate
+              </button>
+
+
+              <button
+                id="copyBtn"
+                type="button"
+                class="rounded-lg border border-white/10 px-4 py-2 text-sm text-gray-300 transition hover:bg-white/10 hover:text-white"
+              >
+                📋 Copy
+              </button>
+
+
+              <button
+                id="downloadBtn"
+                type="button"
+                class="rounded-lg border border-white/10 px-4 py-2 text-sm text-gray-300 transition hover:bg-white/10 hover:text-white"
+              >
+                ⬇️ Download
+              </button>
+
+            </div>
+
+          </div>
+
+
+          <!-- Result -->
+          <div
+            id="result"
+            class="max-h-[650px] min-h-[250px] overflow-y-auto whitespace-pre-wrap rounded-xl border border-white/10 bg-[#111118] p-5 leading-7 text-gray-200"
+          ></div>
+
+
+          <!-- Clear -->
+          <button
+            id="clearBtn"
+            type="button"
+            class="mt-4 text-sm text-gray-500 transition hover:text-white"
+          >
+            Clear result
+          </button>
+
+        </div>
+
+      </section>
+
+
+      <!-- Features -->
+      <section
+        class="mx-auto mt-10 grid max-w-3xl gap-5 sm:grid-cols-3"
+      >
+
+        <div
+          class="rounded-2xl border border-white/10 bg-white/[0.03] p-5"
+        >
+
+          <div class="text-2xl">
+            ⚡
+          </div>
+
+          <h3 class="mt-3 font-semibold">
+            Fast
+          </h3>
+
+          <p class="mt-2 text-sm text-gray-500">
+            Write professional emails in seconds.
+          </p>
+
+        </div>
+
+
+        <div
+          class="rounded-2xl border border-white/10 bg-white/[0.03] p-5"
+        >
+
+          <div class="text-2xl">
+            🤖
+          </div>
+
+          <h3 class="mt-3 font-semibold">
+            AI Powered
+          </h3>
+
+          <p class="mt-2 text-sm text-gray-500">
+            Create natural and effective emails.
+          </p>
+
+        </div>
+
+
+        <div
+          class="rounded-2xl border border-white/10 bg-white/[0.03] p-5"
+        >
+
+          <div class="text-2xl">
+            📋
+          </div>
+
+          <h3 class="mt-3 font-semibold">
+            Easy to Use
+          </h3>
+
+          <p class="mt-2 text-sm text-gray-500">
+            Copy or download your email easily.
+          </p>
+
+        </div>
+
+      </section>
+
+    </main>
+
+
+    <script>
+
+      const emailType =
+        document.getElementById(
+          'emailType'
+        ) as HTMLSelectElement;
+
+
+      const language =
+        document.getElementById(
+          'language'
+        ) as HTMLSelectElement;
+
+
+      const tone =
+        document.getElementById(
+          'tone'
+        ) as HTMLSelectElement;
+
+
+      const length =
+        document.getElementById(
+          'length'
+        ) as HTMLSelectElement;
+
+
+      const recipient =
+        document.getElementById(
+          'recipient'
+        ) as HTMLInputElement;
+
+
+      const subject =
+        document.getElementById(
+          'subject'
+        ) as HTMLInputElement;
+
+
+      const prompt =
+        document.getElementById(
+          'prompt'
+        ) as HTMLTextAreaElement;
+
+
+      const charCount =
+        document.getElementById(
+          'charCount'
+        ) as HTMLSpanElement;
+
+
+      const generateBtn =
+        document.getElementById(
+          'generateBtn'
+        ) as HTMLButtonElement;
+
+
+      const regenerateBtn =
+        document.getElementById(
+          'regenerateBtn'
+        ) as HTMLButtonElement;
+
+
+      const copyBtn =
+        document.getElementById(
+          'copyBtn'
+        ) as HTMLButtonElement;
+
+
+      const downloadBtn =
+        document.getElementById(
+          'downloadBtn'
+        ) as HTMLButtonElement;
+
+
+      const clearBtn =
+        document.getElementById(
+          'clearBtn'
+        ) as HTMLButtonElement;
+
+
+      const loading =
+        document.getElementById(
+          'loading'
+        ) as HTMLDivElement;
+
+
+      const errorContainer =
+        document.getElementById(
+          'errorContainer'
+        ) as HTMLDivElement;
+
+
+      const errorMessage =
+        document.getElementById(
+          'errorMessage'
+        ) as HTMLParagraphElement;
+
+
+      const resultContainer =
+        document.getElementById(
+          'resultContainer'
+        ) as HTMLDivElement;
+
+
+      const result =
+        document.getElementById(
+          'result'
+        ) as HTMLDivElement;
+
+
+      let lastRequest = {
+        emailType: 'Professional Email',
+        language: 'English',
+        tone: 'Professional',
+        length: 'Medium',
+        recipient: '',
+        subject: '',
+        prompt: ''
+      };
+
+
+      /* Character counter */
+
+      prompt.addEventListener(
+        'input',
+        () => {
+
+          charCount.textContent =
+            String(prompt.value.length);
+
+        }
+      );
+
+
+      /* Generate Email */
+
+      async function generateEmail() {
+
+        const emailTypeValue =
+          emailType.value;
+
+
+        const languageValue =
+          language.value;
+
+
+        const toneValue =
+          tone.value;
+
+
+        const lengthValue =
+          length.value;
+
+
+        const recipientValue =
+          recipient.value.trim();
+
+
+        const subjectValue =
+          subject.value.trim();
+
+
+        const promptValue =
+          prompt.value.trim();
+
+
+        if (!promptValue) {
+
+          errorMessage.textContent =
+            'Please describe what you want the email to say.';
+
+          errorContainer.classList.remove(
+            'hidden'
+          );
+
+          resultContainer.classList.add(
+            'hidden'
+          );
+
+          return;
+
+        }
+
+
+        errorContainer.classList.add(
+          'hidden'
+        );
+
+
+        loading.classList.remove(
+          'hidden'
+        );
+
+
+        resultContainer.classList.add(
+          'hidden'
+        );
+
+
+        generateBtn.disabled = true;
+
+        regenerateBtn.disabled = true;
+
+
+        lastRequest = {
+          emailType: emailTypeValue,
+          language: languageValue,
+          tone: toneValue,
+          length: lengthValue,
+          recipient: recipientValue,
+          subject: subjectValue,
+          prompt: promptValue
+        };
+
+
+        try {
+
+          const response =
+            await fetch(
+              '/api/email-writer',
+              {
+                method: 'POST',
+
+                headers: {
+                  'Content-Type':
+                    'application/json'
+                },
+
+                body: JSON.stringify({
+                  emailType:
+                    emailTypeValue,
+
+                  language:
+                    languageValue,
+
+                  tone:
+                    toneValue,
+
+                  length:
+                    lengthValue,
+
+                  recipient:
+                    recipientValue,
+
+                  subject:
+                    subjectValue,
+
+                  prompt:
+                    promptValue
+                })
+              }
+            );
+
+
+          const data =
+            await response.json();
+
+
+          if (!response.ok) {
+
+            throw new Error(
+              data?.error ||
+              'Failed to generate email.'
+            );
+
+          }
+
+
+          if (!data?.text) {
+
+            throw new Error(
+              'AI returned an empty email.'
+            );
+
+          }
+
+
+          result.textContent =
+            data.text;
+
+
+          resultContainer.classList.remove(
+            'hidden'
+          );
+
+        } catch (error) {
+
+          console.error(error);
+
+          errorMessage.textContent =
+            error instanceof Error
+              ? error.message
+              : 'Something went wrong. Please try again.';
+
+          errorContainer.classList.remove(
+            'hidden'
+          );
+
+        } finally {
+
+          loading.classList.add(
+            'hidden'
+          );
+
+          generateBtn.disabled = false;
+
+          regenerateBtn.disabled = false;
+
+        }
+
+      }
+
+
+      /* Generate */
+
+      generateBtn.addEventListener(
+        'click',
+        generateEmail
+      );
+
+
+      /* Regenerate */
+
+      regenerateBtn.addEventListener(
+        'click',
+        async () => {
+
+          emailType.value =
+            lastRequest.emailType;
+
+          language.value =
+            lastRequest.language;
+
+          tone.value =
+            lastRequest.tone;
+
+          length.value =
+            lastRequest.length;
+
+          recipient.value =
+            lastRequest.recipient;
+
+          subject.value =
+            lastRequest.subject;
+
+          prompt.value =
+            lastRequest.prompt;
+
+
+          charCount.textContent =
+            String(prompt.value.length);
+
+
+          await generateEmail();
+
+        }
+      );
+
+
+      /* Copy */
+
+      copyBtn.addEventListener(
+        'click',
+        async () => {
+
+          const text =
+            result.textContent || '';
+
+
+          if (!text) {
+            return;
+          }
+
+
+          try {
+
+            await navigator.clipboard.writeText(
+              text
+            );
+
+
+            const original =
+              copyBtn.textContent;
+
+
+            copyBtn.textContent =
+              '✅ Copied!';
+
+
+            setTimeout(() => {
+
+              copyBtn.textContent =
+                original;
+
+            }, 1500);
+
+          } catch {
+
+            errorMessage.textContent =
+              'Unable to copy the email.';
+
+            errorContainer.classList.remove(
+              'hidden'
+            );
+
+          }
+
+        }
+      );
+
+
+      /* Download */
+
+      downloadBtn.addEventListener(
+        'click',
+        () => {
+
+          const text =
+            result.textContent || '';
+
+
+          if (!text) {
+            return;
+          }
+
+
+          const blob =
+            new Blob(
+              [text],
+              {
+                type:
+                  'text/plain;charset=utf-8'
+              }
+            );
+
+
+          const url =
+            URL.createObjectURL(blob);
+
+
+          const link =
+            document.createElement('a');
+
+
+          link.href = url;
+
+
+          link.download =
+            'aizenova-email.txt';
+
+
+          document.body.appendChild(
+            link
+          );
+
+
+          link.click();
+
+
+          link.remove();
+
+
+          URL.revokeObjectURL(url);
+
+        }
+      );
+
+
+      /* Clear */
+
+      clearBtn.addEventListener(
+        'click',
+        () => {
+
+          result.textContent = '';
+
+          resultContainer.classList.add(
+            'hidden'
+          );
+
+          errorContainer.classList.add(
+            'hidden'
+          );
+
+        }
+      );
+
+    </script>
+
+  </body>
+</html>

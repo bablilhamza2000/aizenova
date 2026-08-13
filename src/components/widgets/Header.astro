@@ -1,0 +1,152 @@
+---
+import { Icon } from 'astro-icon/components';
+import Logo from '~/components/Logo.astro';
+import ToggleTheme from '~/components/common/ToggleTheme.astro';
+import ToggleMenu from '~/components/common/ToggleMenu.astro';
+import Button from '~/components/ui/Button.astro';
+
+import { getHomePermalink } from '~/utils/permalinks';
+import { trimSlash, getAsset } from '~/utils/permalinks';
+import type { CallToAction } from '~/types';
+
+interface Link {
+  text?: string;
+  href?: string;
+  ariaLabel?: string;
+  icon?: string;
+}
+
+interface MenuLink extends Link {
+  links?: Array<MenuLink>;
+}
+
+export interface Props {
+  id?: string;
+  links?: Array<MenuLink>;
+  actions?: Array<CallToAction>;
+  isSticky?: boolean;
+  isDark?: boolean;
+  isFullWidth?: boolean;
+  showToggleTheme?: boolean;
+  showRssFeed?: boolean;
+}
+
+const {
+  id = 'header',
+  links = [],
+  actions = [],
+  isSticky = false,
+  isDark = false,
+  isFullWidth = false,
+  showToggleTheme = false,
+  showRssFeed = false,
+} = Astro.props;
+
+const currentPath = `/${trimSlash(new URL(Astro.url).pathname)}`;
+---
+
+<header
+  class:list={[
+    { sticky: isSticky, relative: !isSticky, dark: isDark },
+    'top-0 z-40 flex-none mx-auto w-full border-b border-gray-50/0 transition-[opacity] ease-in-out',
+  ]}
+  {...isSticky ? { 'data-aw-sticky-header': true } : {}}
+  {...id ? { id } : {}}
+>
+  <div class="absolute inset-0"></div>
+
+  <div class="relative flex items-center justify-between py-3 px-4 md:px-6 mx-auto max-w-7xl">
+
+    <!-- Logo -->
+    <div class="flex items-center shrink-0">
+      <a href={getHomePermalink()}>
+        <Logo />
+      </a>
+    </div>
+
+    <!-- Navigation -->
+    <nav
+      class="hidden md:flex flex-1 justify-center items-center"
+      aria-label="Main navigation"
+    >
+      <ul class="flex items-center gap-7 text-[15px] font-medium">
+        {
+          links.map(({ text, href, links }) => (
+            <li class={links?.length ? 'dropdown relative' : ''}>
+              {links?.length ? (
+                <>
+                  <button
+                    type="button"
+                    class="hover:text-link dark:hover:text-white flex items-center"
+                  >
+                    {text}
+                    <Icon
+                      name="tabler:chevron-down"
+                      class="w-4 h-4 ml-1"
+                    />
+                  </button>
+
+                  <ul class="dropdown-menu hidden absolute mt-2 rounded bg-white dark:bg-slate-900 shadow-xl min-w-[200px]">
+                    {links.map(({ text: text2, href: href2 }) => (
+                      <li>
+                        <a
+                          class:list={[
+                            'block px-5 py-2 hover:bg-gray-100 dark:hover:bg-slate-800',
+                            { 'aw-link-active': href2 === currentPath },
+                          ]}
+                          href={href2}
+                        >
+                          {text2}
+                        </a>
+                      </li>
+                    ))}
+                  </ul>
+                </>
+              ) : (
+                <a
+                  class:list={[
+                    'hover:text-link dark:hover:text-white',
+                    { 'aw-link-active': href === currentPath },
+                  ]}
+                  href={href}
+                >
+                  {text}
+                </a>
+              )}
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+
+    <!-- Right Icons -->
+    <div class="hidden md:flex items-center gap-2 shrink-0">
+      {showToggleTheme && (
+        <ToggleTheme iconClass="w-5 h-5" />
+      )}
+
+      {showRssFeed && (
+        <a
+          href={getAsset('/rss.xml')}
+          aria-label="RSS Feed"
+          class="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-slate-800"
+        >
+          <Icon name="tabler:rss" class="w-5 h-5" />
+        </a>
+      )}
+
+      {actions.map((btnProps) => (
+        <Button
+          {...btnProps}
+          class="ml-2 py-2.5 px-5 font-semibold text-sm"
+        />
+      ))}
+    </div>
+
+    <!-- Mobile -->
+    <div class="md:hidden">
+      <ToggleMenu />
+    </div>
+
+  </div>
+</header>

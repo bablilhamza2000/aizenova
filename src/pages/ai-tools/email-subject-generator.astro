@@ -1,0 +1,651 @@
+---
+import Layout from '../../layouts/Layout.astro';
+
+const pageTitle = 'AI Email Subject Generator | AIZENOVA';
+const pageDescription =
+  'Generate engaging email subject lines for marketing, business, newsletters, and professional emails with AIZENOVA.';
+---
+
+<Layout title={pageTitle} description={pageDescription}>
+  <main class="mx-auto max-w-5xl px-6 py-12 text-white">
+
+    <a
+      href="/ai-tools"
+      class="inline-flex items-center gap-2 text-sm text-gray-400 transition hover:text-white"
+    >
+      ← Back to AI Tools
+    </a>
+
+    <header class="mt-10 text-center">
+      <div
+        class="mx-auto mb-5 flex h-16 w-16 items-center justify-center rounded-2xl bg-white/10 text-3xl"
+      >
+        📧
+      </div>
+
+      <h1 class="text-4xl font-bold sm:text-5xl">
+        AI Email Subject Generator
+      </h1>
+
+      <p class="mx-auto mt-4 max-w-2xl text-gray-400">
+        Create compelling email subject lines designed to grab attention and
+        encourage people to open your emails.
+      </p>
+    </header>
+
+    <section class="mt-12 grid gap-8 lg:grid-cols-2">
+
+      <!-- INPUT -->
+      <div
+        class="rounded-2xl border border-white/10 bg-white/[0.03] p-6 sm:p-8"
+      >
+        <h2 class="text-xl font-semibold">
+          Email Details
+        </h2>
+
+        <p class="mt-2 text-sm text-gray-500">
+          Describe your email and choose the style you want.
+        </p>
+
+        <div class="mt-7">
+          <label
+            for="topic"
+            class="mb-2 block text-sm font-medium text-gray-300"
+          >
+            What is the email about?
+          </label>
+
+          <textarea
+            id="topic"
+            rows="6"
+            placeholder="Example: New AI productivity tool launching with 30% off for the first week"
+            class="w-full resize-y rounded-xl border border-white/10 bg-[#111118] px-4 py-3 text-sm leading-7 text-white placeholder-gray-500 outline-none transition focus:border-white/30"
+          ></textarea>
+        </div>
+
+        <div class="mt-5">
+          <label
+            for="type"
+            class="mb-2 block text-sm font-medium text-gray-300"
+          >
+            Email Type
+          </label>
+
+          <select
+            id="type"
+            class="w-full rounded-xl border border-white/10 bg-[#111118] px-4 py-3 text-sm text-white outline-none focus:border-white/30"
+          >
+            <option value="marketing" selected>
+              Marketing
+            </option>
+
+            <option value="newsletter">
+              Newsletter
+            </option>
+
+            <option value="sales">
+              Sales
+            </option>
+
+            <option value="business">
+              Business
+            </option>
+
+            <option value="announcement">
+              Announcement
+            </option>
+
+            <option value="followup">
+              Follow-up
+            </option>
+
+            <option value="personal">
+              Personal
+            </option>
+          </select>
+        </div>
+
+        <div class="mt-5">
+          <label
+            for="tone"
+            class="mb-2 block text-sm font-medium text-gray-300"
+          >
+            Tone
+          </label>
+
+          <select
+            id="tone"
+            class="w-full rounded-xl border border-white/10 bg-[#111118] px-4 py-3 text-sm text-white outline-none focus:border-white/30"
+          >
+            <option value="curious" selected>
+              Curiosity
+            </option>
+
+            <option value="professional">
+              Professional
+            </option>
+
+            <option value="urgent">
+              Urgent
+            </option>
+
+            <option value="friendly">
+              Friendly
+            </option>
+
+            <option value="exciting">
+              Exciting
+            </option>
+
+            <option value="minimal">
+              Short & Simple
+            </option>
+          </select>
+        </div>
+
+        <div class="mt-5">
+          <label
+            for="audience"
+            class="mb-2 block text-sm font-medium text-gray-300"
+          >
+            Target Audience
+          </label>
+
+          <input
+            id="audience"
+            type="text"
+            placeholder="Example: SaaS founders, students, marketers"
+            class="w-full rounded-xl border border-white/10 bg-[#111118] px-4 py-3 text-sm text-white placeholder-gray-500 outline-none transition focus:border-white/30"
+          />
+        </div>
+
+        <div class="mt-5">
+          <label
+            for="benefit"
+            class="mb-2 block text-sm font-medium text-gray-300"
+          >
+            Main Benefit
+          </label>
+
+          <input
+            id="benefit"
+            type="text"
+            placeholder="Example: Save 5 hours every week"
+            class="w-full rounded-xl border border-white/10 bg-[#111118] px-4 py-3 text-sm text-white placeholder-gray-500 outline-none transition focus:border-white/30"
+          />
+        </div>
+
+        <div class="mt-8 flex flex-wrap gap-3">
+          <button
+            id="generateBtn"
+            type="button"
+            class="flex-1 rounded-xl bg-white px-6 py-4 font-semibold text-black transition hover:bg-gray-200"
+          >
+            Generate Subjects
+          </button>
+
+          <button
+            id="clearBtn"
+            type="button"
+            class="rounded-xl border border-white/10 px-6 py-4 text-gray-300 transition hover:bg-white/10"
+          >
+            Clear
+          </button>
+        </div>
+
+        <p
+          id="status"
+          class="mt-4 hidden text-center text-sm text-gray-400"
+        ></p>
+      </div>
+
+      <!-- OUTPUT -->
+      <div
+        class="rounded-2xl border border-white/10 bg-white/[0.03] p-6 sm:p-8 lg:sticky lg:top-8 lg:self-start"
+      >
+        <div class="flex items-center justify-between gap-4">
+          <div>
+            <h2 class="text-xl font-semibold">
+              Generated Subject Lines
+            </h2>
+
+            <p class="mt-1 text-sm text-gray-500">
+              Choose the subject line that best fits your email.
+            </p>
+          </div>
+
+          <button
+            id="copyBtn"
+            type="button"
+            class="rounded-lg border border-white/10 px-4 py-2 text-sm text-gray-300 transition hover:bg-white/10"
+          >
+            Copy
+          </button>
+        </div>
+
+        <textarea
+          id="output"
+          readonly
+          rows="26"
+          placeholder="Your email subject lines will appear here..."
+          class="mt-6 w-full resize-y rounded-xl border border-white/10 bg-[#111118] px-4 py-4 text-sm leading-8 text-gray-300 outline-none"
+        ></textarea>
+
+        <div class="mt-4 flex items-center justify-between text-xs text-gray-500">
+          <span id="lineCount">
+            0 subjects
+          </span>
+
+          <span id="charCount">
+            0 characters
+          </span>
+        </div>
+      </div>
+
+    </section>
+
+    <section class="mt-16 max-w-3xl">
+      <h2 class="text-2xl font-bold">
+        Tips for better email subject lines
+      </h2>
+
+      <div class="mt-6 grid gap-4 sm:grid-cols-2">
+
+        <div class="rounded-xl border border-white/10 bg-white/[0.03] p-5">
+          <div class="text-2xl">🎯</div>
+
+          <h3 class="mt-3 font-semibold">
+            Be specific
+          </h3>
+
+          <p class="mt-2 text-sm leading-6 text-gray-500">
+            Tell readers what they can expect instead of using vague
+            descriptions.
+          </p>
+        </div>
+
+        <div class="rounded-xl border border-white/10 bg-white/[0.03] p-5">
+          <div class="text-2xl">👀</div>
+
+          <h3 class="mt-3 font-semibold">
+            Create curiosity
+          </h3>
+
+          <p class="mt-2 text-sm leading-6 text-gray-500">
+            Give readers a reason to open the email without misleading them.
+          </p>
+        </div>
+
+        <div class="rounded-xl border border-white/10 bg-white/[0.03] p-5">
+          <div class="text-2xl">⚡</div>
+
+          <h3 class="mt-3 font-semibold">
+            Highlight the benefit
+          </h3>
+
+          <p class="mt-2 text-sm leading-6 text-gray-500">
+            Focus on the result or value the reader will get from opening the
+            email.
+          </p>
+        </div>
+
+        <div class="rounded-xl border border-white/10 bg-white/[0.03] p-5">
+          <div class="text-2xl">✂️</div>
+
+          <h3 class="mt-3 font-semibold">
+            Keep it concise
+          </h3>
+
+          <p class="mt-2 text-sm leading-6 text-gray-500">
+            Short, clear subject lines are easier to scan on desktop and
+            mobile.
+          </p>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <script>
+    const $ = (id: string) =>
+      document.getElementById(id);
+
+    const getValue = (id: string) => {
+      const element =
+        document.getElementById(id) as
+          | HTMLInputElement
+          | HTMLTextAreaElement
+          | HTMLSelectElement
+          | null;
+
+      return element?.value.trim() || '';
+    };
+
+    const clean = (text: string) =>
+      text.replace(/\s+/g, ' ').trim();
+
+    function createSubjects(
+      topic: string,
+      type: string,
+      tone: string,
+      audience: string,
+      benefit: string
+    ) {
+      const subject =
+        clean(topic);
+
+      const target =
+        clean(audience) ||
+        'you';
+
+      const value =
+        clean(benefit);
+
+      const benefitText =
+        value || 'a better way to get results';
+
+      const subjects: Record<
+        string,
+        string[]
+      > = {
+        curious: [
+          `What if ${subject.toLowerCase()} could be easier?`,
+          `You might want to see this 👀`,
+          `The simple idea behind ${subject}`,
+          `Have you tried this yet?`,
+          `There is something interesting about ${subject}`,
+          `A better way to think about ${subject}`,
+          `This could change how you approach ${subject}`,
+          `One thing you should know about ${subject}`,
+          `Why ${subject} deserves your attention`,
+          `The idea I wish I knew earlier`,
+        ],
+
+        professional: [
+          `A practical approach to ${subject}`,
+          `An important update about ${subject}`,
+          `New insights on ${subject}`,
+          `A better strategy for ${subject}`,
+          `What ${target} should know about ${subject}`,
+          `A quick update: ${subject}`,
+          `Improving results with ${subject}`,
+          `A smarter approach to ${subject}`,
+          `Key insights for ${subject}`,
+          `What to consider before ${subject}`,
+        ],
+
+        urgent: [
+          `Last chance: ${subject}`,
+          `Don't miss this: ${subject}`,
+          `Important: ${subject}`,
+          `Act now: ${subject}`,
+          `Time-sensitive: ${subject}`,
+          `Before you miss out on this`,
+          `Your opportunity is here`,
+          `Final reminder about ${subject}`,
+          `Don't wait on this`,
+          `This won't be available forever`,
+        ],
+
+        friendly: [
+          `A quick note about ${subject} 👋`,
+          `Thought you might like this`,
+          `Something useful for you`,
+          `I wanted to share this with you`,
+          `Here's something you might enjoy`,
+          `A little update for you`,
+          `Hope this helps!`,
+          `You might find this useful`,
+          `Just wanted to let you know`,
+          `Something worth checking out`,
+        ],
+
+        exciting: [
+          `🚀 Something new is here!`,
+          `Big news: ${subject}`,
+          `This is exciting: ${subject}`,
+          `✨ Meet your new way to ${benefitText}`,
+          `🚀 Ready for a better approach?`,
+          `The wait is over`,
+          `A new opportunity just arrived`,
+          `Something big is happening`,
+          `This could be a game changer`,
+          `Here's what we've been working on`,
+        ],
+
+        minimal: [
+          `${subject}`,
+          `New: ${subject}`,
+          `Quick update`,
+          `A better way`,
+          `Don't miss this`,
+          `Worth a look`,
+          `New opportunity`,
+          `Important update`,
+          `Here's what's new`,
+          `Take a look`,
+        ],
+      };
+
+      let list =
+        subjects[tone] ||
+        subjects.curious;
+
+      if (type === 'sales') {
+        list = [
+          `Save more with ${subject}`,
+          `Ready to improve your results?`,
+          `A better solution for ${target}`,
+          `Get more from ${subject}`,
+          `Here's what you could gain`,
+          `Your next opportunity is here`,
+          `How to ${benefitText}`,
+          `A smarter way to get results`,
+          `Discover a better approach`,
+          `See what's possible`,
+        ];
+      }
+
+      if (type === 'newsletter') {
+        list = [
+          `This week's ideas: ${subject}`,
+          `Your latest update is here`,
+          `5 things worth knowing this week`,
+          `What's new: ${subject}`,
+          `This week's top insights`,
+          `A few things you shouldn't miss`,
+          `Your weekly dose of useful ideas`,
+          `New insights for you`,
+          `What we're reading this week`,
+          `The latest from AIZENOVA`,
+        ];
+      }
+
+      if (type === 'announcement') {
+        list = [
+          `🚀 We're excited to announce: ${subject}`,
+          `Important announcement`,
+          `It's official: ${subject}`,
+          `Something new is coming`,
+          `Big news: ${subject}`,
+          `We've got something to share`,
+          `Introducing something new`,
+          `The announcement you've been waiting for`,
+          `A new chapter begins`,
+          `Here's what's changing`,
+        ];
+      }
+
+      return list;
+    }
+
+    function updateStats(text: string) {
+      const lines =
+        text
+          .split('\n')
+          .filter(
+            (line) => line.trim()
+          );
+
+      $('lineCount')!.textContent =
+        `${lines.length} ${lines.length === 1 ? 'subject' : 'subjects'}`;
+
+      $('charCount')!.textContent =
+        `${text.length} characters`;
+    }
+
+    function showStatus(message: string) {
+      const status =
+        $('status')!;
+
+      status.textContent =
+        message;
+
+      status.classList.remove(
+        'hidden'
+      );
+
+      setTimeout(() => {
+        status.classList.add(
+          'hidden'
+        );
+      }, 2500);
+    }
+
+    $('generateBtn')!.addEventListener(
+      'click',
+      () => {
+        const topic =
+          getValue('topic');
+
+        if (!topic) {
+          showStatus(
+            'Please enter what your email is about.'
+          );
+
+          return;
+        }
+
+        const type =
+          getValue('type');
+
+        const tone =
+          getValue('tone');
+
+        const audience =
+          getValue('audience');
+
+        const benefit =
+          getValue('benefit');
+
+        const subjects =
+          createSubjects(
+            topic,
+            type,
+            tone,
+            audience,
+            benefit
+          );
+
+        const output =
+          $('output') as HTMLTextAreaElement;
+
+        output.value =
+          subjects
+            .map(
+              (item, index) =>
+                `${index + 1}. ${item}`
+            )
+            .join('\n');
+
+        updateStats(
+          output.value
+        );
+
+        showStatus(
+          'Email subject lines generated successfully.'
+        );
+      }
+    );
+
+    $('copyBtn')!.addEventListener(
+      'click',
+      async () => {
+        const output =
+          (
+            $('output') as HTMLTextAreaElement
+          ).value.trim();
+
+        if (!output) {
+          showStatus(
+            'Generate subject lines first.'
+          );
+
+          return;
+        }
+
+        try {
+          await navigator.clipboard.writeText(
+            output
+          );
+
+          const button =
+            $('copyBtn')!;
+
+          const original =
+            button.textContent;
+
+          button.textContent =
+            'Copied!';
+
+          setTimeout(() => {
+            button.textContent =
+              original;
+          }, 1800);
+        } catch {
+          showStatus(
+            'Unable to copy automatically.'
+          );
+        }
+      }
+    );
+
+    $('clearBtn')!.addEventListener(
+      'click',
+      () => {
+        (
+          $('topic') as HTMLTextAreaElement
+        ).value = '';
+
+        (
+          $('type') as HTMLSelectElement
+        ).value = 'marketing';
+
+        (
+          $('tone') as HTMLSelectElement
+        ).value = 'curious';
+
+        (
+          $('audience') as HTMLInputElement
+        ).value = '';
+
+        (
+          $('benefit') as HTMLInputElement
+        ).value = '';
+
+        (
+          $('output') as HTMLTextAreaElement
+        ).value = '';
+
+        updateStats('');
+
+        $('status')!.classList.add(
+          'hidden'
+        );
+      }
+    );
+
+    updateStats('');
+  </script>
+</Layout>

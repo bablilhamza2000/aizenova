@@ -1,0 +1,750 @@
+---
+const pageTitle = 'AI Summarizer';
+const pageDescription =
+  'Summarize long texts quickly and clearly with AI.';
+---
+
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0"
+    />
+
+    <title>{pageTitle} | AIZENOVA</title>
+
+    <meta
+      name="description"
+      content={pageDescription}
+    />
+  </head>
+
+  <body class="min-h-screen bg-[#08080d] text-white">
+
+    <main class="mx-auto max-w-5xl px-5 py-12 sm:px-8">
+
+      <!-- Back -->
+      <a
+        href="/ai-tools"
+        class="inline-flex items-center gap-2 text-sm text-gray-400 transition hover:text-white"
+      >
+        ← Back to AI Tools
+      </a>
+
+
+      <!-- Header -->
+      <section class="mt-12 text-center">
+
+        <div
+          class="mx-auto mb-5 flex h-16 w-16 items-center justify-center rounded-2xl bg-white/10 text-3xl"
+        >
+          📝
+        </div>
+
+        <h1 class="text-4xl font-bold sm:text-5xl">
+          AI Summarizer
+        </h1>
+
+        <p class="mx-auto mt-4 max-w-2xl text-gray-400">
+          Turn long articles and texts into clear,
+          concise summaries in seconds.
+        </p>
+
+      </section>
+
+
+      <!-- Summarizer Card -->
+      <section
+        class="mx-auto mt-10 max-w-3xl rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-8"
+      >
+
+        <!-- Text -->
+        <div>
+
+          <label
+            for="sourceText"
+            class="mb-3 block text-sm font-medium text-gray-200"
+          >
+            Paste your text
+          </label>
+
+          <textarea
+            id="sourceText"
+            rows="12"
+            maxlength="15000"
+            placeholder="Paste the article, document, notes, or any text you want to summarize..."
+            class="w-full resize-y rounded-xl border border-white/10 bg-[#111118] px-4 py-4 text-white placeholder-gray-500 outline-none transition focus:border-white/30"
+          ></textarea>
+
+          <div class="mt-2 flex justify-between text-xs text-gray-500">
+
+            <span>
+              Paste the text you want to summarize.
+            </span>
+
+            <span>
+              <span id="charCount">0</span>/15000
+            </span>
+
+          </div>
+
+        </div>
+
+
+        <!-- Options -->
+        <div class="mt-6 grid gap-5 sm:grid-cols-2">
+
+          <!-- Language -->
+          <div>
+
+            <label
+              for="language"
+              class="mb-3 block text-sm font-medium text-gray-200"
+            >
+              Language
+            </label>
+
+            <select
+              id="language"
+              class="w-full rounded-xl border border-white/10 bg-[#111118] px-4 py-3 text-white outline-none transition focus:border-white/30"
+            >
+              <option value="English">English</option>
+              <option value="French">French</option>
+              <option value="Arabic">Arabic</option>
+              <option value="Spanish">Spanish</option>
+              <option value="German">German</option>
+              <option value="Italian">Italian</option>
+            </select>
+
+          </div>
+
+
+          <!-- Length -->
+          <div>
+
+            <label
+              for="length"
+              class="mb-3 block text-sm font-medium text-gray-200"
+            >
+              Summary Length
+            </label>
+
+            <select
+              id="length"
+              class="w-full rounded-xl border border-white/10 bg-[#111118] px-4 py-3 text-white outline-none transition focus:border-white/30"
+            >
+              <option value="Short">
+                Short
+              </option>
+
+              <option value="Medium" selected>
+                Medium
+              </option>
+
+              <option value="Detailed">
+                Detailed
+              </option>
+            </select>
+
+          </div>
+
+        </div>
+
+
+        <!-- Generate -->
+        <button
+          id="summarizeBtn"
+          type="button"
+          class="mt-6 w-full rounded-xl bg-white px-6 py-4 font-semibold text-black transition hover:bg-gray-200 disabled:cursor-not-allowed disabled:opacity-50"
+        >
+          ✨ Summarize Text
+        </button>
+
+
+        <!-- Loading -->
+        <div
+          id="loading"
+          class="mt-6 hidden rounded-xl border border-white/10 bg-white/[0.03] p-6 text-center"
+        >
+
+          <div class="animate-pulse text-2xl">
+            ✨
+          </div>
+
+          <p class="mt-2 text-sm text-gray-400">
+            AI is summarizing your text...
+          </p>
+
+          <p class="mt-1 text-xs text-gray-500">
+            This may take a few seconds.
+          </p>
+
+        </div>
+
+
+        <!-- Error -->
+        <div
+          id="errorContainer"
+          class="mt-6 hidden rounded-xl border border-red-500/20 bg-red-500/5 p-4"
+        >
+
+          <p
+            id="errorMessage"
+            class="text-sm text-red-400"
+          ></p>
+
+        </div>
+
+
+        <!-- Result -->
+        <div
+          id="resultContainer"
+          class="mt-8 hidden"
+        >
+
+          <div
+            class="mb-3 flex flex-wrap items-center justify-between gap-3"
+          >
+
+            <h2 class="text-lg font-semibold">
+              Summary
+            </h2>
+
+            <div class="flex flex-wrap gap-2">
+
+              <button
+                id="regenerateBtn"
+                type="button"
+                class="rounded-lg border border-white/10 px-4 py-2 text-sm text-gray-300 transition hover:bg-white/10 hover:text-white"
+              >
+                🔄 Regenerate
+              </button>
+
+              <button
+                id="copyBtn"
+                type="button"
+                class="rounded-lg border border-white/10 px-4 py-2 text-sm text-gray-300 transition hover:bg-white/10 hover:text-white"
+              >
+                📋 Copy
+              </button>
+
+              <button
+                id="downloadBtn"
+                type="button"
+                class="rounded-lg border border-white/10 px-4 py-2 text-sm text-gray-300 transition hover:bg-white/10 hover:text-white"
+              >
+                ⬇️ Download
+              </button>
+
+            </div>
+
+          </div>
+
+
+          <div
+            id="result"
+            class="max-h-[650px] min-h-[250px] overflow-y-auto whitespace-pre-wrap rounded-xl border border-white/10 bg-[#111118] p-5 leading-7 text-gray-200"
+          ></div>
+
+
+          <button
+            id="clearBtn"
+            type="button"
+            class="mt-4 text-sm text-gray-500 transition hover:text-white"
+          >
+            Clear result
+          </button>
+
+        </div>
+
+      </section>
+
+
+      <!-- Features -->
+      <section
+        class="mx-auto mt-10 grid max-w-3xl gap-5 sm:grid-cols-3"
+      >
+
+        <div
+          class="rounded-2xl border border-white/10 bg-white/[0.03] p-5"
+        >
+
+          <div class="text-2xl">
+            ⚡
+          </div>
+
+          <h3 class="mt-3 font-semibold">
+            Fast
+          </h3>
+
+          <p class="mt-2 text-sm text-gray-500">
+            Summarize long texts in seconds.
+          </p>
+
+        </div>
+
+
+        <div
+          class="rounded-2xl border border-white/10 bg-white/[0.03] p-5"
+        >
+
+          <div class="text-2xl">
+            🤖
+          </div>
+
+          <h3 class="mt-3 font-semibold">
+            AI Powered
+          </h3>
+
+          <p class="mt-2 text-sm text-gray-500">
+            Extract the most important information.
+          </p>
+
+        </div>
+
+
+        <div
+          class="rounded-2xl border border-white/10 bg-white/[0.03] p-5"
+        >
+
+          <div class="text-2xl">
+            📋
+          </div>
+
+          <h3 class="mt-3 font-semibold">
+            Easy to Use
+          </h3>
+
+          <p class="mt-2 text-sm text-gray-500">
+            Copy or download your summary easily.
+          </p>
+
+        </div>
+
+      </section>
+
+    </main>
+
+
+    <!-- JavaScript -->
+    <script>
+
+      const sourceText =
+        document.getElementById(
+          'sourceText'
+        ) as HTMLTextAreaElement;
+
+
+      const languageSelect =
+        document.getElementById(
+          'language'
+        ) as HTMLSelectElement;
+
+
+      const lengthSelect =
+        document.getElementById(
+          'length'
+        ) as HTMLSelectElement;
+
+
+      const summarizeBtn =
+        document.getElementById(
+          'summarizeBtn'
+        ) as HTMLButtonElement;
+
+
+      const regenerateBtn =
+        document.getElementById(
+          'regenerateBtn'
+        ) as HTMLButtonElement;
+
+
+      const copyBtn =
+        document.getElementById(
+          'copyBtn'
+        ) as HTMLButtonElement;
+
+
+      const downloadBtn =
+        document.getElementById(
+          'downloadBtn'
+        ) as HTMLButtonElement;
+
+
+      const clearBtn =
+        document.getElementById(
+          'clearBtn'
+        ) as HTMLButtonElement;
+
+
+      const charCount =
+        document.getElementById(
+          'charCount'
+        ) as HTMLSpanElement;
+
+
+      const loading =
+        document.getElementById(
+          'loading'
+        ) as HTMLDivElement;
+
+
+      const errorContainer =
+        document.getElementById(
+          'errorContainer'
+        ) as HTMLDivElement;
+
+
+      const errorMessage =
+        document.getElementById(
+          'errorMessage'
+        ) as HTMLParagraphElement;
+
+
+      const resultContainer =
+        document.getElementById(
+          'resultContainer'
+        ) as HTMLDivElement;
+
+
+      const result =
+        document.getElementById(
+          'result'
+        ) as HTMLDivElement;
+
+
+      let lastRequest = {
+        text: '',
+        language: 'English',
+        length: 'Medium'
+      };
+
+
+      /* Character counter */
+
+      sourceText.addEventListener(
+        'input',
+        () => {
+
+          charCount.textContent =
+            String(sourceText.value.length);
+
+        }
+      );
+
+
+      /* Summarize */
+
+      async function summarizeText() {
+
+        const text =
+          sourceText.value.trim();
+
+
+        const language =
+          languageSelect.value;
+
+
+        const length =
+          lengthSelect.value;
+
+
+        if (!text) {
+
+          errorMessage.textContent =
+            'Please paste some text to summarize.';
+
+          errorContainer.classList.remove(
+            'hidden'
+          );
+
+          resultContainer.classList.add(
+            'hidden'
+          );
+
+          return;
+
+        }
+
+
+        errorContainer.classList.add(
+          'hidden'
+        );
+
+        loading.classList.remove(
+          'hidden'
+        );
+
+        resultContainer.classList.add(
+          'hidden'
+        );
+
+        summarizeBtn.disabled = true;
+
+        regenerateBtn.disabled = true;
+
+
+        lastRequest = {
+          text,
+          language,
+          length
+        };
+
+
+        try {
+
+          const response =
+            await fetch(
+              '/api/summarize',
+              {
+                method: 'POST',
+
+                headers: {
+                  'Content-Type':
+                    'application/json'
+                },
+
+                body: JSON.stringify({
+                  text,
+                  language,
+                  length
+                })
+              }
+            );
+
+
+          const data =
+            await response.json();
+
+
+          if (!response.ok) {
+
+            throw new Error(
+              data?.error ||
+              'Failed to summarize text.'
+            );
+
+          }
+
+
+          if (!data?.text) {
+
+            throw new Error(
+              'AI returned an empty summary.'
+            );
+
+          }
+
+
+          result.textContent =
+            data.text;
+
+
+          resultContainer.classList.remove(
+            'hidden'
+          );
+
+        } catch (error) {
+
+          console.error(error);
+
+          errorMessage.textContent =
+            error instanceof Error
+              ? error.message
+              : 'Something went wrong. Please try again.';
+
+          errorContainer.classList.remove(
+            'hidden'
+          );
+
+        } finally {
+
+          loading.classList.add(
+            'hidden'
+          );
+
+          summarizeBtn.disabled = false;
+
+          regenerateBtn.disabled = false;
+
+        }
+
+      }
+
+
+      /* Generate */
+
+      summarizeBtn.addEventListener(
+        'click',
+        summarizeText
+      );
+
+
+      /* Regenerate */
+
+      regenerateBtn.addEventListener(
+        'click',
+        async () => {
+
+          if (!lastRequest.text) {
+            return;
+          }
+
+
+          sourceText.value =
+            lastRequest.text;
+
+
+          languageSelect.value =
+            lastRequest.language;
+
+
+          lengthSelect.value =
+            lastRequest.length;
+
+
+          charCount.textContent =
+            String(
+              sourceText.value.length
+            );
+
+
+          await summarizeText();
+
+        }
+      );
+
+
+      /* Copy */
+
+      copyBtn.addEventListener(
+        'click',
+        async () => {
+
+          const text =
+            result.textContent || '';
+
+
+          if (!text) {
+            return;
+          }
+
+
+          try {
+
+            await navigator.clipboard.writeText(
+              text
+            );
+
+
+            const original =
+              copyBtn.textContent;
+
+
+            copyBtn.textContent =
+              '✅ Copied!';
+
+
+            setTimeout(() => {
+
+              copyBtn.textContent =
+                original;
+
+            }, 1500);
+
+          } catch {
+
+            errorMessage.textContent =
+              'Unable to copy the summary.';
+
+            errorContainer.classList.remove(
+              'hidden'
+            );
+
+          }
+
+        }
+      );
+
+
+      /* Download */
+
+      downloadBtn.addEventListener(
+        'click',
+        () => {
+
+          const text =
+            result.textContent || '';
+
+
+          if (!text) {
+            return;
+          }
+
+
+          const blob =
+            new Blob(
+              [text],
+              {
+                type:
+                  'text/plain;charset=utf-8'
+              }
+            );
+
+
+          const url =
+            URL.createObjectURL(blob);
+
+
+          const link =
+            document.createElement('a');
+
+
+          link.href = url;
+
+
+          link.download =
+            'aizenova-summary.txt';
+
+
+          document.body.appendChild(
+            link
+          );
+
+
+          link.click();
+
+
+          link.remove();
+
+
+          URL.revokeObjectURL(url);
+
+        }
+      );
+
+
+      /* Clear */
+
+      clearBtn.addEventListener(
+        'click',
+        () => {
+
+          result.textContent = '';
+
+          resultContainer.classList.add(
+            'hidden'
+          );
+
+          errorContainer.classList.add(
+            'hidden'
+          );
+
+        }
+      );
+
+    </script>
+
+  </body>
+</html>

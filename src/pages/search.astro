@@ -1,0 +1,75 @@
+---
+import Layout from '~/layouts/PageLayout.astro';
+import { getCollection } from 'astro:content';
+
+const posts = await getCollection('post');
+
+const metadata = {
+  title: 'Search',
+};
+---
+
+<Layout metadata={metadata}>
+  <section class="max-w-4xl mx-auto px-6 py-16">
+
+    <h1 class="text-5xl font-bold mb-4">
+      Search
+    </h1>
+
+    <p class="text-gray-500 mb-8">
+      Search articles, tutorials, reviews and AI guides.
+    </p>
+
+    <input
+      id="searchInput"
+      type="text"
+      placeholder="Search articles..."
+      class="w-full rounded-xl border border-gray-300 p-4 text-lg dark:bg-slate-900 dark:border-slate-700"
+    />
+
+    <div
+      id="posts-data"
+      data-posts={JSON.stringify(
+        posts.map((post) => ({
+          title: post.data.title,
+          excerpt: post.data.excerpt ?? '',
+          slug: post.id.replace(/\.mdx?$/, ''),
+        }))
+      )}
+      class="hidden"
+    ></div>
+
+    <div id="results" class="mt-10"></div>
+
+  </section>
+
+  <script is:inline>
+    const input = document.getElementById('searchInput');
+    const results = document.getElementById('results');
+    const data = JSON.parse(document.getElementById('posts-data').dataset.posts);
+
+    input.addEventListener('input', () => {
+      const q = input.value.toLowerCase().trim();
+
+      if (!q) {
+        results.innerHTML = '';
+        return;
+      }
+
+      const filtered = data.filter(post =>
+        post.title.toLowerCase().includes(q) ||
+        post.excerpt.toLowerCase().includes(q)
+      );
+
+      results.innerHTML = filtered.length
+        ? filtered.map(post => `
+          <a href="/${post.slug}" class="block p-4 mb-4 border rounded-xl hover:bg-gray-50 dark:hover:bg-slate-800">
+            <h2 class="font-bold text-xl">${post.title}</h2>
+            <p class="text-gray-500 mt-2">${post.excerpt}</p>
+          </a>
+        `).join('')
+        : '<p>No articles found.</p>';
+    });
+  </script>
+
+</Layout>

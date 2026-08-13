@@ -1,0 +1,459 @@
+---
+import Layout from '../../layouts/Layout.astro';
+
+const pageTitle = 'AI YouTube Description Generator | AIZENOVA';
+const pageDescription =
+  'Generate engaging, SEO-friendly YouTube descriptions for your videos with AIZENOVA.';
+---
+
+<Layout title={pageTitle} description={pageDescription}>
+  <main class="mx-auto max-w-5xl px-6 py-12 text-white">
+
+    <a
+      href="/ai-tools"
+      class="inline-flex items-center gap-2 text-sm text-gray-400 transition hover:text-white"
+    >
+      ← Back to AI Tools
+    </a>
+
+    <header class="mt-10 text-center">
+      <div
+        class="mx-auto mb-5 flex h-16 w-16 items-center justify-center rounded-2xl bg-white/10 text-3xl"
+      >
+        📝
+      </div>
+
+      <h1 class="text-4xl font-bold sm:text-5xl">
+        AI YouTube Description Generator
+      </h1>
+
+      <p class="mx-auto mt-4 max-w-2xl text-gray-400">
+        Create clear, engaging, and SEO-friendly YouTube descriptions from
+        your video topic and keywords.
+      </p>
+    </header>
+
+    <section class="mt-12 grid gap-8 lg:grid-cols-2">
+
+      <!-- INPUT -->
+      <div
+        class="rounded-2xl border border-white/10 bg-white/[0.03] p-6 sm:p-8"
+      >
+        <h2 class="text-xl font-semibold">
+          Video Information
+        </h2>
+
+        <p class="mt-2 text-sm text-gray-500">
+          Add the basic information about your video.
+        </p>
+
+        <div class="mt-7">
+          <label
+            for="topic"
+            class="mb-2 block text-sm font-medium text-gray-300"
+          >
+            Video Topic
+          </label>
+
+          <textarea
+            id="topic"
+            rows="6"
+            placeholder="Example: A beginner-friendly tutorial explaining how to learn Python from zero."
+            class="w-full resize-y rounded-xl border border-white/10 bg-[#111118] px-4 py-3 text-sm leading-7 text-white placeholder-gray-500 outline-none transition focus:border-white/30"
+          ></textarea>
+        </div>
+
+        <div class="mt-5">
+          <label
+            for="keyword"
+            class="mb-2 block text-sm font-medium text-gray-300"
+          >
+            Main Keywords
+          </label>
+
+          <input
+            id="keyword"
+            type="text"
+            placeholder="Example: Python, Python tutorial, learn Python"
+            class="w-full rounded-xl border border-white/10 bg-[#111118] px-4 py-3 text-sm text-white placeholder-gray-500 outline-none transition focus:border-white/30"
+          />
+        </div>
+
+        <div class="mt-5">
+          <label
+            for="channel"
+            class="mb-2 block text-sm font-medium text-gray-300"
+          >
+            Channel Name
+          </label>
+
+          <input
+            id="channel"
+            type="text"
+            placeholder="Example: AIZENOVA"
+            class="w-full rounded-xl border border-white/10 bg-[#111118] px-4 py-3 text-sm text-white placeholder-gray-500 outline-none transition focus:border-white/30"
+          />
+        </div>
+
+        <div class="mt-5">
+          <label
+            for="style"
+            class="mb-2 block text-sm font-medium text-gray-300"
+          >
+            Description Style
+          </label>
+
+          <select
+            id="style"
+            class="w-full rounded-xl border border-white/10 bg-[#111118] px-4 py-3 text-sm text-white outline-none focus:border-white/30"
+          >
+            <option value="seo">SEO Focused</option>
+            <option value="professional">Professional</option>
+            <option value="friendly">Friendly</option>
+            <option value="short">Short & Simple</option>
+            <option value="engaging">Engaging</option>
+          </select>
+        </div>
+
+        <div class="mt-5">
+          <label
+            for="cta"
+            class="mb-2 block text-sm font-medium text-gray-300"
+          >
+            Call to Action
+          </label>
+
+          <input
+            id="cta"
+            type="text"
+            placeholder="Example: Subscribe for more tutorials!"
+            class="w-full rounded-xl border border-white/10 bg-[#111118] px-4 py-3 text-sm text-white placeholder-gray-500 outline-none transition focus:border-white/30"
+          />
+        </div>
+
+        <div class="mt-8 flex flex-wrap gap-3">
+          <button
+            id="generateBtn"
+            type="button"
+            class="flex-1 rounded-xl bg-white px-6 py-4 font-semibold text-black transition hover:bg-gray-200"
+          >
+            Generate Description
+          </button>
+
+          <button
+            id="clearBtn"
+            type="button"
+            class="rounded-xl border border-white/10 px-6 py-4 text-gray-300 transition hover:bg-white/10"
+          >
+            Clear
+          </button>
+        </div>
+
+        <p
+          id="status"
+          class="mt-4 hidden text-center text-sm text-gray-400"
+        ></p>
+      </div>
+
+      <!-- OUTPUT -->
+      <div
+        class="rounded-2xl border border-white/10 bg-white/[0.03] p-6 sm:p-8 lg:sticky lg:top-8 lg:self-start"
+      >
+        <div class="flex items-center justify-between gap-4">
+          <div>
+            <h2 class="text-xl font-semibold">
+              YouTube Description
+            </h2>
+
+            <p class="mt-1 text-sm text-gray-500">
+              Your generated description will appear here.
+            </p>
+          </div>
+
+          <button
+            id="copyBtn"
+            type="button"
+            class="rounded-lg border border-white/10 px-4 py-2 text-sm text-gray-300 transition hover:bg-white/10"
+          >
+            Copy
+          </button>
+        </div>
+
+        <textarea
+          id="output"
+          readonly
+          rows="22"
+          placeholder="Your YouTube description will appear here..."
+          class="mt-6 w-full resize-y rounded-xl border border-white/10 bg-[#111118] px-4 py-4 text-sm leading-7 text-gray-300 outline-none"
+        ></textarea>
+
+        <div class="mt-4 flex items-center justify-between text-xs text-gray-500">
+          <span id="wordCount">
+            0 words
+          </span>
+
+          <span id="charCount">
+            0 characters
+          </span>
+        </div>
+      </div>
+
+    </section>
+
+    <section class="mt-16 max-w-3xl">
+      <h2 class="text-2xl font-bold">
+        Why use a YouTube description generator?
+      </h2>
+
+      <div class="mt-5 space-y-4 text-sm leading-7 text-gray-400">
+        <p>
+          A good YouTube description helps viewers understand your video and
+          can provide useful context about the content.
+        </p>
+
+        <p>
+          Adding relevant keywords naturally can also make your content easier
+          to understand for search engines and viewers.
+        </p>
+
+        <p>
+          Use the generated description as a starting point and customize it
+          with your own links, resources, timestamps, and important information.
+        </p>
+      </div>
+    </section>
+
+  </main>
+
+  <script>
+    const $ = (id: string) =>
+      document.getElementById(id);
+
+    const getValue = (id: string) => {
+      const element =
+        document.getElementById(id) as
+          | HTMLInputElement
+          | HTMLTextAreaElement
+          | HTMLSelectElement
+          | null;
+
+      return element?.value.trim() || '';
+    };
+
+    const escapeText = (text: string) =>
+      text.replace(/\s+/g, ' ').trim();
+
+    function generateDescription() {
+      const topic = escapeText(getValue('topic'));
+      const keyword = escapeText(getValue('keyword'));
+      const channel = escapeText(getValue('channel'));
+      const style = getValue('style');
+      const cta = escapeText(getValue('cta'));
+
+      if (!topic) {
+        showStatus('Please enter your video topic first.');
+        return;
+      }
+
+      const keywords = keyword
+        ? keyword
+            .split(',')
+            .map((item) => item.trim())
+            .filter(Boolean)
+        : [];
+
+      const mainKeyword =
+        keywords[0] || 'this topic';
+
+      let intro = '';
+
+      if (style === 'short') {
+        intro = `In this video, we cover ${topic}.`;
+
+      } else if (style === 'professional') {
+        intro =
+          `In this video, we provide a practical and detailed overview of ${topic}. ` +
+          `You will learn the key concepts, useful strategies, and important points to keep in mind.`;
+
+      } else if (style === 'friendly') {
+        intro =
+          `Hey everyone! 👋 In today's video, we're talking about ${topic}. ` +
+          `If you're interested in ${mainKeyword}, this video is for you.`;
+
+      } else if (style === 'engaging') {
+        intro =
+          `Want to learn more about ${topic}? 🚀 ` +
+          `In this video, we'll break everything down into simple and practical steps.`;
+
+      } else {
+        intro =
+          `Looking for a simple guide to ${topic}? ` +
+          `In this video, we'll explore ${mainKeyword} and explain the most important things you need to know.`;
+      }
+
+      const keywordLine = keywords.length
+        ? `\n\n🔎 Topics covered:\n${keywords
+            .map((item) => `• ${item}`)
+            .join('\n')}`
+        : '';
+
+      const valueSection =
+        style === 'short'
+          ? ''
+          : `\n\n📌 What you'll learn:\n` +
+            `• Understand the main ideas behind ${mainKeyword}\n` +
+            `• Learn practical tips and strategies\n` +
+            `• Avoid common mistakes\n` +
+            `• Apply what you learn in real situations`;
+
+      const ctaSection = cta
+        ? `\n\n👉 ${cta}`
+        : `\n\n👍 If you found this video helpful, consider liking the video and subscribing for more useful content.`;
+
+      const channelSection = channel
+        ? `\n\n📺 ${channel}\nMore useful content, tutorials, and guides are coming soon.`
+        : '';
+
+      const disclaimer =
+        `\n\n⚠️ Note: Always verify important information and adapt the ideas in this video to your own situation.`;
+
+      const hashtags = keywords.length
+        ? `\n\n${keywords
+            .slice(0, 5)
+            .map(
+              (item) =>
+                '#' +
+                item
+                  .replace(/[^a-zA-Z0-9]+/g, '')
+            )
+            .filter((item) => item.length > 1)
+            .join(' ')}`
+        : '';
+
+      return (
+        intro +
+        valueSection +
+        keywordLine +
+        ctaSection +
+        channelSection +
+        disclaimer +
+        hashtags
+      );
+    }
+
+    function updateStats(text: string) {
+      const words = text.trim()
+        ? text.trim().split(/\s+/).length
+        : 0;
+
+      const characters = text.length;
+
+      $('wordCount')!.textContent =
+        `${words} ${words === 1 ? 'word' : 'words'}`;
+
+      $('charCount')!.textContent =
+        `${characters} characters`;
+    }
+
+    function showStatus(message: string) {
+      const status = $('status')!;
+
+      status.textContent = message;
+      status.classList.remove('hidden');
+
+      setTimeout(() => {
+        status.classList.add('hidden');
+      }, 2500);
+    }
+
+    $('generateBtn')!.addEventListener(
+      'click',
+      () => {
+        const result = generateDescription();
+
+        if (!result) return;
+
+        const output =
+          $('output') as HTMLTextAreaElement;
+
+        output.value = result;
+
+        updateStats(result);
+
+        showStatus(
+          'YouTube description generated successfully.'
+        );
+      }
+    );
+
+    $('copyBtn')!.addEventListener(
+      'click',
+      async () => {
+        const output =
+          ($('output') as HTMLTextAreaElement).value.trim();
+
+        if (!output) {
+          showStatus(
+            'Generate a description first.'
+          );
+          return;
+        }
+
+        try {
+          await navigator.clipboard.writeText(output);
+
+          const button = $('copyBtn')!;
+
+          const original =
+            button.textContent;
+
+          button.textContent = 'Copied!';
+
+          setTimeout(() => {
+            button.textContent = original;
+          }, 1800);
+
+        } catch {
+          showStatus(
+            'Unable to copy automatically.'
+          );
+        }
+      }
+    );
+
+    $('clearBtn')!.addEventListener(
+      'click',
+      () => {
+        (
+          $('topic') as HTMLTextAreaElement
+        ).value = '';
+
+        (
+          $('keyword') as HTMLInputElement
+        ).value = '';
+
+        (
+          $('channel') as HTMLInputElement
+        ).value = '';
+
+        (
+          $('style') as HTMLSelectElement
+        ).value = 'seo';
+
+        (
+          $('cta') as HTMLInputElement
+        ).value = '';
+
+        (
+          $('output') as HTMLTextAreaElement
+        ).value = '';
+
+        updateStats('');
+
+        $('status')!.classList.add('hidden');
+      }
+    );
+
+    updateStats('');
+  </script>
+</Layout>

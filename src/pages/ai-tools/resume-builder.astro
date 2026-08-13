@@ -1,0 +1,1016 @@
+---
+import Layout from '../../layouts/Layout.astro';
+---
+
+<Layout title="AI Resume Builder | AIZENOVA">
+  <main class="mx-auto max-w-5xl px-6 py-12 text-white">
+
+    <a
+      href="/ai-tools"
+      class="inline-flex items-center gap-2 text-sm text-gray-400 transition hover:text-white"
+    >
+      ← Back to AI Tools
+    </a>
+
+    <header class="mt-10 text-center">
+      <div class="mx-auto mb-5 flex h-16 w-16 items-center justify-center rounded-2xl bg-white/10 text-3xl">
+        📄
+      </div>
+
+      <h1 class="text-4xl font-bold sm:text-5xl">
+        AI Resume Builder
+      </h1>
+
+      <p class="mx-auto mt-4 max-w-2xl text-gray-400">
+        Create a professional resume from your information in a few simple steps.
+      </p>
+    </header>
+
+    <section class="mt-12 grid gap-8 lg:grid-cols-2">
+
+      <!-- FORM -->
+
+      <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-6 sm:p-8">
+
+        <h2 class="text-xl font-semibold">
+          Your Information
+        </h2>
+
+        <p class="mt-2 text-sm text-gray-500">
+          Fill in the details below. You can preview and print your resume instantly.
+        </p>
+
+        <!-- Personal Information -->
+
+        <div class="mt-7">
+
+          <h3 class="mb-4 text-sm font-semibold uppercase tracking-wider text-gray-400">
+            Personal Information
+          </h3>
+
+          <div class="grid gap-4 sm:grid-cols-2">
+
+            <input
+              id="fullName"
+              type="text"
+              placeholder="Full name"
+              class="rounded-xl border border-white/10 bg-[#111118] px-4 py-3 text-white placeholder-gray-500 outline-none focus:border-white/30"
+            />
+
+            <input
+              id="jobTitle"
+              type="text"
+              placeholder="Job title"
+              class="rounded-xl border border-white/10 bg-[#111118] px-4 py-3 text-white placeholder-gray-500 outline-none focus:border-white/30"
+            />
+
+            <input
+              id="email"
+              type="email"
+              placeholder="Email"
+              class="rounded-xl border border-white/10 bg-[#111118] px-4 py-3 text-white placeholder-gray-500 outline-none focus:border-white/30"
+            />
+
+            <input
+              id="phone"
+              type="text"
+              placeholder="Phone"
+              class="rounded-xl border border-white/10 bg-[#111118] px-4 py-3 text-white placeholder-gray-500 outline-none focus:border-white/30"
+            />
+
+            <input
+              id="location"
+              type="text"
+              placeholder="City, Country"
+              class="rounded-xl border border-white/10 bg-[#111118] px-4 py-3 text-white placeholder-gray-500 outline-none focus:border-white/30 sm:col-span-2"
+            />
+
+            <input
+              id="linkedin"
+              type="text"
+              placeholder="LinkedIn URL"
+              class="rounded-xl border border-white/10 bg-[#111118] px-4 py-3 text-white placeholder-gray-500 outline-none focus:border-white/30"
+            />
+
+            <input
+              id="website"
+              type="text"
+              placeholder="Portfolio / Website"
+              class="rounded-xl border border-white/10 bg-[#111118] px-4 py-3 text-white placeholder-gray-500 outline-none focus:border-white/30"
+            />
+
+          </div>
+
+        </div>
+
+        <!-- Summary -->
+
+        <div class="mt-8">
+
+          <h3 class="mb-4 text-sm font-semibold uppercase tracking-wider text-gray-400">
+            Professional Summary
+          </h3>
+
+          <textarea
+            id="summary"
+            rows="5"
+            placeholder="Write a short professional summary..."
+            class="w-full resize-y rounded-xl border border-white/10 bg-[#111118] px-4 py-3 text-white placeholder-gray-500 outline-none focus:border-white/30"
+          ></textarea>
+
+        </div>
+
+        <!-- Experience -->
+
+        <div class="mt-8">
+
+          <div class="mb-4 flex items-center justify-between">
+
+            <h3 class="text-sm font-semibold uppercase tracking-wider text-gray-400">
+              Experience
+            </h3>
+
+            <button
+              id="addExperience"
+              type="button"
+              class="rounded-lg border border-white/10 px-3 py-2 text-xs text-gray-300 hover:bg-white/10"
+            >
+              + Add
+            </button>
+
+          </div>
+
+          <div id="experienceContainer" class="space-y-4"></div>
+
+        </div>
+
+        <!-- Education -->
+
+        <div class="mt-8">
+
+          <div class="mb-4 flex items-center justify-between">
+
+            <h3 class="text-sm font-semibold uppercase tracking-wider text-gray-400">
+              Education
+            </h3>
+
+            <button
+              id="addEducation"
+              type="button"
+              class="rounded-lg border border-white/10 px-3 py-2 text-xs text-gray-300 hover:bg-white/10"
+            >
+              + Add
+            </button>
+
+          </div>
+
+          <div id="educationContainer" class="space-y-4"></div>
+
+        </div>
+
+        <!-- Skills -->
+
+        <div class="mt-8">
+
+          <h3 class="mb-4 text-sm font-semibold uppercase tracking-wider text-gray-400">
+            Skills
+          </h3>
+
+          <textarea
+            id="skills"
+            rows="4"
+            placeholder="JavaScript, Python, Communication, Project Management..."
+            class="w-full resize-y rounded-xl border border-white/10 bg-[#111118] px-4 py-3 text-white placeholder-gray-500 outline-none focus:border-white/30"
+          ></textarea>
+
+          <p class="mt-2 text-xs text-gray-500">
+            Separate skills with commas.
+          </p>
+
+        </div>
+
+        <!-- Languages -->
+
+        <div class="mt-8">
+
+          <h3 class="mb-4 text-sm font-semibold uppercase tracking-wider text-gray-400">
+            Languages
+          </h3>
+
+          <textarea
+            id="languages"
+            rows="3"
+            placeholder="English — Fluent, French — Intermediate, Arabic — Native"
+            class="w-full resize-y rounded-xl border border-white/10 bg-[#111118] px-4 py-3 text-white placeholder-gray-500 outline-none focus:border-white/30"
+          ></textarea>
+
+        </div>
+
+        <div class="mt-8 flex flex-wrap gap-3">
+
+          <button
+            id="generateBtn"
+            type="button"
+            class="flex-1 rounded-xl bg-white px-6 py-4 font-semibold text-black transition hover:bg-gray-200"
+          >
+            Generate Resume
+          </button>
+
+          <button
+            id="clearBtn"
+            type="button"
+            class="rounded-xl border border-white/10 px-6 py-4 text-gray-300 transition hover:bg-white/10"
+          >
+            Clear
+          </button>
+
+        </div>
+
+      </div>
+
+      <!-- PREVIEW -->
+
+      <div class="lg:sticky lg:top-8 lg:self-start">
+
+        <div class="mb-4 flex items-center justify-between">
+
+          <div>
+            <h2 class="text-xl font-semibold">
+              Resume Preview
+            </h2>
+
+            <p class="mt-1 text-sm text-gray-500">
+              Your resume updates automatically.
+            </p>
+          </div>
+
+          <button
+            id="printBtn"
+            type="button"
+            class="rounded-lg border border-white/10 px-4 py-2 text-sm text-gray-300 hover:bg-white/10"
+          >
+            Print / PDF
+          </button>
+
+        </div>
+
+        <article
+          id="resumePreview"
+          class="min-h-[1000px] rounded-xl bg-white p-8 text-gray-900 shadow-2xl sm:p-10"
+        >
+
+          <div class="border-b border-gray-200 pb-6">
+
+            <h1
+              id="previewName"
+              class="text-3xl font-bold"
+            >
+              Your Name
+            </h1>
+
+            <p
+              id="previewJob"
+              class="mt-1 text-lg text-gray-600"
+            >
+              Professional Title
+            </p>
+
+            <div
+              id="previewContact"
+              class="mt-4 flex flex-wrap gap-x-4 gap-y-1 text-sm text-gray-500"
+            >
+              <span>Email</span>
+              <span>Phone</span>
+              <span>Location</span>
+            </div>
+
+          </div>
+
+          <div class="mt-7">
+
+            <section id="previewSummarySection">
+
+              <h2 class="border-b border-gray-200 pb-2 text-sm font-bold uppercase tracking-widest">
+                Profile
+              </h2>
+
+              <p
+                id="previewSummary"
+                class="mt-3 text-sm leading-6 text-gray-600"
+              >
+                Your professional summary will appear here.
+              </p>
+
+            </section>
+
+            <section
+              id="previewExperienceSection"
+              class="mt-7"
+            >
+
+              <h2 class="border-b border-gray-200 pb-2 text-sm font-bold uppercase tracking-widest">
+                Experience
+              </h2>
+
+              <div
+                id="previewExperience"
+                class="mt-4 space-y-5"
+              ></div>
+
+            </section>
+
+            <section
+              id="previewEducationSection"
+              class="mt-7"
+            >
+
+              <h2 class="border-b border-gray-200 pb-2 text-sm font-bold uppercase tracking-widest">
+                Education
+              </h2>
+
+              <div
+                id="previewEducation"
+                class="mt-4 space-y-4"
+              ></div>
+
+            </section>
+
+            <section
+              id="previewSkillsSection"
+              class="mt-7"
+            >
+
+              <h2 class="border-b border-gray-200 pb-2 text-sm font-bold uppercase tracking-widest">
+                Skills
+              </h2>
+
+              <div
+                id="previewSkills"
+                class="mt-3 flex flex-wrap gap-2"
+              ></div>
+
+            </section>
+
+            <section
+              id="previewLanguagesSection"
+              class="mt-7"
+            >
+
+              <h2 class="border-b border-gray-200 pb-2 text-sm font-bold uppercase tracking-widest">
+                Languages
+              </h2>
+
+              <p
+                id="previewLanguages"
+                class="mt-3 whitespace-pre-line text-sm text-gray-600"
+              ></p>
+
+            </section>
+
+          </div>
+
+        </article>
+
+      </div>
+
+    </section>
+
+  </main>
+
+  <script>
+    interface ExperienceItem {
+      id: number;
+      job: string;
+      company: string;
+      location: string;
+      start: string;
+      end: string;
+      description: string;
+    }
+
+    interface EducationItem {
+      id: number;
+      degree: string;
+      school: string;
+      location: string;
+      start: string;
+      end: string;
+    }
+
+    let experiences: ExperienceItem[] = [];
+    let educations: EducationItem[] = [];
+
+    let experienceId = 0;
+    let educationId = 0;
+
+    const $ = (id: string) =>
+      document.getElementById(id);
+
+    function escapeHTML(value: string) {
+      const div = document.createElement("div");
+      div.textContent = value;
+      return div.innerHTML;
+    }
+
+    function value(id: string) {
+      return ($<HTMLInputElement>(id)?.value || "").trim();
+    }
+
+    function textValue(id: string) {
+      return ($<HTMLTextAreaElement>(id)?.value || "").trim();
+    }
+
+    function updatePreview() {
+      const name =
+        value("fullName") || "Your Name";
+
+      const job =
+        value("jobTitle") || "Professional Title";
+
+      $("previewName")!.textContent = name;
+      $("previewJob")!.textContent = job;
+
+      const contactItems = [
+        value("email"),
+        value("phone"),
+        value("location"),
+        value("linkedin"),
+        value("website"),
+      ].filter(Boolean);
+
+      const contact =
+        $("previewContact")!;
+
+      contact.innerHTML = "";
+
+      if (!contactItems.length) {
+        contact.innerHTML =
+          "<span>Email</span><span>Phone</span><span>Location</span>";
+      } else {
+        contactItems.forEach((item) => {
+          const span =
+            document.createElement("span");
+
+          span.textContent = item;
+
+          contact.appendChild(span);
+        });
+      }
+
+      const summary =
+        textValue("summary");
+
+      $("previewSummary")!.textContent =
+        summary ||
+        "Your professional summary will appear here.";
+
+      $("previewSummarySection")!.classList.toggle(
+        "hidden",
+        !summary
+      );
+
+      renderExperience();
+      renderEducation();
+      renderSkills();
+      renderLanguages();
+    }
+
+    function renderExperience() {
+      const container =
+        $("previewExperience")!;
+
+      container.innerHTML = "";
+
+      $("previewExperienceSection")!.classList.toggle(
+        "hidden",
+        experiences.length === 0
+      );
+
+      experiences.forEach((item) => {
+        const article =
+          document.createElement("div");
+
+        article.innerHTML = `
+          <div class="flex flex-wrap justify-between gap-2">
+            <div>
+              <h3 class="font-semibold">
+                ${escapeHTML(item.job || "Job Title")}
+              </h3>
+
+              <p class="text-sm text-gray-600">
+                ${escapeHTML(item.company || "Company")}
+                ${item.location ? ` · ${escapeHTML(item.location)}` : ""}
+              </p>
+            </div>
+
+            <p class="text-xs text-gray-500">
+              ${escapeHTML(item.start)}
+              ${item.start || item.end ? " — " : ""}
+              ${escapeHTML(item.end)}
+            </p>
+          </div>
+
+          ${
+            item.description
+              ? `
+                <p class="mt-2 whitespace-pre-line text-sm leading-6 text-gray-600">
+                  ${escapeHTML(item.description)}
+                </p>
+              `
+              : ""
+          }
+        `;
+
+        container.appendChild(article);
+      });
+    }
+
+    function renderEducation() {
+      const container =
+        $("previewEducation")!;
+
+      container.innerHTML = "";
+
+      $("previewEducationSection")!.classList.toggle(
+        "hidden",
+        educations.length === 0
+      );
+
+      educations.forEach((item) => {
+        const article =
+          document.createElement("div");
+
+        article.innerHTML = `
+          <div class="flex flex-wrap justify-between gap-2">
+
+            <div>
+              <h3 class="font-semibold">
+                ${escapeHTML(item.degree || "Degree")}
+              </h3>
+
+              <p class="text-sm text-gray-600">
+                ${escapeHTML(item.school || "Institution")}
+                ${item.location ? ` · ${escapeHTML(item.location)}` : ""}
+              </p>
+            </div>
+
+            <p class="text-xs text-gray-500">
+              ${escapeHTML(item.start)}
+              ${item.start || item.end ? " — " : ""}
+              ${escapeHTML(item.end)}
+            </p>
+
+          </div>
+        `;
+
+        container.appendChild(article);
+      });
+    }
+
+    function renderSkills() {
+      const container =
+        $("previewSkills")!;
+
+      container.innerHTML = "";
+
+      const skills =
+        textValue("skills")
+          .split(",")
+          .map((item) => item.trim())
+          .filter(Boolean);
+
+      $("previewSkillsSection")!.classList.toggle(
+        "hidden",
+        skills.length === 0
+      );
+
+      skills.forEach((skill) => {
+        const span =
+          document.createElement("span");
+
+        span.className =
+          "rounded-full bg-gray-100 px-3 py-1 text-xs text-gray-700";
+
+        span.textContent = skill;
+
+        container.appendChild(span);
+      });
+    }
+
+    function renderLanguages() {
+      const languages =
+        textValue("languages");
+
+      $("previewLanguages")!.textContent =
+        languages;
+
+      $("previewLanguagesSection")!.classList.toggle(
+        "hidden",
+        !languages
+      );
+    }
+
+    function renderExperienceForm() {
+      const container =
+        $("experienceContainer")!;
+
+      container.innerHTML = "";
+
+      experiences.forEach((item, index) => {
+
+        const wrapper =
+          document.createElement("div");
+
+        wrapper.className =
+          "rounded-xl border border-white/10 bg-[#111118] p-4";
+
+        wrapper.innerHTML = `
+          <div class="mb-4 flex items-center justify-between">
+
+            <span class="text-xs font-semibold uppercase tracking-wider text-gray-500">
+              Experience ${index + 1}
+            </span>
+
+            <button
+              type="button"
+              data-remove-experience="${item.id}"
+              class="text-xs text-red-400 hover:text-red-300"
+            >
+              Remove
+            </button>
+
+          </div>
+
+          <div class="grid gap-3 sm:grid-cols-2">
+
+            <input
+              data-exp-field="job"
+              data-id="${item.id}"
+              value="${escapeHTML(item.job)}"
+              placeholder="Job title"
+              class="rounded-lg border border-white/10 bg-black/20 px-3 py-2 text-sm text-white placeholder-gray-500 outline-none"
+            />
+
+            <input
+              data-exp-field="company"
+              data-id="${item.id}"
+              value="${escapeHTML(item.company)}"
+              placeholder="Company"
+              class="rounded-lg border border-white/10 bg-black/20 px-3 py-2 text-sm text-white placeholder-gray-500 outline-none"
+            />
+
+            <input
+              data-exp-field="location"
+              data-id="${item.id}"
+              value="${escapeHTML(item.location)}"
+              placeholder="Location"
+              class="rounded-lg border border-white/10 bg-black/20 px-3 py-2 text-sm text-white placeholder-gray-500 outline-none"
+            />
+
+            <input
+              data-exp-field="start"
+              data-id="${item.id}"
+              value="${escapeHTML(item.start)}"
+              placeholder="Start date"
+              class="rounded-lg border border-white/10 bg-black/20 px-3 py-2 text-sm text-white placeholder-gray-500 outline-none"
+            />
+
+            <input
+              data-exp-field="end"
+              data-id="${item.id}"
+              value="${escapeHTML(item.end)}"
+              placeholder="End date / Present"
+              class="rounded-lg border border-white/10 bg-black/20 px-3 py-2 text-sm text-white placeholder-gray-500 outline-none"
+            />
+
+            <textarea
+              data-exp-field="description"
+              data-id="${item.id}"
+              rows="4"
+              placeholder="Describe your responsibilities and achievements..."
+              class="resize-y rounded-lg border border-white/10 bg-black/20 px-3 py-2 text-sm text-white placeholder-gray-500 outline-none sm:col-span-2"
+            >${escapeHTML(item.description)}</textarea>
+
+          </div>
+        `;
+
+        container.appendChild(wrapper);
+      });
+
+      container
+        .querySelectorAll<HTMLElement>(
+          "[data-remove-experience]"
+        )
+        .forEach((button) => {
+          button.addEventListener("click", () => {
+            const id =
+              Number(
+                button.dataset.removeExperience
+              );
+
+            experiences =
+              experiences.filter(
+                (item) => item.id !== id
+              );
+
+            renderExperienceForm();
+            updatePreview();
+          });
+        });
+
+      container
+        .querySelectorAll<HTMLInputElement | HTMLTextAreaElement>(
+          "[data-exp-field]"
+        )
+        .forEach((input) => {
+          input.addEventListener("input", () => {
+
+            const id =
+              Number(input.dataset.id);
+
+            const field =
+              input.dataset.expField as keyof ExperienceItem;
+
+            const item =
+              experiences.find(
+                (entry) => entry.id === id
+              );
+
+            if (!item) return;
+
+            if (field !== "id") {
+              (item[field] as string) =
+                input.value;
+            }
+
+            updatePreview();
+          });
+        });
+    }
+
+    function renderEducationForm() {
+      const container =
+        $("educationContainer")!;
+
+      container.innerHTML = "";
+
+      educations.forEach((item, index) => {
+
+        const wrapper =
+          document.createElement("div");
+
+        wrapper.className =
+          "rounded-xl border border-white/10 bg-[#111118] p-4";
+
+        wrapper.innerHTML = `
+          <div class="mb-4 flex items-center justify-between">
+
+            <span class="text-xs font-semibold uppercase tracking-wider text-gray-500">
+              Education ${index + 1}
+            </span>
+
+            <button
+              type="button"
+              data-remove-education="${item.id}"
+              class="text-xs text-red-400 hover:text-red-300"
+            >
+              Remove
+            </button>
+
+          </div>
+
+          <div class="grid gap-3 sm:grid-cols-2">
+
+            <input
+              data-edu-field="degree"
+              data-id="${item.id}"
+              value="${escapeHTML(item.degree)}"
+              placeholder="Degree / Certificate"
+              class="rounded-lg border border-white/10 bg-black/20 px-3 py-2 text-sm text-white placeholder-gray-500 outline-none"
+            />
+
+            <input
+              data-edu-field="school"
+              data-id="${item.id}"
+              value="${escapeHTML(item.school)}"
+              placeholder="School / University"
+              class="rounded-lg border border-white/10 bg-black/20 px-3 py-2 text-sm text-white placeholder-gray-500 outline-none"
+            />
+
+            <input
+              data-edu-field="location"
+              data-id="${item.id}"
+              value="${escapeHTML(item.location)}"
+              placeholder="Location"
+              class="rounded-lg border border-white/10 bg-black/20 px-3 py-2 text-sm text-white placeholder-gray-500 outline-none"
+            />
+
+            <input
+              data-edu-field="start"
+              data-id="${item.id}"
+              value="${escapeHTML(item.start)}"
+              placeholder="Start date"
+              class="rounded-lg border border-white/10 bg-black/20 px-3 py-2 text-sm text-white placeholder-gray-500 outline-none"
+            />
+
+            <input
+              data-edu-field="end"
+              data-id="${item.id}"
+              value="${escapeHTML(item.end)}"
+              placeholder="End date"
+              class="rounded-lg border border-white/10 bg-black/20 px-3 py-2 text-sm text-white placeholder-gray-500 outline-none"
+            />
+
+          </div>
+        `;
+
+        container.appendChild(wrapper);
+      });
+
+      container
+        .querySelectorAll<HTMLElement>(
+          "[data-remove-education]"
+        )
+        .forEach((button) => {
+          button.addEventListener("click", () => {
+
+            const id =
+              Number(
+                button.dataset.removeEducation
+              );
+
+            educations =
+              educations.filter(
+                (item) => item.id !== id
+              );
+
+            renderEducationForm();
+            updatePreview();
+          });
+        });
+
+      container
+        .querySelectorAll<HTMLInputElement>(
+          "[data-edu-field]"
+        )
+        .forEach((input) => {
+          input.addEventListener("input", () => {
+
+            const id =
+              Number(input.dataset.id);
+
+            const field =
+              input.dataset.eduField as keyof EducationItem;
+
+            const item =
+              educations.find(
+                (entry) => entry.id === id
+              );
+
+            if (!item) return;
+
+            if (field !== "id") {
+              (item[field] as string) =
+                input.value;
+            }
+
+            updatePreview();
+          });
+        });
+    }
+
+    $("addExperience")!.addEventListener(
+      "click",
+      () => {
+
+        experiences.push({
+          id: ++experienceId,
+          job: "",
+          company: "",
+          location: "",
+          start: "",
+          end: "",
+          description: "",
+        });
+
+        renderExperienceForm();
+        updatePreview();
+      }
+    );
+
+    $("addEducation")!.addEventListener(
+      "click",
+      () => {
+
+        educations.push({
+          id: ++educationId,
+          degree: "",
+          school: "",
+          location: "",
+          start: "",
+          end: "",
+        });
+
+        renderEducationForm();
+        updatePreview();
+      }
+    );
+
+    document
+      .querySelectorAll<
+        HTMLInputElement | HTMLTextAreaElement
+      >(
+        "#fullName, #jobTitle, #email, #phone, #location, #linkedin, #website, #summary, #skills, #languages"
+      )
+      .forEach((input) => {
+        input.addEventListener(
+          "input",
+          updatePreview
+        );
+      });
+
+    $("generateBtn")!.addEventListener(
+      "click",
+      () => {
+        updatePreview();
+
+        document
+          .getElementById("resumePreview")
+          ?.scrollIntoView({
+            behavior: "smooth",
+            block: "start",
+          });
+      }
+    );
+
+    $("clearBtn")!.addEventListener(
+      "click",
+      () => {
+
+        document
+          .querySelectorAll<
+            HTMLInputElement | HTMLTextAreaElement
+          >(
+            "#fullName, #jobTitle, #email, #phone, #location, #linkedin, #website, #summary, #skills, #languages"
+          )
+          .forEach((input) => {
+            input.value = "";
+          });
+
+        experiences = [];
+        educations = [];
+
+        experienceId = 0;
+        educationId = 0;
+
+        renderExperienceForm();
+        renderEducationForm();
+        updatePreview();
+      }
+    );
+
+    $("printBtn")!.addEventListener(
+      "click",
+      () => {
+        window.print();
+      }
+    );
+
+    renderExperienceForm();
+    renderEducationForm();
+    updatePreview();
+  </script>
+
+  <style>
+    @media print {
+      body {
+        background: white !important;
+      }
+
+      main {
+        max-width: none !important;
+        padding: 0 !important;
+      }
+
+      main > a,
+      main > header,
+      main > section > div:first-child,
+      #printBtn {
+        display: none !important;
+      }
+
+      main > section {
+        display: block !important;
+        margin: 0 !important;
+      }
+
+      #resumePreview {
+        display: block !important;
+        min-height: auto !important;
+        border-radius: 0 !important;
+        box-shadow: none !important;
+        padding: 40px !important;
+      }
+    }
+  </style>
+</Layout>
