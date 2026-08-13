@@ -1,30 +1,43 @@
-import type { APIRoute } from "astro";
+import type { APIRoute } from 'astro';
+import { GoogleGenAI } from '@google/genai';
+
+export const prerender = false;
 
 export const POST: APIRoute = async ({ request }) => {
   try {
-    const body = await request.json();
+    const apiKey = import.meta.env.GEMINI_API_KEY;
 
-    const {
-      prompt,
-      textType = "blog",
-      language = "English",
-      tone = "Professional",
-      length = "Medium",
-    } = body;
-
-    // -----------------------------
-    // Validate prompt
-    // -----------------------------
-
-    if (!prompt || typeof prompt !== "string" || prompt.trim().length === 0) {
+    if (!apiKey) {
       return new Response(
         JSON.stringify({
-          error: "Please enter a prompt.",
+          error: 'GEMINI_API_KEY is not configured.',
+        }),
+        {
+          status: 500,
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+      );
+    }
+
+    const body = await request.json();
+
+    const prompt = String(body?.prompt || '').trim();
+    const type = String(body?.type || 'blog');
+    const language = String(body?.language || 'English');
+    const tone = String(body?.tone || 'Professional');
+    const length = String(body?.length || 'Medium');
+
+    if (!prompt) {
+      return new Response(
+        JSON.stringify({
+          error: 'Please enter a prompt.',
         }),
         {
           status: 400,
           headers: {
-            "Content-Type": "application/json",
+            'Content-Type': 'application/json',
           },
         }
       );
@@ -33,117 +46,61 @@ export const POST: APIRoute = async ({ request }) => {
     if (prompt.length > 5000) {
       return new Response(
         JSON.stringify({
-          error: "Prompt is too long. Maximum 5000 characters.",
+          error: 'Prompt is too long. Maximum 5000 characters.',
         }),
         {
           status: 400,
           headers: {
-            "Content-Type": "application/json",
+            'Content-Type': 'application/json',
           },
         }
       );
     }
 
-    // -----------------------------
-    // Gemini API Key
-    // -----------------------------
+    const typeInstructions: Record<string, string> = {
+      blog:
+        'Write a well-structured blog article with a clear introduction, useful sections, and a concise conclusion.',
 
-    const apiKey = import.meta.env.GEMINI_API_KEY;
+      idea:
+        'Generate a useful list of original content ideas. Make every idea specific and practical.',
 
-    if (!apiKey) {
-      console.error("GEMINI_API_KEY is missing.");
+      social:
+        'Write an engaging social media post suitable for a professional audience.',
 
-      return new Response(
-        JSON.stringify({
-          error:
-            "Gemini API key is not configured. Please add GEMINI_API_KEY to your .env file.",
-        }),
-        {
-          status: 500,
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
-    }
+      email:
+        'Write a clear and professional email with an appropriate structure.',
 
-    // -----------------------------
-    // Length instructions
-    // -----------------------------
+      description:
+        'Write a compelling product description that clearly explains benefits, features, and value.',
 
-    let lengthInstruction = "";
+      summary:
+        'Create a concise and accurate summary that preserves the most important information.',
+    };
 
-    switch (length) {
-      case "Short":
-        lengthInstruction =
-          "Keep the response concise, approximately 150-250 words.";
-        break;
+    const instruction =
+      typeInstructions[type] || typeInstructions.blog;
 
-      case "Long":
-        lengthInstruction =
-          "Write a detailed response, approximately 700-1000 words.";
-        break;
+    const lengthInstructions: Record<string, string> = {
+      Short:
+        'Keep the response concise, around 150-300 words when appropriate.',
 
-      case "Medium":
-      default:
-        lengthInstruction =
-          "Write a medium-length response, approximately 400-600 words.";
-        break;
-    }
+      Medium:
+        'Provide a balanced response, around 400-700 words when appropriate.',
 
-    // -----------------------------
-    // Content type instructions
-    // -----------------------------
+      Long:
+        'Provide a detailed and comprehensive response, around 800-1200 words when appropriate.',
+    };
 
-    let typeInstruction = "";
+    const lengthInstruction =
+      lengthInstructions[length] || lengthInstructions.Medium;
 
-    switch (textType) {
-      case "blog":
-        typeInstruction =
-          "Create a well-structured blog article with a clear title, introduction, useful headings, and a conclusion.";
-        break;
+    const systemPrompt = `
+You are AIZENOVA AI Text Generator.
 
-      case "idea":
-        typeInstruction =
-          "Generate useful and original content ideas. Present them as a clear numbered list with short explanations.";
-        break;
-
-      case "social":
-        typeInstruction =
-          "Create an engaging social media post. Make it concise, natural, and suitable for social media.";
-        break;
-
-      case "email":
-        typeInstruction =
-          "Write a professional and natural email with an appropriate structure and clear call to action.";
-        break;
-
-      case "description":
-        typeInstruction =
-          "Write an attractive and informative product description highlighting the main benefits and features.";
-        break;
-
-      case "summary":
-        typeInstruction =
-          "Create a clear and concise summary containing only the most important information.";
-        break;
-
-      default:
-        typeInstruction =
-          "Create useful, clear, well-structured content based on the user's request.";
-    }
-
-    // -----------------------------
-    // Gemini instructions
-    // -----------------------------
-
-    const instructions = `
-You are an expert AI writing assistant.
-
-Create content based on the user's request.
+Create high-quality original content.
 
 Content type:
-${textType}
+${type}
 
 Language:
 ${language}
@@ -154,133 +111,65 @@ ${tone}
 Length:
 ${length}
 
-${typeInstruction}
+Instructions:
+${instruction}
 
 ${lengthInstruction}
 
-Important rules:
+User request:
+${prompt}
 
+Important:
 - Write entirely in ${language}.
-- Follow the requested tone: ${tone}.
-- Do not mention that you are an AI.
-- Do not add unnecessary explanations before or after the requested content.
-- Make the content natural, useful, and easy to read.
-- Use proper grammar and spelling.
-- Follow the user's instructions carefully.
-`;
+- Follow the requested tone.
+- Do not mention that you are an AI unless the user explicitly asks.
+- Do not include unnecessary meta commentary.
+- Do not fabricate specific facts when factual accuracy matters.
+- Make the response useful, natural, readable, and well structured.
+`.trim();
 
-    // -----------------------------
-    // Gemini API
-    // -----------------------------
+    const ai = new GoogleGenAI({
+      apiKey,
+    });
 
-    const response = await fetch(
-      `https://generativelanguage.googleapis.com/v1beta/models/gemini-3.6-flash:generateContent?key=${apiKey}`,
-      {
-        method: "POST",
+    const response = await ai.interactions.create({
+      model: 'gemini-3-flash-preview',
+      input: systemPrompt,
+    });
 
-        headers: {
-          "Content-Type": "application/json",
-        },
+    const text = response.output_text?.trim() || '';
 
-        body: JSON.stringify({
-          systemInstruction: {
-            parts: [
-              {
-                text: instructions,
-              },
-            ],
-          },
-
-          contents: [
-            {
-              role: "user",
-              parts: [
-                {
-                  text: prompt,
-                },
-              ],
-            },
-          ],
-        }),
-      }
-    );
-
-    const data = await response.json();
-
-    // -----------------------------
-    // Gemini API error
-    // -----------------------------
-
-    if (!response.ok) {
-      console.error("Gemini API error:", data);
-
-      return new Response(
-        JSON.stringify({
-          error:
-            data?.error?.message ||
-            "Gemini API request failed.",
-        }),
-        {
-          status: response.status,
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
+    if (!text) {
+      throw new Error('Gemini returned an empty response.');
     }
-
-    // -----------------------------
-    // Get generated text
-    // -----------------------------
-
-    const generatedText =
-      data?.candidates?.[0]?.content?.parts
-        ?.map((part: { text?: string }) => part.text || "")
-        .join("")
-        .trim();
-
-    if (!generatedText) {
-      console.error("No generated text returned:", data);
-
-      return new Response(
-        JSON.stringify({
-          error: "The AI did not return any text.",
-        }),
-        {
-          status: 500,
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
-    }
-
-    // -----------------------------
-    // Return result
-    // -----------------------------
 
     return new Response(
       JSON.stringify({
-        text: generatedText,
+        text,
       }),
       {
         status: 200,
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
         },
       }
     );
   } catch (error) {
-    console.error("Generate text error:", error);
+    console.error('Gemini API error:', error);
+
+    const message =
+      error instanceof Error
+        ? error.message
+        : 'Unknown server error.';
 
     return new Response(
       JSON.stringify({
-        error: "Something went wrong while generating the text.",
+        error: `AI generation failed: ${message}`,
       }),
       {
         status: 500,
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
         },
       }
     );

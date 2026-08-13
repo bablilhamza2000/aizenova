@@ -1,24 +1,16 @@
 ---
-const pageTitle = 'AI Summarizer';
-const pageDescription =
-  'Summarize long texts quickly and clearly with AI.';
+import Layout from '~/layouts/PageLayout.astro';
+
+const metadata = {
+  title: 'AI Summarizer | AIZENOVA',
+  description:
+    'Summarize long texts quickly and clearly with AI.',
+};
 ---
 
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1.0"
-    />
-
-    <title>{pageTitle} | AIZENOVA</title>
-
-    <meta
-      name="description"
-      content={pageDescription}
-    />
-  </head>
+<Layout metadata={metadata}>
+  <main class="min-h-screen bg-page text-page">
+    <section class="mx-auto max-w-5xl px-5 py-12 sm:px-8">
 
   <body class="min-h-screen bg-[#08080d] text-white">
 
@@ -746,5 +738,6 @@ const pageDescription =
 
     </script>
 
-  </body>
-</html>
+    </section>
+  </main>
+</Layout>
